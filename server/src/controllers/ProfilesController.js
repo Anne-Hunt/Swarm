@@ -26,4 +26,9 @@ export class ProfilesController extends BaseController {
       next(error)
     }
   }
+
+  // async getEventsByCreator(creatorId) {
+  //     const events = await dbContext.Event
+  //     return events
+  // }
 }

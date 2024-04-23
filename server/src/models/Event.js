@@ -21,9 +21,8 @@ EventSchema.virtual('creator', {
     justOne: true
 })
 
-EventSchema.virtual('event', {
-    localField: 'eventId',
-    ref: 'Event',
-    foreignField: '_id',
-    justOne: true
+EventSchema.virtual('comment', {
+    localField: 'commentId',
+    ref: 'Comment',
+    foreignField: '_id'
 })
