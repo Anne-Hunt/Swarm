@@ -8,8 +8,9 @@ export const EventSchema = new Schema({
     startDate: { type: Date, required: true },
     isCanceled: { type: Boolean, default: false, required: true },
     type: { type: String, required: true, enum: ['concert', 'convention', 'sport', 'digital', 'meeting'], default: 'digital' },
+    duration: { type: '', required: true },
     creatorId: { type: Schema.ObjectId, required: true, ref: 'Account' },
-    ticketCount: { type: Schema.ObjectId, required: true, ref: 'Ticket' }
+    ticketCount: { type: Schema.ObjectId, required: true, ref: 'Ticket' },
 }, {
     timestamps: true, toJSON: { virtuals: true }
 })
