@@ -19,6 +19,7 @@ let meetData = ref({
   location: '',
   capacity: 0,
   startDate: '',
+  time: '',
   isCanceled: false,
   type: [],
   duration: ''
@@ -32,6 +33,7 @@ function resetForm(){
   location: '',
   capacity: 0,
   startDate: '',
+  time: ','
   isCanceled: false,
   type: [],
   duration: '',

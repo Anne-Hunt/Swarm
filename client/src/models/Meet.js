@@ -10,6 +10,7 @@ export class Meet{
         this.location = data.location
         this.capacity = data.capacity
         this.startDate = data.startDate
+        this.time = data.time
         this.isCanceled = data.isCanceled
         this.type = data.type
         this.duration = data.duration
