@@ -49,9 +49,10 @@ class EventService {
 
     async deleteEvent(eventId, userId) {
         const eventToDelete = await dbContext.Event.findById(eventId)
-        eventToDelete.populate('creator')
+        eventToDelete.populate('creator ticketCount')
+        if (!eventToDelete) throw new Error('Unable to delete what is not found')
         if (eventToDelete.creatorId != userId) throw new Forbidden('You cannot delete this event')
-        await dbContext.Event.deleteOne(eventId)
+        await eventToDelete.deleteOne()
         return `event ${eventId} deleted`
     }
 

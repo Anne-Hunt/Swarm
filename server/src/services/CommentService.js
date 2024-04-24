@@ -7,16 +7,18 @@ class CommentService {
     async createComment(commentData) {
         const comment = await dbContext.Comment.create(commentData)
         await comment.populate('creator event')
+        return comment
     }
 
-    async getComments() {
-        const comments = await dbContext.Comment.find().populate('creator event')
+    async getComments(eventId) {
+        const comments = await dbContext.Comment.find({ eventId: eventId }).populate('creator event')
         return comments
     }
 
     async deleteComment(commentId, userId) {
-        const comment = await dbContext.Comment.findOneAndDelete(commentId)
+        const comment = await dbContext.Comment.findById(commentId)
         if (comment.creatorId != userId) throw new Forbidden('Cannot delete comment')
+        await comment.deleteOne()
         return `item ${commentId} deleted`
     }
 

@@ -6,7 +6,6 @@ export class CommentController extends BaseController {
     constructor() {
         super('api/comments')
         this.router
-            .get('', this.getComments)
             .use(Auth0Provider.getAuthorizedUserInfo)
             .post('', this.createComment)
             .delete('/:commentId', this.deleteComment)
@@ -25,19 +24,11 @@ export class CommentController extends BaseController {
         }
     }
 
-    async getComments(request, response, next) {
-        try {
-            const comments = await commentService.getComments()
-            response.send(comments)
-        } catch (error) {
-            next(error)
-        }
-    }
-
     async deleteComment(request, response, next) {
         try {
             const commentId = request.params.commentId
-            const comment = await commentService.deleteComment(commentId)
+            const userId = request.userInfo.id
+            const comment = await commentService.deleteComment(commentId, userId)
             response.send(comment)
         } catch (error) {
             next(error)

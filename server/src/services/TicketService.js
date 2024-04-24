@@ -6,26 +6,27 @@ class TicketService {
 
 
     async getTicketsByUser(userId) {
-        const tickets = await dbContext.Ticket.find({ userId: creatorId })
+        const tickets = await dbContext.Ticket.find({ accountId: userId }).populate('event profile')
         return tickets
     }
 
     async getTickets(eventId) {
-        const tickets = await dbContext.Ticket.find({ eventId: eventId })
+        const tickets = await dbContext.Ticket.find({ eventId: eventId }).populate('event profile')
         return tickets
     }
 
-    async createTicket(eventId, userId) {
-        const ticket = await dbContext.Ticket.create()
-
+    async createTicket(ticketData) {
+        const ticket = await dbContext.Ticket.create(ticketData)
+        await ticket.populate('profile event', '-email')
         return ticket
     }
 
     async deleteTicket(ticketId, userId) {
-        const ticket = await (await dbContext.Ticket.findById(ticketId))
-        ticket.populate('creator')
-        if (ticket.creatorId != userId) throw new Forbidden("Cannot delete ticket")
-        await dbContext.Ticket.deleteOne(ticketId)
+        const ticket = await dbContext.Ticket.findById(ticketId)
+        const accountId = ticket.accountId
+        if (!ticket) throw new Error('Unable to delete what is not found')
+        if (accountId != userId) throw new Forbidden("Cannot delete ticket")
+        await ticket.deleteOne()
         return `ticket ${ticketId} is deleted`
     }
 }
