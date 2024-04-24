@@ -4,7 +4,7 @@ import { Forbidden } from "../utils/Errors.js"
 
 class EventService {
     async getEvents() {
-        const events = await dbContext.Event.find().populate('creator')
+        const events = await dbContext.Event.find().populate('creator tickets ticketCount comments')
         return events
     }
 

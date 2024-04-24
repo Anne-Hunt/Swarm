@@ -1,4 +1,5 @@
 import { Profile } from "./Profile.js"
+import { Ticket } from "./Ticket.js"
 
 
 export class Event{
@@ -16,6 +17,8 @@ export class Event{
         this.type = data.type
         this.duration = data.duration
         this.creator = data.creator ? new Profile(data.creator) : null
+        this.ticket = data.ticket ? new Ticket(data.ticket) : null
+        this.comment = data.comment ? new Comment(data.comment) : null
         this.ticketCount = data.ticketCount
     }
 }

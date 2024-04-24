@@ -36,6 +36,13 @@ EventSchema.virtual('ticket', {
     foreignField: '_id'
 })
 
+EventSchema.virtual('ticketCount', {
+    localField: '_id',
+    ref: 'Ticket',
+    foreignField: 'ticketId',
+    count: true
+})
+
 // EventSchema.virtual('ticketCount').get(function () {
 //     const ticketCount = this.capacity -= this.ticketId.length
 //     return ticketCount
