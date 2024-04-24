@@ -20,26 +20,26 @@ export const EventSchema = new Schema({
 EventSchema.virtual('creator', {
     localField: 'creatorId',
     ref: 'Account',
-    foreignField: 'id',
+    foreignField: '_id',
     justOne: true
 })
 
 EventSchema.virtual('comment', {
     localField: 'commentId',
     ref: 'Comment',
-    foreignField: 'id'
+    foreignField: '_id'
 })
 
 EventSchema.virtual('ticket', {
     localField: 'ticketId',
     ref: 'Ticket',
-    foreignField: 'id'
+    foreignField: '_id'
 })
 
-EventSchema.virtual('ticketCount').get(function () {
-    const ticketCount = this.capacity -= this.ticketId.length
-    return ticketCount
-})
+// EventSchema.virtual('ticketCount').get(function () {
+//     const ticketCount = this.capacity -= this.ticketId.length
+//     return ticketCount
+// })
 
 // personSchema.virtual('fullName').get(function() {
 //     return this.name.first + ' ' + this.name.last;

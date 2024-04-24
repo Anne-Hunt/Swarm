@@ -1,3 +1,4 @@
+import { Profile } from "./Profile.js"
 
 export class Discuss {
     constructor(data){
@@ -5,6 +6,6 @@ export class Discuss {
         this.id = data.id
         this.creatorId = data.creatorId
         this.eventId = data.eventId
-        this.creator = data.creator
+        this.creator = data.creator ? new Profile(data.creator) : null
     }
 }

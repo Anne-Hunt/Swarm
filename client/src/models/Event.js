@@ -1,4 +1,4 @@
-import { Account } from "./Account.js"
+import { Profile } from "./Profile.js"
 
 
 export class Event{
@@ -15,7 +15,7 @@ export class Event{
         this.isCanceled = data.isCanceled
         this.type = data.type
         this.duration = data.duration
-        this.creator = new Account(data.creator)
+        this.creator = data.creator ? new Profile(data.creator) : null
         this.ticketCount = data.ticketCount
     }
 }
