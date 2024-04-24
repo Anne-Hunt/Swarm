@@ -6,13 +6,11 @@ export const EventSchema = new Schema({
     location: { type: String, required: true, minLength: 1, maxLength: 500 },
     capacity: { type: Number, required: true, min: 1, max: 5000 },
     startDate: { type: String, required: true },
-    time: { type: String, required: true },
+    time: { type: String },
     isCanceled: { type: Boolean, default: false, required: true },
     type: { type: String, required: true, enum: ['concert', 'convention', 'sport', 'digital', 'meeting'], default: 'digital' },
-    duration: { type: String, required: true },
+    duration: { type: String },
     creatorId: { type: Schema.ObjectId, required: true, ref: 'Account' },
-    ticketId: { type: [Schema.ObjectId], required: true, ref: 'Ticket' },
-    commentId: { type: [Schema.ObjectId], required: true, ref: 'Comment' },
 }, {
     timestamps: true, toJSON: { virtuals: true }
 })
@@ -24,30 +22,9 @@ EventSchema.virtual('creator', {
     justOne: true
 })
 
-EventSchema.virtual('comment', {
-    localField: 'commentId',
-    ref: 'Comment',
-    foreignField: '_id'
-})
-
-EventSchema.virtual('ticket', {
-    localField: 'ticketId',
-    ref: 'Ticket',
-    foreignField: '_id'
-})
-
 EventSchema.virtual('ticketCount', {
     localField: '_id',
     ref: 'Ticket',
     foreignField: 'ticketId',
     count: true
 })
-
-// EventSchema.virtual('ticketCount').get(function () {
-//     const ticketCount = this.capacity -= this.ticketId.length
-//     return ticketCount
-// })
-
-// personSchema.virtual('fullName').get(function() {
-//     return this.name.first + ' ' + this.name.last;
-//   });
