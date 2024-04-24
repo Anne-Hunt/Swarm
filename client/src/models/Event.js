@@ -1,7 +1,7 @@
 import { Account } from "./Account.js"
 
 
-export class Meet{
+export class Event{
     constructor(data){
         this.id = data.id
         this.creatorId = data.creatorId

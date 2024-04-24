@@ -1,5 +1,6 @@
 import { AppState } from "../AppState.js"
-import { Meet } from "../models/Meet.js"
+import { Event } from "../models/Event.js"
+import { logger } from "../utils/Logger.js"
 import { api } from "./AxiosService.js"
 
 
@@ -7,20 +8,21 @@ class EventService{
 
     async getEvents(){
         const response = await api.get('api/events')
-        const meets = response.data.map(meet => new Meet(meet.data))
-        return meets
+        logger.log('sending response to get events', response.data)
+        const meets = response.data.map(eventData => new Event(eventData))
+        AppState.events = meets
     }
 
     async createEvent(eventData){
         const response = await api.post('api/events', eventData)
-        const meet = new Meet(response.data)
+        const meet = new Event(response.data)
         AppState.events.push(meet)
         return meet
     }
 
     async updateEvent(eventId, eventData){
         const response = await api.put(`api/events/${eventId}`, eventData)
-        const meet = new Meet(response.data)
+        const meet = new Event(response.data)
         AppState.events.find(event => event.id == meet.id)
 
     }

@@ -9,7 +9,7 @@ import Pop from '../utils/Pop.js';
 import { eventService } from '../services/EventService.js';
 // import { Modal } from 'bootstrap';
 
-const meets = computed(()=> AppState.events)
+const events = computed(()=> AppState.events)
 
 async function getEvents(){
   try {
@@ -37,8 +37,8 @@ onMounted(()=>{
 </button>
   </div>
   <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-<div v-for="meet in meets" :key="meet.id">
-  <EventCard :meet="meet"/>
+<div v-for="event in events" :key="event.id">
+  <EventCard :event="event"/>
 </div>
   </div>
   <ModalComp modalId="event-create-modal">

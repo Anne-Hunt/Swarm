@@ -11,7 +11,7 @@ import { useRouter } from 'vue-router';
 const account = computed(()=> AppState.account)
 const route = useRouter()
 
-let meetData = ref({
+let eventData = ref({
   name: '',
   description: '',
   coverImg: '',
@@ -26,7 +26,7 @@ let meetData = ref({
 })
 
 function resetForm(){
-    meetData.value = {
+    eventData.value = {
   name: '',
   description: '',
   coverImg: '',
@@ -43,10 +43,10 @@ function resetForm(){
 
 async function createEvent(){
   try {
-    const eventData = meetData.value
-    const event = await eventService.createEvent(eventData)
+    const eventDataValue = eventData.value
+    const event = await eventService.createEvent(eventDataValue)
     resetForm()
-    Modal.getOrCreateInstance('#event-create-modal').hide()
+    Modal.getOrCreateInstance('#event-create-modal').toggle()
     Pop.toast('Event created!', 'success')
     route.push({name: 'Event Details', params: {eventId: event.id}})
   } catch (error) {
@@ -61,32 +61,32 @@ async function createEvent(){
 <div class="container-fluid">
     <form @submit.prevent="createEvent()" class="row">
         <div class="form-floating mb-3">
-            <input v-model="meetData.name" type="text" class="form-control" name="name" id="eventName" placeholder="" minlength="3" maxlength="50" required/>
+            <input v-model="eventData.name" type="text" class="form-control" name="name" id="eventName" placeholder="" minlength="3" maxlength="50" required/>
             <label for="eventName">Name</label>
         </div>
         <div class="form-floating mb-3">
-            <input v-model="meetData.location" type="text" class="form-control" name="location" id="eventLocation" placeholder="" minlength="15" maxlength="1000" required/>
+            <input v-model="eventData.location" type="text" class="form-control" name="location" id="eventLocation" placeholder="" minlength="15" maxlength="1000" required/>
             <label for="eventLocation">Location</label>
         </div>
         <!-- <div class="mb-3">
     <label for="eventDatepicker">Choose a date</label>
-    <b-form-datepicker id="eventDatepicker" name="startDate" v-model="meetData.startDate" class="mb-2"></b-form-datepicker>
+    <b-form-datepicker id="eventDatepicker" name="startDate" v-model="eventData.startDate" class="mb-2"></b-form-datepicker>
   </div> -->
         <div class="form-floating mb-3">
-            <input v-model="meetData.startDate" type="date" class="form-control" name="startDate" id="eventDate" placeholder="" required/>
+            <input v-model="eventData.startDate" type="date" class="form-control" name="startDate" id="eventDate" placeholder="" required/>
             <label for="eventDate">Date</label>
         </div>
         <div class="form-floating mb-3">
-          <input type="time" v-model="meetData.time" class="form-control" name="time" id="eventTime" required>
+          <input type="time" v-model="eventData.time" class="form-control" name="time" id="eventTime" required>
           <label for="eventTime"></label>
         </div>
         <div class="form-floating mb-3">
-            <input v-model="meetData.duration" type="text" class="form-control" name="duration" id="eventDuration" placeholder="" minlength="2" maxlength="15" required/>
+            <input v-model="eventData.duration" type="text" class="form-control" name="duration" id="eventDuration" placeholder="" minlength="2" maxlength="15" required/>
             <label for="eventDuration">Duration</label>
         </div>
         <div class="mb-3">
             <label for="eventType">Category</label>
-            <select v-model="meetData.type" name="type" id="eventType" class="form-select" aria-label="Default select example" required>
+            <select v-model="eventData.type" name="type" id="eventType" class="form-select" aria-label="Default select example" required>
   <option selected>Choose a Category</option>
   <option value="concert">Concert</option>
   <option value="convention">Convention</option>
@@ -96,19 +96,19 @@ async function createEvent(){
 </select>
         </div>
         <div class="form-floating mb-3">
-            <input v-model="meetData.coverImg" type="url" class="form-control" name="coverImg" id="eventImg" placeholder="http://" required/>
+            <input v-model="eventData.coverImg" type="url" class="form-control" name="coverImg" id="eventImg" placeholder="http://" required/>
             <label for="eventImg">Image</label>
         </div>
         <div class="form-floating mb-3">
-            <input v-model="meetData.description" type="textarea" class="form-control" name="description" id="eventDescription" placeholder="" minlength="15" maxlength="1000" required/>
+            <input v-model="eventData.description" type="textarea" class="form-control" name="description" id="eventDescription" placeholder="" minlength="15" maxlength="1000" required/>
             <label for="eventDescription">Description</label>
         </div>
         <!-- <div class="d-flex align-items-center mb-3">
-            <input v-model="meetData.isCanceled" type="checkbox" class="form-check-input" name="isCanceled" id="eventCancel" unchecked required/>
+            <input v-model="eventData.isCanceled" type="checkbox" class="form-check-input" name="isCanceled" id="eventCancel" unchecked required/>
             <label class="form-check-label" for="eventCancel">Cancel Event?</label>
         </div> -->
         <div class="form-floating mb-3">
-            <input v-model="meetData.capacity" type="number" class="form-control" name="capacity" id="eventCapacity" placeholder="" min="1" max="1000" required/>
+            <input v-model="eventData.capacity" type="number" class="form-control" name="capacity" id="eventCapacity" placeholder="" min="1" max="1000" required/>
             <label for="eventCapacity">Capacity</label>
             <button class="btn btn-success" type="submit"><small>SUBMIT</small></button>
         </div>
