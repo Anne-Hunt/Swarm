@@ -20,20 +20,20 @@ export const EventSchema = new Schema({
 EventSchema.virtual('creator', {
     localField: 'creatorId',
     ref: 'Account',
-    foreignField: '_id',
+    foreignField: 'id',
     justOne: true
 })
 
 EventSchema.virtual('comment', {
     localField: 'commentId',
     ref: 'Comment',
-    foreignField: '_id'
+    foreignField: 'id'
 })
 
 EventSchema.virtual('ticket', {
     localField: 'ticketId',
     ref: 'Ticket',
-    foreignField: '_id'
+    foreignField: 'id'
 })
 
 EventSchema.virtual('ticketCount').get(function () {
