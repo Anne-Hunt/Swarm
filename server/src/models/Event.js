@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { Schema, VirtualType } from "mongoose";
 export const EventSchema = new Schema({
     name: { type: String, required: true, minLength: 3, maxLength: 50 },
     description: { type: String, required: true, minLength: 15, maxLength: 1000 },
@@ -9,9 +9,10 @@ export const EventSchema = new Schema({
     time: { type: String, required: true },
     isCanceled: { type: Boolean, default: false, required: true },
     type: { type: String, required: true, enum: ['concert', 'convention', 'sport', 'digital', 'meeting'], default: 'digital' },
-    duration: { type: '', required: true },
+    duration: { type: String, required: true },
     creatorId: { type: Schema.ObjectId, required: true, ref: 'Account' },
-    ticketCount: { type: Schema.ObjectId, required: true, ref: 'Ticket' },
+    ticketId: { type: [Schema.ObjectId], required: true, ref: 'Ticket' },
+    commentId: { type: [Schema.ObjectId], required: true, ref: 'Comment' },
 }, {
     timestamps: true, toJSON: { virtuals: true }
 })
@@ -28,3 +29,18 @@ EventSchema.virtual('comment', {
     ref: 'Comment',
     foreignField: '_id'
 })
+
+EventSchema.virtual('ticket', {
+    localField: 'ticketId',
+    ref: 'Ticket',
+    foreignField: '_id'
+})
+
+EventSchema.virtual('ticketCount').get(function () {
+    const ticketCount = this.capacity -= this.ticketId.length
+    return ticketCount
+})
+
+// personSchema.virtual('fullName').get(function() {
+//     return this.name.first + ' ' + this.name.last;
+//   });

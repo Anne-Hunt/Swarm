@@ -7,6 +7,7 @@ import { computed, onMounted } from 'vue';
 import { logger } from '../utils/Logger.js';
 import Pop from '../utils/Pop.js';
 import { eventService } from '../services/EventService.js';
+// import { Modal } from 'bootstrap';
 
 const meets = computed(()=> AppState.events)
 
@@ -20,11 +21,21 @@ async function getEvents(){
 }
 
 onMounted(()=>{
-  // getEvents()
+  getEvents()
   })
 </script>
 
 <template>
+  <div>
+    <button
+    type="button"
+    class="btn btn-primary btn-lg"
+    data-bs-toggle="modal"
+    data-bs-target="#modalId"
+>
+    Launch
+</button>
+  </div>
   <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
 <div v-for="meet in meets" :key="meet.id">
   <EventCard :meet="meet"/>

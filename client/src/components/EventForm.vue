@@ -22,6 +22,7 @@ let meetData = ref({
   isCanceled: false,
   type: [],
   duration: '',
+  ticketCount: 0
 })
 
 function resetForm(){
@@ -36,6 +37,7 @@ function resetForm(){
   isCanceled: false,
   type: [],
   duration: '',
+  ticketCount: 0
 }
 }
 
@@ -44,7 +46,7 @@ async function createEvent(){
     const eventData = meetData.value
     const event = await eventService.createEvent(eventData)
     resetForm()
-    Modal.getOrCreateInstance('event-create-modal').hide()
+    Modal.getOrCreateInstance('#event-create-modal').hide()
     Pop.toast('Event created!', 'success')
     route.push({name: 'Event Details', params: {eventId: event.id}})
   } catch (error) {
@@ -73,6 +75,10 @@ async function createEvent(){
         <div class="form-floating mb-3">
             <input v-model="meetData.startDate" type="date" class="form-control" name="startDate" id="eventDate" placeholder="" required/>
             <label for="eventDate">Date</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="time" v-model="meetData.time" class="form-control" name="time" id="eventTime" required>
+          <label for="eventTime"></label>
         </div>
         <div class="form-floating mb-3">
             <input v-model="meetData.duration" type="text" class="form-control" name="duration" id="eventDuration" placeholder="" minlength="2" maxlength="15" required/>
@@ -104,7 +110,7 @@ async function createEvent(){
         <div class="form-floating mb-3">
             <input v-model="meetData.capacity" type="number" class="form-control" name="capacity" id="eventCapacity" placeholder="" min="1" max="1000" required/>
             <label for="eventCapacity">Capacity</label>
-            <!-- <button class="btn btn-success" type="submit"><small>SUBMIT</small></button> -->
+            <button class="btn btn-success" type="submit"><small>SUBMIT</small></button>
         </div>
 
 

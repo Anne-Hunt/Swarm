@@ -1,3 +1,4 @@
+import { Account } from "./Account.js"
 
 
 export class Meet{
@@ -14,7 +15,7 @@ export class Meet{
         this.isCanceled = data.isCanceled
         this.type = data.type
         this.duration = data.duration
-        this.creator = data.creator
+        this.creator = new Account(data.creator)
         this.ticketCount = data.ticketCount
     }
 }
