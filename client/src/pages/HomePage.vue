@@ -20,7 +20,7 @@ async function getEvents(){
 }
 
 onMounted(()=>{
-  getEvents()
+  // getEvents()
   })
 </script>
 

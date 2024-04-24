@@ -8,7 +8,6 @@ import { AppState } from '../AppState.js';
 import { useRouter } from 'vue-router';
 
 
-
 const account = computed(()=> AppState.account)
 const route = useRouter()
 
@@ -22,7 +21,7 @@ let meetData = ref({
   time: '',
   isCanceled: false,
   type: [],
-  duration: ''
+  duration: '',
 })
 
 function resetForm(){
@@ -33,12 +32,10 @@ function resetForm(){
   location: '',
   capacity: 0,
   startDate: '',
-  time: ','
+  time: '',
   isCanceled: false,
   type: [],
   duration: '',
-  creatorId: account.value.id,
-  creator: account
 }
 }
 
@@ -69,11 +66,10 @@ async function createEvent(){
             <input v-model="meetData.location" type="text" class="form-control" name="location" id="eventLocation" placeholder="" minlength="15" maxlength="1000" required/>
             <label for="eventLocation">Location</label>
         </div>
-        <div class="mb-3">
-    <label for="example-datepicker">Choose a date</label>
-    <b-form-datepicker id="eventDate" v-model="meetData.startDate" class="mb-2"></b-form-datepicker>
-    <p>Value: '{{ value }}'</p>
-  </div>
+        <!-- <div class="mb-3">
+    <label for="eventDatepicker">Choose a date</label>
+    <b-form-datepicker id="eventDatepicker" name="startDate" v-model="meetData.startDate" class="mb-2"></b-form-datepicker>
+  </div> -->
         <div class="form-floating mb-3">
             <input v-model="meetData.startDate" type="date" class="form-control" name="startDate" id="eventDate" placeholder="" required/>
             <label for="eventDate">Date</label>
@@ -108,7 +104,7 @@ async function createEvent(){
         <div class="form-floating mb-3">
             <input v-model="meetData.capacity" type="number" class="form-control" name="capacity" id="eventCapacity" placeholder="" min="1" max="1000" required/>
             <label for="eventCapacity">Capacity</label>
-            <button class="btn btn-success" type="submit"><small>SUBMIT</small></button>
+            <!-- <button class="btn btn-success" type="submit"><small>SUBMIT</small></button> -->
         </div>
 
 
