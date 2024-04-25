@@ -98,10 +98,10 @@ async function deleteTicket(){
 
 onMounted(()=>{
     getActiveEvent()
-    getUserTicket()
     getComments()
     // getProfiles() 
     getTickets()
+    getUserTicket()
 })
 </script>
 
@@ -141,15 +141,17 @@ onMounted(()=>{
                     </section>
                 </div>
                 <div class="col-4">
-                    <div v-if="!userTicket" class="bg-primary rounded p-2">
-                        <h4>You know you want to go</h4>
-                        <p>Claim your spot!</p>
-                        <button class="btn btn-primary" @click="createTicket">Ticket</button>
-                    </div>
-                    <div v-else class="bg-success rounded p-2">
-                        <h4>You're going!</h4>
-                        <p>Changed your mind?</p>
-                        <button class="btn btn-secondary" @click="deleteTicket">Cancel</button>
+                    <div v-if="AppState.account">
+                        <div v-if="userTicket" class="bg-success rounded p-2">
+                            <h4>You're going!</h4>
+                            <p>Changed your mind?</p>
+                            <button class="btn btn-secondary" @click="deleteTicket">Cancel</button>
+                        </div>
+                        <div v-else class="bg-primary rounded p-2">
+                            <h4>You know you want to go</h4>
+                            <p>Claim your spot!</p>
+                            <button class="btn btn-primary" @click="createTicket">Ticket</button>
+                        </div>
                     </div>
                     <div>
                         <p>Attendees</p>
