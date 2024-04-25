@@ -30,7 +30,7 @@ const routes = [
   {
     path: '/profile',
     name: 'Profile',
-    component: loadPage('ProfiilePage')
+    component: loadPage('ProfilePage')
   }
 ]
 

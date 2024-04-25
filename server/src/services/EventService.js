@@ -3,6 +3,10 @@ import { Forbidden } from "../utils/Errors.js"
 
 
 class EventService {
+    async getEventsByCreator(creatorId) {
+        const events = await dbContext.Event.find(creatorId).populate('creator ticketCount')
+        return events
+    }
     async getEvents() {
         const events = await dbContext.Event.find().populate('creator ticketCount')
         return events
