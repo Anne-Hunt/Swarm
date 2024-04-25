@@ -7,7 +7,7 @@ import { computed, onMounted } from 'vue';
 import { logger } from '../utils/Logger.js';
 import Pop from '../utils/Pop.js';
 import { eventService } from '../services/EventService.js';
-// import { Modal } from 'bootstrap';
+import { Event } from '../models/Event.js';
 
 const events = computed(()=> AppState.events)
 
@@ -34,7 +34,7 @@ onMounted(()=>{
       </div>
     </div>
   </div>
-
+<!-- Section for Create and Search -->
   <section class="row p-5 justify-content-evenly">
     <h3>What Swarm Does</h3>
     <div class="col-4">
@@ -43,7 +43,8 @@ onMounted(()=>{
           <i class="mdi mdi-magnify"></i>
         </div>
         <div class="col-9">
-          Search for all your events and things to do
+          <h3>Find events you want, when you want</h3>
+          <p>Search for what you're looking for and possibly find the event to change your life.</p>
         </div>
       </div>
     </div>
@@ -60,7 +61,7 @@ onMounted(()=>{
       </div>
     </div>
   </section>
-//SECTION - 
+<!-- Section for Category Filters-->
   <section class="row p-3 justify-content-evenly">
     <h3>Explore by Category</h3>
     <div class="col-2 bg-success rounded text-center">
@@ -84,17 +85,12 @@ onMounted(()=>{
       <h4>Digital</h4>
     </div>
   </section>
-//SECTION - 
-  <section class="row" v-for="event in events" :key="event.id">
-    <EventCard :event="event"></EventCard>
 
-  </section>
-
-<section class="row">
-  <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
+<!-- Section for Event Cards-->
+<section class="row justify-content-evenly align-items-center p-2">
+  <h3>Upcoming Events</h3>
     <div v-for="event in events" :key="event.id">
       <EventCard :event="event" />
-    </div>
   </div>
 </section>
   <ModalComp modalId="event-create-modal">
@@ -103,6 +99,10 @@ onMounted(()=>{
 </template>
 
 <style scoped lang="scss">
+i {
+  font-size: xx-large;
+}
+
 .bgimage{
   background-color: black;
   background-image: url('https://images.unsplash.com/photo-1528605248644-14dd04022da1?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
@@ -110,6 +110,7 @@ onMounted(()=>{
   height: 50dvh;
   object-fit: contain;
 }
+
 .fontfix{
    text-shadow: 0 0 8.5 black;
 }

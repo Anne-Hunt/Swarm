@@ -1,4 +1,5 @@
 import { Profile } from "./Profile.js"
+import { Event } from "./Event.js"
 
 export class Comment {
     constructor(data){

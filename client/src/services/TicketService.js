@@ -1,6 +1,9 @@
 
 
 class TicketService{
+    getTickets(eventId) {
+        throw new Error('Method not implemented.');
+    }
 
 }
 

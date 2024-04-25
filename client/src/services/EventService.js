@@ -5,6 +5,12 @@ import { api } from "./AxiosService.js"
 
 
 class EventService{
+    async setActiveEvent(eventId) {
+        const response = await api.get(`api/events/${eventId}`)
+        logger.log('sending response to get eventById', response.data)
+        const eventActive = new Event(response.data)
+        AppState.activeEvent = eventActive
+    }
 
     async getEvents(){
         const response = await api.get('api/events')
