@@ -30,7 +30,15 @@ class EventService{
         const response = await api.put(`api/events/${eventId}`, eventData)
         const meet = new Event(response.data)
         AppState.events.find(event => event.id == meet.id)
+    }
 
+    async cancelEvent(eventId){
+        const response = await api.put(`api/events/${eventId}`)
+        logger.log('sending event to cancel', response.data)
+        const eventToCancel = new Event(response.data)
+        const eventIndex = AppState.events.findIndex(eventId) 
+        AppState.events.splice(eventIndex, 1)
+        AppState.events.push(eventToCancel)
     }
 
     async trashEvent(eventId){

@@ -10,7 +10,7 @@ const eventimage = computed(()=> `url(${eventProps.event.coverImg})`)
 
 
 <template>
-    <div class="col-3">
+    <div class="col-4">
         <RouterLink :to="{name: 'Event Details', params: {eventId: event.id}}">
             <div class="card rounded">
                 <div class="card-image eventimage text-end">
