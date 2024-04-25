@@ -1,11 +1,15 @@
 import { AppState } from '../AppState'
 import { Account } from '../models/Account.js'
+import { Profile } from '../models/Profile.js'
 import { logger } from '../utils/Logger'
 import { api } from './AxiosService'
 
 class ProfileService {
-  getProfiles(eventId) {
-      throw new Error('Method not implemented.')
+  async getProfiles(eventId) {
+      const response = await api.get(`api/event/${eventId}/tickets`)
+      logger.log('getting profiles for tickets', response.data)
+      const profiles = response.data.profiles.map(profileData => new Profile(profileData))
+      AppState.profiles = profiles
   }
   async getProfile() {
     try {
