@@ -1,32 +1,31 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue';
-import { AppState } from '../AppState.js';
+import { computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import Pop from '../utils/Pop.js';
 import { logger } from '../utils/Logger.js';
 import { eventService } from '../services/EventService.js';
-import { Event } from '../models/Event.js';
 import { commentService } from '../services/CommentService.js';
 import { profileService } from '../services/ProfileService.js';
 import { ticketService } from '../services/TicketService.js';
+import { AppState } from '../AppState.js';
+import Pop from '../utils/Pop.js';
 import ProfileTicket from '../components/ProfileTicket.vue';
+import { Event } from '../models/Event.js';
 import { Comment } from '../models/Comment.js';
 import { Profile } from '../models/Profile.js';
+import { Ticket } from '../models/Ticket.js';
+import { Account } from '../models/Account.js';
 // import EventDetailsCard from '../components/EventDetailsCard.vue';
 
 const activeEvent = computed(()=> AppState.activeEvent)
 const eventImg = computed(()=> `url(${AppState.activeEvent?.coverImg})`)
-const profiles = computed(()=> AppState.profiles)
+// const profiles = computed(()=> AppState.profiles)
 const tickets = computed(()=> AppState.tickets)
 const comments = computed(()=>AppState.comments)
-const profile = computed(()=> AppState.account)
+const userProfile = computed(()=> AppState.account)
+const usersTickets = computed(()=> AppState.usersTickets)
+const userTicket = computed(()=> AppState.usersTickets.find(userTicket => userTicket.eventId == activeEvent.value.id))
+const attending = computed(()=> AppState.usersTickets.find(usersTicket => usersTicket.id == userTicket.value.id))
 const route = useRoute()
-
-const ticketData = ref({
-    creatorId: profile.value.id,
-    eventId: route.params.eventId
-})
-
 
 async function getActiveEvent(){
 try {
@@ -48,20 +47,20 @@ async function getComments(){
     }
 }
 
-async function getProfiles(){
-    try {
-        const eventId = route.params.eventId
-        await profileService.getProfiles(eventId)
-    } catch (error) {
-        Pop.toast('Unable to load profiles', 'error')
-        logger.log('Unable to load profiles', error)
-    }
-}
+// async function getProfiles(){
+//     try {
+//         const eventId = route.params.eventId
+//         await profileService.getProfiles(eventId)
+//     } catch (error) {
+//         Pop.toast('Unable to load profiles', 'error')
+//         logger.log('Unable to load profiles', error)
+//     }
+// }
 
 async function createTicket(){
     try {
+        const ticketData = {eventId: route.params.eventId}
         await ticketService.createTicket(ticketData)
-        ticketData.value = {creatorId: profile.value.id, eventId: route.params.eventId}
     } catch (error) {
         Pop.toast('Unable to load tickets', 'error')
         logger.log('Unable to load tickets', error)
@@ -70,18 +69,38 @@ async function createTicket(){
 
 async function getTickets(){
     try {
-        const eventId = route.params.eventId
-        await ticketService.getTickets(eventId)
+        await ticketService.getTickets(route.params.eventId)
     } catch (error) {
         Pop.toast('Unable to get tickets', 'error')
         logger.log('Unable to get tickets', error)
     }
 }
 
+async function getUserTicket(){
+    try {
+        await ticketService.getTicketById()
+    } catch (error) {
+        Pop.toast('unable to find ticket', 'error')
+        logger.log('unable to find ticket', 'error')
+    }
+}
+
+async function deleteTicket(){
+    try {
+        Pop.confirm('Do you want to cancel your ticket?')
+        if (!confirm) return
+        await ticketService.deleteTicket()
+    } catch (error) {
+        Pop.toast('unable to delete ticket', 'error')
+        logger.log('Unable to delete ticket', error)
+    }
+}
+
 onMounted(()=>{
     getActiveEvent()
+    getUserTicket()
     getComments()
-    getProfiles()
+    // getProfiles() 
     getTickets()
 })
 </script>
@@ -122,16 +141,21 @@ onMounted(()=>{
                     </section>
                 </div>
                 <div class="col-4">
-                    <div class="bg-primary rounded p-2">
+                    <div v-if="!userTicket" class="bg-primary rounded p-2">
                         <h4>You know you want to go</h4>
                         <p>Claim your spot!</p>
                         <button class="btn btn-primary" @click="createTicket">Ticket</button>
                     </div>
+                    <div v-else class="bg-success rounded p-2">
+                        <h4>You're going!</h4>
+                        <p>Changed your mind?</p>
+                        <button class="btn btn-secondary" @click="deleteTicket">Cancel</button>
+                    </div>
                     <div>
                         <p>Attendees</p>
                         <div class="bg-primary rounded p-2">
-                            <div v-for="profile in profiles" :key="profile.id">
-                                <ProfileTicket :profile="profile"></ProfileTicket>
+                            <div v-for="ticket in tickets" :key="ticket.id">
+                                <ProfileTicket :ticket="ticket"/>
                             </div>
                         </div>
                     </div>

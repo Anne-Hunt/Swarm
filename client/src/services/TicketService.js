@@ -8,7 +8,7 @@ class TicketService{
     async getTickets(eventId) {
         const response = await api.get(`api/events/${eventId}/tickets`)
         logger.log('getting Tickets in service', response.data)
-        const tickets = response.data.map(new Ticket(response.data))
+        const tickets = response.data.map(ticketData => new Ticket(ticketData))
         AppState.tickets = tickets
     }
 
@@ -16,11 +16,11 @@ class TicketService{
         const response = await api.get('api/account/tickets')
         logger.log('getting tickers for user', response.data)
         const tickets = response.data.map(new Ticket(response.data))
-        AppState.tickets = tickets
+        AppState.usersTickets = tickets
     }
 
-    async createTicket(){
-        const response = await api.get('api/tickets')
+    async createTicket(ticketData){
+        const response = await api.post('api/tickets', ticketData)
         logger.log('creating ticket', response.data)
         const ticket = new Ticket(response.data)
         AppState.tickets.push(ticket)
