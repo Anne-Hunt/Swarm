@@ -1,5 +1,4 @@
 import { Profile } from "./Profile.js"
-import { Ticket } from "./Ticket.js"
 
 
 export class Event{
