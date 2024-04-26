@@ -25,7 +25,10 @@ const userProfile = computed(()=> AppState.account)
 const usersTickets = computed(()=> AppState.usersTickets)
 const userTicket = computed(()=> AppState.usersTickets.find(userTicket => userTicket.eventId == activeEvent.value.id))
 const attending = computed(()=> AppState.usersTickets.find(usersTicket => usersTicket.id == userTicket.value.id))
-const soldOut = computed(()=> (AppState.activeEvent.capacity == AppState.activeEvent.ticketCount) ? `<h3><strong>SOLD OUT</strong></h3>`: `<h3><strong>TICKETS AVAILABLE</strong></h3>`)
+const soldOutText = `SOLD OUT`
+const ticketAvailable = `TICKETS AVAILABLE`
+const soldOut = computed(()=> (AppState.activeEvent.capacity == AppState.activeEvent.ticketCount) ? soldOutText : ticketAvailable)
+// const soldOutTickets = computed(()=> (if(AppState.activeEvent.capacity == AppState.activeEvent.ticketCount) return soldOutText))
 const route = useRoute()
 
 async function getActiveEvent(){
@@ -70,9 +73,10 @@ async function createTicket(){
 
 async function getTickets(){
     try {
-        await ticketService.getTickets()
+        const ticketData = {eventId: route.params.eventId}
+        await ticketService.getTickets(ticketData)
     } catch (error) {
-        Pop.toast('Unable to get tickets', 'error')
+        // Pop.toast('Unable to get tickets', 'error')
         logger.log('Unable to get tickets', error)
     }
 }
@@ -81,7 +85,7 @@ async function getUserTicket(){
     try {
         await ticketService.getTicketById()
     } catch (error) {
-        Pop.toast('unable to find ticket', 'error')
+        // Pop.toast('unable to find ticket', 'error')
         logger.log('unable to find ticket', 'error')
     }
 }
@@ -123,8 +127,8 @@ onMounted(()=>{
     <section class="row justify-content-center">
         <div v-if="activeEvent" class="col-12 col-md-8">
             <section class="row bgimage rounded">
-                <div v-if="activeEvent.isCanceled = true" class="bg-warning text-light"><h3><strong>CANCELED</strong></h3></div>
-                <div v-else>{{ soldOut }}</div>
+                <span v-if="activeEvent.isCanceled == true" class="bg-warning text-light"><h3><strong>CANCELED</strong></h3></span>
+                <span v-else class="text-light fontfix"><h3><strong>{{ soldOut }}</strong></h3></span>
             </section>
             <section class="row">
                 <div class="col-8">
@@ -133,9 +137,9 @@ onMounted(()=>{
                             <h2>{{ activeEvent.name }} </h2>
                             <span class="rounded-pill bg-primary">{{ activeEvent.type }}</span>
                         </div>
-                        <div v-if="userProfile.id = activeEvent.creatorId" class="col-4">
+                        <div v-if="activeEvent.creatorId == userProfile?.id" class="col-4">
                             <div class="dropdown">
-                                <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="mdi mdi-dots-horizontal fs-1"></i></button>
+                                <div class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="mdi mdi-dots-horizontal fs-1"></i></div>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="#" @click="cancelEvent">Cancel Event</a></li>
                                 </ul>
@@ -161,20 +165,20 @@ onMounted(()=>{
                         </div>
                     </section>
                 </div>
-                <div class="col-4">
+                <div class="col-4 p-2">
                     <div v-if="AppState.account">
                         <div v-if="userTicket" class="bg-success rounded p-2">
                             <h4>You're going!</h4>
                             <p>Changed your mind?</p>
                             <button class="btn btn-secondary" @click="deleteTicket">Cancel</button>
                         </div>
-                        <div v-else-if="activeEvent.isCanceled = false && activeEvent.ticketCount != activeEvent.capacity" class="bg-primary rounded p-2">
+                        <div v-else-if="activeEvent.isCanceled || activeEvent.capacity != activeEvent.ticketCount" class="bg-primary rounded p-2">
                             <h4>You know you want to go</h4>
                             <p>Claim your spot!</p>
                             <button class="btn btn-primary" @click="createTicket">Ticket</button>
                         </div>
                     </div>
-                    <div>
+                    <div v-if="tickets.length > 0">
                         <p>Attendees</p>
                         <div class="bg-primary rounded p-2">
                             <div v-for="ticket in tickets" :key="ticket.id">
@@ -200,5 +204,9 @@ onMounted(()=>{
   background-position: center;
   height: 40dvh;
   object-fit: contain;
+}
+
+.fontfix{
+   text-shadow: 0 5 9 black;
 }
 </style>
