@@ -14,6 +14,7 @@ const events = computed(()=> {
   return AppState.events.filter(event => event.type == filterTo.value)})
 
 const filterTo = ref('all')
+// FIXME make sure names match types of your ENUM
 const filters = [
   {
     name: 'digital',

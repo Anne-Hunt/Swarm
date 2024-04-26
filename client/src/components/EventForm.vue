@@ -44,7 +44,9 @@ async function createEvent(){
     const eventDataValue = eventData.value
     const event = await eventService.createEvent(eventDataValue)
     resetForm()
-    Modal.getOrCreateInstance('#event-create-modal').toggle()
+
+    // REVIEW maybe change this id? Maybe wait until passing?
+    Modal.getOrCreateInstance('#modalId').toggle()
     Pop.toast('Event created!', 'success')
     route.push({name: 'Event Details', params: {eventId: event.id}})
   } catch (error) {

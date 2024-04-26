@@ -31,6 +31,7 @@ const routes = [
     path: '/profile',
     name: 'Profile',
     component: loadPage('ProfilePage')
+    // FIXME add authguard
   }
 ]
 

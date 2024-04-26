@@ -29,6 +29,9 @@ class EventService {
         const eventUpdate = await dbContext.Event.findById(eventId)
         if (!eventUpdate) throw new Error("ANGRY")
         if (eventUpdate.creatorId != userId) throw new Forbidden("cannot update event")
+        // FIXME check to see if the event is cancelled, and throw an error if it is!
+
+
         eventUpdate.name = eventData.name ?? eventUpdate.name
         eventUpdate.description = eventData.description ?? eventUpdate.description
         eventUpdate.coverImg = eventData.coverImg ?? eventUpdate.coverImg

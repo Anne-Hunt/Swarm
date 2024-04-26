@@ -13,11 +13,12 @@ class TicketService{
     }
 
     async getUserTickets(userId) {
+        // FIXME check your request URL here, you should send the request to account/tickets
         const response = await api.get('api/tickets')
         logger.log('getting Tickets in service', response.data)
         const tickets = response.data.map(ticketData => new Ticket(ticketData))
-        const userTickets = tickets.filter(ticket => ticket.accountId == userId)
-        AppState.usersTickets = userTickets
+        // const userTickets = tickets.filter(ticket => ticket.accountId == userId)
+        AppState.usersTickets = tickets
     }
 
     async getTicketById(){

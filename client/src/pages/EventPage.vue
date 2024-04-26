@@ -8,12 +8,12 @@ import { commentService } from '../services/CommentService.js';
 import { ticketService } from '../services/TicketService.js';
 import { AppState } from '../AppState.js';
 import Pop from '../utils/Pop.js';
-import ProfileTicket from '../components/ProfileTicket.vue';
 import { Event } from '../models/Event.js';
 import { Comment } from '../models/Comment.js';
 import { Profile } from '../models/Profile.js';
 import { Ticket } from '../models/Ticket.js';
 import { Account } from '../models/Account.js';
+import TicketHoldersCard from '../components/TicketHoldersCard.vue';
 // import EventDetailsCard from '../components/EventDetailsCard.vue';
 
 const activeEvent = computed(()=> AppState.activeEvent)
@@ -73,6 +73,7 @@ async function createTicket(){
 
 async function getTickets(){
     try {
+        // FIXME do not create an object, we just need the id for the network request
         const ticketData = {eventId: route.params.eventId}
         await ticketService.getTickets(ticketData)
     } catch (error) {
@@ -103,6 +104,7 @@ async function deleteTicket(){
 
     async function cancelEvent(){
         try {
+            // FIXME make sure you save the PopConfirm value to a variable
             await Pop.confirm('Do you wan to cancel your event?')
             if(!confirm) return
             const eventId = route.params.eventId
@@ -127,7 +129,7 @@ onMounted(()=>{
     <section class="row justify-content-center">
         <div v-if="activeEvent" class="col-12 col-md-8">
             <section class="row bgimage rounded">
-                <span v-if="activeEvent.isCanceled == true" class="bg-warning text-light"><h3><strong>CANCELED</strong></h3></span>
+                <span v-if="activeEvent.isCanceled == true" class=" text-light"><h3><strong>CANCELED</strong></h3></span>
                 <span v-else class="text-light fontfix"><h3><strong>{{ soldOut }}</strong></h3></span>
             </section>
             <section class="row">
@@ -141,7 +143,7 @@ onMounted(()=>{
                             <div class="dropdown">
                                 <div class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="mdi mdi-dots-horizontal fs-1"></i></div>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#" @click="cancelEvent">Cancel Event</a></li>
+                                    <li><button class="dropdown-item"  @click="cancelEvent">Cancel Event</button></li>
                                 </ul>
                             </div>
                         </div>
@@ -170,19 +172,24 @@ onMounted(()=>{
                         <div v-if="userTicket" class="bg-success rounded p-2">
                             <h4>You're going!</h4>
                             <p>Changed your mind?</p>
-                            <button class="btn btn-secondary" @click="deleteTicket">Cancel</button>
+                            <button class="btn btn-warning" @click="deleteTicket">Cancel</button>
                         </div>
-                        <div v-else-if="activeEvent.isCanceled || activeEvent.capacity != activeEvent.ticketCount" class="bg-primary rounded p-2">
+                        <div v-else-if="activeEvent.isCanceled = false || activeEvent.capacity != activeEvent.ticketCount" class="bg-primary rounded p-2">
                             <h4>You know you want to go</h4>
                             <p>Claim your spot!</p>
-                            <button class="btn btn-primary" @click="createTicket">Ticket</button>
+                            <button class="btn btn-secondary" @click="createTicket">Ticket</button>
                         </div>
+                        <!-- <div v-else class="bg-primary rounded p-2">
+                            <h4> {{ soldOut }}</h4>
+                            <p>You missed out!</p>
+                            <button class="btn btn-secondary" disabled>Ticket</button>
+                        </div> -->
                     </div>
                     <div v-if="tickets.length > 0">
                         <p>Attendees</p>
                         <div class="bg-primary rounded p-2">
                             <div v-for="ticket in tickets" :key="ticket.id">
-                                <ProfileTicket :ticket="ticket"/>
+                                <TicketHoldersCard :ticket="ticket"/>
                             </div>
                         </div>
                     </div>

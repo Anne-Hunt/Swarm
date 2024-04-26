@@ -47,6 +47,8 @@ async function deleteTicket(){
     }
 }
 
+// FIXME go and get the user's tickets here
+
 onMounted(()=> {
     getEventsByCreator()
     getUserEvents()
