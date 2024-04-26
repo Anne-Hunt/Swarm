@@ -13,10 +13,20 @@ export class EventController extends BaseController {
             .get('/:eventId/tickets', this.getTickets)
             .get('/:eventId/comments', this.getComments)
             .use(Auth0Provider.getAuthorizedUserInfo)
+            .get('/account/events', this.getEventByUser)
             .post('', this.createEvent)
             .put('/:eventId', this.updateEvent)
             .delete('/:eventId', this.cancelEvent)
             .delete('/:eventId', this.deleteEvent)
+    }
+    async getEventByUser(request, response, next) {
+        try {
+            const creatorId = request.userInfo.id
+            const events = await eventService.getEventsByCreator(creatorId)
+            response.send(events)
+        } catch (error) {
+            next(error)
+        }
     }
 
     async getEvents(request, response, next) {

@@ -10,23 +10,21 @@ const eventimage = computed(()=> `url(${eventProps.event.coverImg})`)
 
 
 <template>
-    <div class="col-4">
         <RouterLink :to="{name: 'Event Details', params: {eventId: event.id}}">
             <div class="card rounded">
                 <div class="card-image eventimage text-end">
                     <span class="bg-light">{{ event.type }}</span>
                 </div>
                 <div class="card-body">
-                    <div class="card-title">{{ event.name }}</div>
+                    <div class="card-title"><strong>{{ event.name }}</strong></div>
                     <div class="card-subtitle"><span>Hosted by {{ event.creator.name }}</span></div>
                     <div class="card-description">
-                        <p>{{ event.startDate }} - {{ event.location }}</p>
-                        <p>{{ event.ticketCount }} people are going</p>
+                        <span>{{ event.startDate }} - {{ event.location }}</span><br>
+                        <span>{{ event.ticketCount }} people are going</span>
                     </div>
                 </div>
             </div>
         </RouterLink>
-        </div>
 </template>
 
 

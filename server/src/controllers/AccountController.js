@@ -37,7 +37,8 @@ export class AccountController extends BaseController {
   async getTicketsByUser(request, response, next) {
     try {
       const userId = request.userInfo.id
-      const tickets = await ticketService.getTicketsByUser(userId)
+      const account = { accountId: userId }
+      const tickets = await ticketService.getTicketsByUser(account)
       response.send(tickets)
     } catch (error) {
       next(error)

@@ -14,10 +14,23 @@ import EventCard from '../components/EventCard.vue';
 
 const events = computed(()=> AppState.userEvents)
 const tickets = computed(()=> AppState.usersTickets)
+const account = computed(()=> AppState.account)
 
-async function getUserTicket(){
+async function getEventsByCreator(){
+  try {
+    const userId = account.value.id
+    await eventService.getEventsByCreator(userId)
+  } catch (error) {
+    logger.log('Unable to get events', error)
+    Pop.toast('Unable to load events', 'error')
+  }
+}
+
+async function getUserEvents(){
     try {
-        await ticketService.getTicketById()
+        const userId = account.value.id
+        const accountID = {accountId: userId}
+        await ticketService.getTicketById(accountID)
     } catch (error) {
         Pop.toast('unable to find ticket', 'error')
         logger.log('unable to find ticket', 'error')
@@ -35,37 +48,34 @@ async function deleteTicket(){
     }
 }
 
-async function getEventsByCreator(){
-    try {
-        await eventService.getEventsByCreator()
-    } catch (error) {
-        Pop.toast('Unable to get events created by you', 'error')
-        logger.log('unable to get user created events', 'error')
-    }
-
-}
-
 onMounted(()=> {
-    getUserTicket()
     getEventsByCreator()
+    getUserEvents()
 })
 </script>
 
 
 <template>
-    <section class="row">
+    <section class="row p-5">
         <Login/>
     </section>
-    <section v-if="events" class="row">
-        <div v-for="event in events" :key="event.id">
-            <EventCard :event="event"/>
-        </div>
-    </section>
-    <section v-if="tickets" class="row">
-        <div v-for="event in tickets" :key="event.id">
-            <EventCard :ticket="event"/>
-        </div>
-    </section>
+    <div v-if="!AppState.account">
+        <span><i class="mdi mdi-loading fs-1"></i> Loading Your Events</span>
+    </div>
+    <div v-else>
+        <section class="row">
+            <h2>Your Events</h2>
+            <div class="col-4 p-1" v-for="event in events" :key="event?.id">
+                <EventCard :event="event"/>
+            </div>
+        </section>
+        <section v-if="tickets" class="row">
+            <h2>Your Tickets</h2>
+            <div class="col-4 p-1" v-for="event in tickets" :key="event?.id">
+                <EventCard :ticket="event"/>
+            </div>
+        </section>
+    </div>
 </template>
 
 

@@ -6,7 +6,8 @@ class TicketService {
 
 
     async getTicketsByUser(userId) {
-        const tickets = await dbContext.Ticket.find({ accountId: userId }).populate('event profile')
+        const tickets = await dbContext.Ticket.find(userId).populate('event profile')
+        if (!tickets) throw new Error('No tickets found')
         return tickets
     }
 

@@ -3,8 +3,9 @@ import { Forbidden } from "../utils/Errors.js"
 
 
 class EventService {
-    async getEventsByCreator(creatorId) {
-        const events = await dbContext.Event.find(creatorId).populate('creator ticketCount')
+    async getEventsByCreator(userId) {
+        const events = await dbContext.Event.find({ creatorId: userId }).populate('creator ticketCount')
+        if (!events) throw new Error('Events not found')
         return events
     }
     async getEvents() {
@@ -35,7 +36,7 @@ class EventService {
         eventUpdate.capacity = eventData.capacity ?? eventUpdate.capacity
         eventUpdate.startDate = eventData.startDate ?? eventUpdate.startDate
         eventUpdate.time = eventData.time ?? eventUpdate.time
-        eventUpdate.isCanceled = eventData.isCanceled ?? eventUpdate.isCanceled
+        // eventUpdate.isCanceled = eventData.isCanceled ?? eventUpdate.isCanceled
         eventUpdate.type = eventData.type ?? eventUpdate.type
         eventUpdate.duration = eventData.duration ?? eventUpdate.duration
         eventUpdate.populate('creator ticketCount')

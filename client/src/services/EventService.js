@@ -5,10 +5,12 @@ import { api } from "./AxiosService.js"
 
 
 class EventService{
-    async getEventsByCreator() {
-        const response = await api.get('api/account/events')
-        logger.log('sending response to get created events', response.data)
-        const userEvents = response.data.map(eventData => new Event(eventData))
+    async getEventsByCreator(userId) {
+        const response = await api.get('api/events')
+        logger.log('sending response to get events', response.data)
+        const meets = response.data.map(eventData => new Event(eventData))
+        AppState.events = meets
+        const userEvents = meets.filter(meet => meet.creatorId == userId)
         AppState.userEvents = userEvents
     }
     async setActiveEvent(eventId) {
@@ -17,7 +19,6 @@ class EventService{
         const eventActive = new Event(response.data)
         AppState.activeEvent = eventActive
     }
-
     async getEvents(){
         const response = await api.get('api/events')
         logger.log('sending response to get events', response.data)
@@ -34,8 +35,9 @@ class EventService{
 
     async updateEvent(eventId, eventData){
         const response = await api.put(`api/events/${eventId}`, eventData)
-        const meet = new Event(response.data)
-        AppState.events.find(event => event.id == meet.id)
+        const eventUpdate = new Event(response.data)
+        const eventIndex = AppState.events.findIndex(eventId)
+        AppState.events.splice(eventIndex, 1, eventUpdate)
     }
 
     async cancelEvent(eventId){

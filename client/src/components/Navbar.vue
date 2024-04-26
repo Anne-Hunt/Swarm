@@ -18,11 +18,11 @@ function toggleTheme() {
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-sm navbar-dark bg-dark px-3">
+  <nav class="navbar navbar-expand-sm navbar-dark bg-black px-3">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <div class="d-flex flex-column text-bottom">
-        <div class="rounded-pill border border-5 border-success">
-          <div class="rounded-pill border border-light">
+        <div class="rounded-pill border border-5 border-success mt-2">
+          <div class="rounded-pill border border-light bg-black">
             <i class="mdi mdi-bee fs-1"></i>
           </div>
         </div>
