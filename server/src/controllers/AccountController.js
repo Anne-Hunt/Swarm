@@ -6,7 +6,7 @@ import { eventService } from '../services/EventService.js'
 
 export class AccountController extends BaseController {
   constructor() {
-    super('account')
+    super('api/account')
     this.router
       .use(Auth0Provider.getAuthorizedUserInfo)
       .get('/tickets', this.getTicketsByUser)
@@ -37,8 +37,7 @@ export class AccountController extends BaseController {
   async getTicketsByUser(request, response, next) {
     try {
       const userId = request.userInfo.id
-      const account = { accountId: userId }
-      const tickets = await ticketService.getTicketsByUser(account)
+      const tickets = await ticketService.getTicketsByUser(userId)
       response.send(tickets)
     } catch (error) {
       next(error)

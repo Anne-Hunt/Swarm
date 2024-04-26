@@ -7,11 +7,20 @@ export class TicketController extends BaseController {
     constructor() {
         super('api/tickets')
         this.router
+            .get('', this.getTickets)
             .use(Auth0Provider.getAuthorizedUserInfo)
             .post('', this.createTicket)
             .delete('/:ticketId', this.deleteTicket)
     }
 
+    async getTickets(request, response, next) {
+        try {
+            const tickets = await ticketService.getAllTickets()
+            response.send(tickets)
+        } catch (error) {
+            next(error)
+        }
+    }
     async createTicket(request, response, next) {
         try {
             const ticketData = request.body

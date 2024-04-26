@@ -4,10 +4,13 @@ import { Forbidden } from "../utils/Errors.js"
 
 class TicketService {
 
+    async getAllTickets() {
+        const tickets = await dbContext.Ticket.find().populate('event profile')
+        return tickets
+    }
 
     async getTicketsByUser(userId) {
-        const tickets = await dbContext.Ticket.find(userId).populate('event profile')
-        if (!tickets) throw new Error('No tickets found')
+        const tickets = await dbContext.Ticket.find({ accountId: userId }).populate('event profile')
         return tickets
     }
 

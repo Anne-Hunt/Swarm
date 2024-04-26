@@ -28,9 +28,8 @@ async function getEventsByCreator(){
 
 async function getUserEvents(){
     try {
-        const userId = account.value.id
-        const accountID = {accountId: userId}
-        await ticketService.getTicketById(accountID)
+        // const userId = account.value.id
+        await ticketService.getTicketById()
     } catch (error) {
         Pop.toast('unable to find ticket', 'error')
         logger.log('unable to find ticket', 'error')
