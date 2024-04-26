@@ -55,7 +55,7 @@ onMounted(()=>{
   <div class="bgimage">
     <div class="row justify-content-start align-items-center">
       <div class="col-md-7 col-12 text-dark p-4 fontfix">
-        <div class="p-5">
+        <div class="p-5 text-light">
           <h2><strong>Plan, Schedule, and Execute Events</strong></h2>
           <p><strong>Never spend another night alone. Even your ex-girlfriend will want to go to your events. Let everyone know where to go, when, and for what, and they'll show up - all with Swarm.</strong></p>
         </div>
@@ -118,7 +118,7 @@ i {
 
 .bgimage{
   background-color: black;
-  background-image: url('https://images.unsplash.com/photo-1496024840928-4c417adf211d?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+  background-image: url('https://images.unsplash.com/photo-1569430251091-da3b108cff29?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGJvbmZpcmV8ZW58MHx8MHx8fDA%3D');
   background-position: center;
   height: 50dvh;
   object-fit: cover;
