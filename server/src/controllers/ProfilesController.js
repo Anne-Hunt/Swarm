@@ -1,10 +1,12 @@
 import { profileService } from '../services/ProfileService.js'
+import { ticketService } from '../services/TicketService.js'
 import BaseController from '../utils/BaseController'
 
 export class ProfilesController extends BaseController {
   constructor() {
-    super('api/profiles')
+    super('api/profile')
     this.router
+      .get('/tickets', this.getTicketsByUser)
       .get('', this.getProfiles)
       .get('/:id', this.getProfile)
   }
@@ -26,6 +28,17 @@ export class ProfilesController extends BaseController {
       next(error)
     }
   }
+
+
+  // async getTicketsByUser(request, response, next) {
+  //   try {
+  //     const userId = request.userInfo.id
+  //     const tickets = await ticketService.getTicketsByUser(userId)
+  //     response.send(tickets)
+  //   } catch (error) {
+  //     next(error)
+  //   }
+  // }
 
   // async getEventsByCreator(creatorId) {
   //     const events = await dbContext.Event

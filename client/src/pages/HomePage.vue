@@ -3,13 +3,39 @@ import ModalComp from '../components/ModalComp.vue'
 import EventForm from '../components/EventForm.vue';
 import EventCard from '../components/EventCard.vue';
 import { AppState } from '../AppState.js';
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { logger } from '../utils/Logger.js';
 import Pop from '../utils/Pop.js';
 import { eventService } from '../services/EventService.js';
 import { Event } from '../models/Event.js';
 
-const events = computed(()=> AppState.events)
+const events = computed(()=> {
+  if(filterTo.value == 'all') return AppState.events
+  return AppState.events.filter(event => event.type == filterTo.value)})
+
+const filterTo = ref('all')
+const filters = [
+  {
+    name: 'digital',
+    icon: 'mdi mdi-television text-light'
+  },
+  {
+    name: 'convention',
+    icon: 'mdi mdi-earth text-primary'
+  },
+  {
+    name: 'concerts',
+    icon: 'mdi mdi-music text-secondary'
+  },
+  {
+    name: 'sports',
+    icon: 'mdi mdi-soccer text-warning'
+  },
+  {
+    name: 'meetings',
+    icon: 'mdi mdi-group text-danger'
+  }
+]
 
 async function getEvents(){
   try {
@@ -39,8 +65,8 @@ onMounted(()=>{
 <!-- Section for Create and Search -->
   <section class="row p-5 justify-content-evenly">
     <h3 class="p-2">What Swarm Does</h3>
-    <div class="col-4">
-      <div class="row bg-primary rounded p-2 modalOpener">
+    <div class="col-5">
+      <div class="row bg-primary rounded p-2 modalOpener p-3">
         <div class="col-2 text-center text-warning">
           <i class="mdi mdi-magnify"></i>
         </div>
@@ -50,15 +76,15 @@ onMounted(()=>{
         </div>
       </div>
     </div>
-    <div class="col-4">
-      <div class="row bg-primary rounded p-2 modalOpener" role="button" data-bs-toggle="modal"
+    <div class="col-5">
+      <div class="row bg-primary rounded p-2 modalOpener p-3" role="button" data-bs-toggle="modal"
     data-bs-target="#modalId">
-        <div class="col-2 text-center ">          
+        <div class="col-2 text-center">          
           <i class="mdi mdi-plus-circle text-warning"></i>
         </div>
         <div class="col-10 p-1">
           <h4>Start an event and make everyone attend!</h4>
-          <p>See what everyone else is doing and then create an event of your own. Guaranteed to be exactly what you make it.</p>
+          <p>See what everyone else is doing and then create an event of your own. </p>
         </div>
       </div>
     </div>
@@ -66,25 +92,10 @@ onMounted(()=>{
 <!-- Section for Category Filters-->
   <section class="row p-3 justify-content-evenly">
     <h3 class="p-3">Explore by Category</h3>
-    <div class="col-2 bg-success rounded text-center p-2">
-      <i class="mdi mdi-earth text-primary"></i>
-      <h4>Conventions</h4>
-    </div>
-    <div class="col-2 bg-success rounded text-center p-2">
-      <i class="mdi mdi-music text-secondary"></i>
-      <h4>Concerts</h4>
-    </div>
-    <div class="col-2 bg-success rounded text-center p-2">
-      <i class="mdi mdi-group text-danger"></i>
-      <h4>Meetings</h4>
-    </div>
-    <div class="col-2 bg-success rounded text-center p-2">
-      <i class="mdi mdi-soccer text-warning"></i>
-      <h4>Sports</h4>
-    </div>
-    <div class="col-2 bg-success rounded text-center p-2">
-      <i class="mdi mdi-television text-light"></i>
-      <h4>Digital</h4>
+
+    <div v-for="filterObj in filters" :key="filterObj.name" class="col-2 bg-success rounded text-center p-2" role="button" @click="filterTo = filterObj.name">
+      <i :class="filterObj.icon"></i>
+      <h4>{{filterObj.name}}</h4>
     </div>
   </section>
 

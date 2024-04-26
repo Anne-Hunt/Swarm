@@ -87,7 +87,6 @@ async function createEvent(){
             <option value="convention">Convention</option>
             <option value="sport">Sport</option>
             <option value="digital">Digital</option>
-            <option value="meeting">Meeting</option>
           </select>
         </div>
         <div class="row">

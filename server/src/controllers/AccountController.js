@@ -6,12 +6,12 @@ import { eventService } from '../services/EventService.js'
 
 export class AccountController extends BaseController {
   constructor() {
-    super('api/account')
+    super('/account')
     this.router
       .use(Auth0Provider.getAuthorizedUserInfo)
-      .get('/tickets', this.getTicketsByUser)
       .get('', this.getUserAccount)
       .put('', this.editUserAccount)
+    // .get('/tickets', this.getTicketsByUser)
   }
 
   async getUserAccount(req, res, next) {
@@ -33,7 +33,6 @@ export class AccountController extends BaseController {
       next(error)
     }
   }
-
   async getTicketsByUser(request, response, next) {
     try {
       const userId = request.userInfo.id
