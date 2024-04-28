@@ -61,7 +61,6 @@ class EventService {
         return `event ${eventId} deleted`
     }
 
-
 }
 
 export const eventService = new EventService()

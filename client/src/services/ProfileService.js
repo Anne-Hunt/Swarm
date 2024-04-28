@@ -6,7 +6,7 @@ import { api } from './AxiosService'
 
 class ProfileService {
   async getProfiles(eventId) {
-      const response = await api.get(`api/event/${eventId}/tickets`)
+      const response = await api.get(`api/events/${eventId}/tickets`)
       logger.log('getting profiles for tickets', response.data)
       const profiles = response.data.profiles.map(profileData => new Profile(profileData))
       AppState.profiles = profiles

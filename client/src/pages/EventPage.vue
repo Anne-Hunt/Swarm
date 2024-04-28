@@ -14,6 +14,8 @@ import { Profile } from '../models/Profile.js';
 import { Ticket } from '../models/Ticket.js';
 import { Account } from '../models/Account.js';
 import TicketHoldersCard from '../components/TicketHoldersCard.vue';
+import { onAuthLoaded } from '@bcwdev/auth0provider-client';
+import { profileService } from '../services/ProfileService.js';
 // import EventDetailsCard from '../components/EventDetailsCard.vue';
 
 const activeEvent = computed(()=> AppState.activeEvent)
@@ -22,7 +24,6 @@ const profiles = computed(()=> AppState.profiles)
 const tickets = computed(()=> AppState.tickets)
 const comments = computed(()=>AppState.comments)
 const userProfile = computed(()=> AppState.account)
-const usersTickets = computed(()=> AppState.usersTickets)
 const userTicket = computed(()=> AppState.usersTickets.find(userTicket => userTicket.eventId == activeEvent.value.id))
 const attending = computed(()=> AppState.usersTickets.find(usersTicket => usersTicket.id == userTicket.value.id))
 const soldOutText = `SOLD OUT`
@@ -51,16 +52,6 @@ async function getComments(){
     }
 }
 
-// async function getProfiles(){
-//     try {
-//         const eventId = route.params.eventId
-//         await profileService.getProfiles(eventId)
-//     } catch (error) {
-//         Pop.toast('Unable to load profiles', 'error')
-//         logger.log('Unable to load profiles', error)
-//     }
-// }
-
 async function createTicket(){
     try {
         const ticketData = {eventId: route.params.eventId}
@@ -73,8 +64,8 @@ async function createTicket(){
 
 async function getTickets(){
     try {
-        const ticketData = route.params.eventId
-        await ticketService.getTickets(ticketData)
+        const eventId = route.params.eventId
+        await ticketService.getTickets(eventId)
     } catch (error) {
         // Pop.toast('Unable to get tickets', 'error')
         logger.log('Unable to get tickets', error)
@@ -103,7 +94,7 @@ async function deleteTicket(){
 
     async function cancelEvent(){
         try {
-            const confirmation = await Pop.confirm('Do you wan to cancel your event?')
+            const confirmation = await Pop.confirm('Do you want to cancel your event?')
             if(!confirmation) return
             const eventId = route.params.eventId
             await eventService.cancelEvent(eventId)
@@ -116,8 +107,10 @@ async function deleteTicket(){
 onMounted(()=>{
     getActiveEvent()
     getComments()
-    // getProfiles() 
     getTickets()
+})
+
+onAuthLoaded(()=>{
     getUserTicket()
 })
 </script>
