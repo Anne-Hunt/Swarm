@@ -10,7 +10,8 @@ import { Comment } from '../models/Comment.js';
 import { eventService } from '../services/EventService.js';
 import Login from '../components/Login.vue';
 import { AppState } from '../AppState.js';
-import EventCard from '../components/EventCard.vue';
+import EventCard from '../components/EventCreatorProfileCard.vue';
+import EventTicketProfileCard from '../components/EventTicketProfileCard.vue';
 
 const events = computed(()=> AppState.userEvents)
 const tickets = computed(()=> AppState.usersTickets)
@@ -26,16 +27,6 @@ async function getEventsByCreator(){
   }
 }
 
-async function getUserEvents(){
-    try {
-        // const userId = account.value.id
-        await ticketService.getTicketById()
-    } catch (error) {
-        Pop.toast('unable to find ticket', 'error')
-        logger.log('unable to find ticket', 'error')
-    }
-}
-
 async function deleteTicket(){
     try {
         Pop.confirm('Do you want to cancel your ticket?')
@@ -47,11 +38,21 @@ async function deleteTicket(){
     }
 }
 
+async function getUserTickets(){
+    try {
+        const userId = account.value.id
+        await ticketService.getUserTickets(userId)
+    } catch (error) {
+        Pop.toast('unable to get tickets', 'error')
+        logger.log('unable to get tickets', error)
+    }
+}
+
 // FIXME go and get the user's tickets here
 
 onMounted(()=> {
     getEventsByCreator()
-    getUserEvents()
+    getUserTickets()
 })
 </script>
 
@@ -65,15 +66,26 @@ onMounted(()=> {
     </div>
     <div v-else>
         <section class="row">
-            <h2>Your Events</h2>
-            <div class="col-4 p-1" v-for="event in events" :key="event?.id">
-                <EventCard :event="event"/>
+            <div v-if="events.length > 0" >
+                <h2>Your Events</h2>
+                <div class="col-4 p-1" v-for="event in events" :key="event?.id">
+                    <EventCard :event="event"/>
+            </div>
+            <div else>
+                <h2>Add Events and Invite Friends</h2>
+                <EventForm/>
+            </div>
             </div>
         </section>
-        <section v-if="tickets" class="row">
-            <h2>Your Tickets</h2>
-            <div class="col-4 p-1" v-for="event in tickets" :key="event?.id">
-                <EventCard :ticket="event"/>
+        <section class="row">
+            <div v-if="tickets.length > 0" >
+                <h2>Your Tickets</h2>
+                <div class="col-6 col-md-4 p-1" v-for="ticket in tickets" :key="ticket?.id">
+                    <EventCard :ticket="ticket"/>
+                </div>
+            </div>
+            <div v-else>
+                <a href="/#"><h2>Get Tickets to Events</h2></a>
             </div>
         </section>
     </div>

@@ -37,11 +37,10 @@ function resetForm(){
 
 <template>
 <form @submit.prevent="createComment">
-    <div class="form-floating">
-        <label class="form-label" for="commentBody">Leave a Comment</label>
-        <input class="form-control" type="text" name="body" id="commentBody" v-model="commentFormData.body">
-    </div>
-    <button type="submit" class="btn btn-primary small rounded-pill"><small>SUBMIT</small></button>
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Leave a Comment" aria-label="Comment input and button" aria-describedby="button-addon1" v-model="commentFormData.body">
+        <button class="btn btn-outline-dark" type="submit" id="button-addon1">Comment</button>
+</div>
 </form>
 </template>
 

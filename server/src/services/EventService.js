@@ -29,9 +29,7 @@ class EventService {
         const eventUpdate = await dbContext.Event.findById(eventId)
         if (!eventUpdate) throw new Error("ANGRY")
         if (eventUpdate.creatorId != userId) throw new Forbidden("cannot update event")
-        // FIXME check to see if the event is cancelled, and throw an error if it is!
-
-
+        if (eventUpdate.isCanceled === true) throw new Error('Cannot edit canceled event')
         eventUpdate.name = eventData.name ?? eventUpdate.name
         eventUpdate.description = eventData.description ?? eventUpdate.description
         eventUpdate.coverImg = eventData.coverImg ?? eventUpdate.coverImg
@@ -39,7 +37,6 @@ class EventService {
         eventUpdate.capacity = eventData.capacity ?? eventUpdate.capacity
         eventUpdate.startDate = eventData.startDate ?? eventUpdate.startDate
         eventUpdate.time = eventData.time ?? eventUpdate.time
-        // eventUpdate.isCanceled = eventData.isCanceled ?? eventUpdate.isCanceled
         eventUpdate.type = eventData.type ?? eventUpdate.type
         eventUpdate.duration = eventData.duration ?? eventUpdate.duration
         eventUpdate.populate('creator ticketCount')

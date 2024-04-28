@@ -54,6 +54,8 @@ async function createEvent(){
     Pop.toast('Unable to create event', 'error')
   }
 }
+
+
 </script>
 
 
@@ -89,6 +91,7 @@ async function createEvent(){
             <option value="convention">Convention</option>
             <option value="sport">Sport</option>
             <option value="digital">Digital</option>
+            <option value="meeting">Meeting</option>
           </select>
         </div>
         <div class="row">
@@ -117,8 +120,8 @@ async function createEvent(){
         </div>
       </div>
       <div class="form-floating mb-3">
-        <input v-model="eventData.description" type="textarea" class="form-control description 
-        text-top" name="description"
+        <textarea v-model="eventData.description" type="text" class="form-control description 
+        text-top text-wrap" name="description"
           id="eventDescription" placeholder="" minlength="15" maxlength="1000" required />
         <label for="eventDescription">Description</label>
       </div>

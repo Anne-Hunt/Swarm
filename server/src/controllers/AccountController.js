@@ -9,9 +9,9 @@ export class AccountController extends BaseController {
     super('/account')
     this.router
       .use(Auth0Provider.getAuthorizedUserInfo)
+      .get('/tickets', this.getTicketsByUser)
       .get('', this.getUserAccount)
       .put('', this.editUserAccount)
-      .get('/tickets', this.getTicketsByUser)
   }
 
   async getUserAccount(req, res, next) {

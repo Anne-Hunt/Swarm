@@ -1,6 +1,5 @@
 import { Profile } from "./Profile.js"
 
-
 export class Event{
     constructor(data){
         this.id = data.id
@@ -10,7 +9,7 @@ export class Event{
         this.coverImg = data.coverImg
         this.location = data.location
         this.capacity = data.capacity
-        this.startDate = data.startDate
+        this.startDate = new Date(data.startDate).toLocaleDateString()
         this.time = data.time
         this.isCanceled = data.isCanceled
         this.type = data.type
@@ -18,4 +17,9 @@ export class Event{
         this.creator = data.creator ? new Profile(data.creator) : null
         this.ticketCount = data.ticketCount
     }
+
+    get DateFixed(){
+        const dateStart = new Date(this.startDate).toDateString()
+        return dateStart
+}
 }

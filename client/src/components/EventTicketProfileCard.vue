@@ -12,47 +12,6 @@ const eventProps = defineProps({event: {type: Event, required: true}, ticket: Ti
 const userProfile = computed(()=> AppState.account)
 const eventimage = computed(()=> `url(${eventProps.event.coverImg})`)
 
-// const categoryIcon = computed(()=> {
-//     if(event.type == categoryType.type )
-//   return categoryType.icon)
-
-// const icons = computed(()=>{
-//     switch(eventProps.event.type){
-//         case 'digital':
-//             return `${mdi mdi-television}`
-//         case 'convention':
-//             return `${mdi mdi-earth}`
-//         case 'concert':
-//             return `${mdi mdi-music}`
-//         case 'sport':
-//             return `${mdi mdi-soccer}`
-//         case 'meeting':
-//             return `${mdi mdi-group}`
-//     }
-// })
-
-// const categoryType = [
-//   {
-//     type: 'digital',
-//     icon: 'mdi mdi-television text-light'
-//   },
-//   {
-//     type: 'convention',
-//     icon: 'mdi mdi-earth text-primary'
-//   },
-//   {
-//     type: 'concert',
-//     icon: 'mdi mdi-music text-secondary'
-//   },
-//   {
-//     type: 'sport',
-//     icon: 'mdi mdi-soccer text-warning'
-//   },
-//   {
-//     type: 'meeting',
-//     icon: 'mdi mdi-group text-danger'
-//   }
-// ]
 
 const colorType = computed(()=>{
     switch(eventProps.event.type){
@@ -69,16 +28,6 @@ const colorType = computed(()=>{
     }
 })
 
-async function createTicket(){
-    try {
-        const ticketData = {eventId: eventProps.event.id}
-        await ticketService.createTicket(ticketData)
-    } catch (error) {
-        Pop.toast('Unable to load tickets', 'error')
-        logger.log('Unable to load tickets', error)
-    }
-}
-
 async function deleteTicket(){
     try {
         await Pop.confirm('Do you want to cancel your ticket?')
@@ -90,17 +39,6 @@ async function deleteTicket(){
     }
 }
 
-    async function cancelEvent(){
-        try {
-            const confirmation = await Pop.confirm('Do you wan to cancel your event?')
-            if(!confirmation) return
-            const eventId = eventProps.event.id
-            await eventService.cancelEvent(eventId)
-        } catch (error) {
-            Pop.toast('unable to cancel', 'error')
-        logger.log('Unable to cancel', error)
-        }
-    }
 </script>
 
 
@@ -113,17 +51,15 @@ async function deleteTicket(){
                 <div class="card-body">
                     <div class="row">
                         <div class="card-title col-10"><strong>{{ event.name }}</strong></div>
-                        <div class="text-end col-2">
+                        <div v-if="ticket.profile.id == userProfile?.id" class="text-end col-2">
                                 <span class="dropdown">
                                     <span class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="mdi mdi-dots-horizontal"></i></span>
                                     <ul class="dropdown-menu">
-                                        <li><button class="dropdown-item" @click="$router.push(`/events/${event.id}`)">See Event Details</button></li>
-                                        <li  v-if="ticket.accountId == userProfile?.id"><button class="dropdown-item"  @click="deleteTicket">Cancel Ticket</button></li>
-                                        <li v-else-if="event.creatorId == userProfile?.id" ><button class="dropdown-item"  @click="cancelEvent">Cancel Event</button></li>
-                                        <li v-else-if="userProfile?.id"><button class="dropdown-item"  @click="createTicket">Get Ticket</button></li>
+                                        <li><button class="dropdown-item"  @click="deleteTicket">Cancel Ticket</button></li>
                                     </ul>
                                 </span>
                             </div>
+                        <div v-else></div>
                     </div>
                     <div class="card-subtitle"><span>Hosted by {{ event.creator.name }}</span></div>
                     <div class="card-description">

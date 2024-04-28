@@ -5,6 +5,5 @@ export class Profile {
     this.picture = data?.picture
     this.banned = data.banned
     this.bannedBy = data.bannedBy
-    // TODO add additional properties if needed
   }
 }

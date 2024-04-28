@@ -41,8 +41,7 @@ class EventService{
     }
 
     async cancelEvent(eventId){
-        // FIXME this should be a delete request
-        const response = await api.put(`api/events/${eventId}`)
+        const response = await api.delete(`api/events/${eventId}`)
         logger.log('sending event to cancel', response.data)
         const eventToCancel = new Event(response.data)
         const eventIndex = AppState.events.findIndex(eventId) 

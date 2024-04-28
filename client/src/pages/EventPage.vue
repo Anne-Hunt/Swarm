@@ -73,8 +73,7 @@ async function createTicket(){
 
 async function getTickets(){
     try {
-        // FIXME do not create an object, we just need the id for the network request
-        const ticketData = {eventId: route.params.eventId}
+        const ticketData = route.params.eventId
         await ticketService.getTickets(ticketData)
     } catch (error) {
         // Pop.toast('Unable to get tickets', 'error')
@@ -84,7 +83,7 @@ async function getTickets(){
 
 async function getUserTicket(){
     try {
-        await ticketService.getTicketById()
+        await ticketService.getUserTickets()
     } catch (error) {
         // Pop.toast('unable to find ticket', 'error')
         logger.log('unable to find ticket', 'error')
@@ -104,9 +103,8 @@ async function deleteTicket(){
 
     async function cancelEvent(){
         try {
-            // FIXME make sure you save the PopConfirm value to a variable
-            await Pop.confirm('Do you wan to cancel your event?')
-            if(!confirm) return
+            const confirmation = await Pop.confirm('Do you wan to cancel your event?')
+            if(!confirmation) return
             const eventId = route.params.eventId
             await eventService.cancelEvent(eventId)
         } catch (error) {

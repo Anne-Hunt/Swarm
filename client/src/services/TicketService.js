@@ -13,17 +13,8 @@ class TicketService{
     }
 
     async getUserTickets(userId) {
-        // FIXME check your request URL here, you should send the request to account/tickets
-        const response = await api.get('api/tickets')
+        const response = await api.get('account/tickets', userId)
         logger.log('getting Tickets in service', response.data)
-        const tickets = response.data.map(ticketData => new Ticket(ticketData))
-        // const userTickets = tickets.filter(ticket => ticket.accountId == userId)
-        AppState.usersTickets = tickets
-    }
-
-    async getTicketById(){
-        const response = await api.get('api/account/tickets')
-        logger.log('getting tickets for user', response.data)
         const tickets = response.data.map(ticketData => new Ticket(ticketData))
         AppState.usersTickets = tickets
     }
@@ -39,6 +30,13 @@ class TicketService{
         logger.log('getting ticket deleted', response.data)
         const ticketIndex = AppState.tickets.findIndex(ticketId)
         AppState.tickets.splice(ticketIndex, 1)
+    }
+
+    async getAllTickets(){
+        const response = await api.get('api/tickets')
+        logger.log('getting all tickets client side', response.data)
+        const tickets = response.data.map(ticketData => new Ticket(ticketData))
+        AppState.tickets = tickets
     }
 
 }
