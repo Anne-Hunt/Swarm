@@ -8,9 +8,9 @@ import Pop from '../utils/Pop.js';
 import { logger } from '../utils/Logger.js';
 import { Ticket } from '../models/Ticket.js';
 
-const eventProps = defineProps({event: {type: Event, required: true}, ticket: Ticket})
+const eventProps = defineProps({event: {type: Event, required: true}})
 const userProfile = computed(()=> AppState.account)
-const eventimage = computed(()=> `url(${eventProps.event.coverImg})`)
+const eventimage = computed(()=> `url(${event.coverImg})`)
 
 // const categoryIcon = computed(()=> {
 //     if(event.type == categoryType.type )
@@ -69,26 +69,7 @@ const colorType = computed(()=>{
     }
 })
 
-async function createTicket(){
-    try {
-        const ticketData = {eventId: eventProps.event.id}
-        await ticketService.createTicket(ticketData)
-    } catch (error) {
-        Pop.toast('Unable to load tickets', 'error')
-        logger.log('Unable to load tickets', error)
-    }
-}
 
-async function deleteTicket(){
-    try {
-        await Pop.confirm('Do you want to cancel your ticket?')
-        if (!confirm) return
-        await ticketService.deleteTicket()
-    } catch (error) {
-        Pop.toast('unable to delete ticket', 'error')
-        logger.log('Unable to delete ticket', error)
-    }
-}
 
     async function cancelEvent(){
         try {
@@ -114,15 +95,6 @@ async function deleteTicket(){
                     <div class="row">
                         <div class="card-title col-10"><strong>{{ event.name }}</strong></div>
                         <div class="text-end col-2">
-                                <span class="dropdown">
-                                    <span class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="mdi mdi-dots-horizontal"></i></span>
-                                    <ul class="dropdown-menu">
-                                        <li><button class="dropdown-item" @click="$router.push(`/events/${event.id}`)">See Event Details</button></li>
-                                        <li  v-if="ticket.accountId == userProfile?.id"><button class="dropdown-item"  @click="deleteTicket">Cancel Ticket</button></li>
-                                        <li v-else-if="event.creatorId == userProfile?.id" ><button class="dropdown-item"  @click="cancelEvent">Cancel Event</button></li>
-                                        <li v-else-if="userProfile?.id"><button class="dropdown-item"  @click="createTicket">Get Ticket</button></li>
-                                    </ul>
-                                </span>
                             </div>
                     </div>
                     <div class="card-subtitle"><span>Hosted by {{ event.creator.name }}</span></div>

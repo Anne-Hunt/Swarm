@@ -12,8 +12,8 @@ class TicketService{
         AppState.tickets = tickets
     }
 
-    async getUserTickets(userId) {
-        const response = await api.get('account/tickets', userId)
+    async getUserTickets() {
+        const response = await api.get('account/tickets')
         logger.log('getting Tickets in service', response.data)
         const tickets = response.data.map(ticketData => new Ticket(ticketData))
         AppState.usersTickets = tickets

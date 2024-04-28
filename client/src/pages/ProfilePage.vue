@@ -10,8 +10,8 @@ import { Comment } from '../models/Comment.js';
 import { eventService } from '../services/EventService.js';
 import Login from '../components/Login.vue';
 import { AppState } from '../AppState.js';
-import EventCard from '../components/EventCreatorProfileCard.vue';
-import EventTicketProfileCard from '../components/EventTicketProfileCard.vue';
+import EventCard from '../components/EventCard.vue';
+import { onAuthLoaded } from '@bcwdev/auth0provider-client';
 
 const events = computed(()=> AppState.userEvents)
 const tickets = computed(()=> AppState.usersTickets)
@@ -40,17 +40,16 @@ async function deleteTicket(){
 
 async function getUserTickets(){
     try {
-        const userId = account.value.id
-        await ticketService.getUserTickets(userId)
+        await ticketService.getUserTickets()
     } catch (error) {
         Pop.toast('unable to get tickets', 'error')
         logger.log('unable to get tickets', error)
     }
 }
+onMounted(()=>{
+})
 
-// FIXME go and get the user's tickets here
-
-onMounted(()=> {
+onAuthLoaded(()=>{
     getEventsByCreator()
     getUserTickets()
 })
@@ -68,7 +67,7 @@ onMounted(()=> {
         <section class="row">
             <div v-if="events.length > 0" >
                 <h2>Your Events</h2>
-                <div class="col-4 p-1" v-for="event in events" :key="event?.id">
+                <div class="col-4 p-1" v-for="event in events" :key="event.id">
                     <EventCard :event="event"/>
             </div>
             <div else>
@@ -80,7 +79,7 @@ onMounted(()=> {
         <section class="row">
             <div v-if="tickets.length > 0" >
                 <h2>Your Tickets</h2>
-                <div class="col-6 col-md-4 p-1" v-for="ticket in tickets" :key="ticket?.id">
+                <div class="col-6 col-md-4 p-1" v-for="ticket in tickets" :key="ticket.id">
                     <EventCard :ticket="ticket"/>
                 </div>
             </div>

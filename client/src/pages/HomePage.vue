@@ -74,9 +74,9 @@ async function getAllTickets(){
 onMounted(()=>{
   getEvents()
   getAllTickets()
-  })
+})
 
-  onAuthLoaded(()=>{
+onAuthLoaded(()=>{
     getUserTickets()
   })
 </script>
@@ -97,7 +97,7 @@ onMounted(()=>{
     <h3 class="p-2">What Swarm Does</h3>
     <div class="col-md-5 col-12">
       <div class="row bg-primary rounded p-2 modalOpener p-3">
-        <div class="col-2 text-center text-warning">
+        <div class="col-2 text-center text-warning fs-1">
           <i class="mdi mdi-magnify"></i>
         </div>
         <div class="col-10 p-1">
@@ -110,7 +110,7 @@ onMounted(()=>{
       <div class="row bg-primary rounded p-2 modalOpener p-3" role="button" data-bs-toggle="modal"
     data-bs-target="#modalId">
         <div class="col-2 text-center">          
-          <i class="mdi mdi-plus-circle text-warning"></i>
+          <i class="mdi mdi-plus-circle text-warning fs-1"></i>
         </div>
         <div class="col-10 p-1">
           <h4>Start an event and make everyone attend!</h4>
@@ -124,7 +124,7 @@ onMounted(()=>{
     <h3 class="p-3">Explore by Category</h3>
     <div class="col-md-2 col-6 mb-2" role="button" @click="filterTo = 'all'">
       <div class="bg-primary rounded text-center p-2">
-        <h4>{{ filterTo }}</h4>
+        <h4>All</h4>
         <i class="mdi mdi-earth text-dark fs-1"></i>
       </div>
       </div>
