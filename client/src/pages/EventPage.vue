@@ -15,13 +15,12 @@ import { Ticket } from '../models/Ticket.js';
 import { Account } from '../models/Account.js';
 import TicketHoldersCard from '../components/TicketHoldersCard.vue';
 import { onAuthLoaded } from '@bcwdev/auth0provider-client';
-import { profileService } from '../services/ProfileService.js';
+// import { profileService } from '../services/ProfileService.js';
 // import EventDetailsCard from '../components/EventDetailsCard.vue';
 
 const activeEvent = computed(()=> AppState.activeEvent)
 const eventImg = computed(()=> `url(${AppState.activeEvent?.coverImg})`)
-const profiles = computed(()=> AppState.profiles)
-const tickets = computed(()=> AppState.tickets)
+const tickets = computed(()=> (AppState.tickets.filter(ticket => AppState.activeEvent.id == ticket.eventId)))
 const comments = computed(()=>AppState.comments)
 const userProfile = computed(()=> AppState.account)
 const userTicket = computed(()=> AppState.usersTickets.find(userTicket => userTicket.eventId == activeEvent.value.id))
@@ -62,15 +61,16 @@ async function createTicket(){
     }
 }
 
-async function getTickets(){
-    try {
-        const eventId = route.params.eventId
-        await ticketService.getTickets(eventId)
-    } catch (error) {
-        // Pop.toast('Unable to get tickets', 'error')
-        logger.log('Unable to get tickets', error)
-    }
-}
+// async function getTickets(){
+//     try {
+//         const eventId = route.params.eventId
+//         await ticketService.getTickets(eventId)
+//         this.getProfiles()
+//     } catch (error) {
+//         // Pop.toast('Unable to get tickets', 'error')
+//         logger.log('Unable to get tickets', error)
+//     }
+// }
 
 async function getUserTicket(){
     try {
@@ -104,32 +104,44 @@ async function deleteTicket(){
         }
     }
 
+    async function getAllTickets(){
+  try {
+      if (AppState.account != null) {
+      await ticketService.getAllTickets()}
+      else return
+  } catch (error) {
+      Pop.toast('unable to get all tickets', 'error')
+        logger.log('unable to get all tickets', error)
+  }
+}
+
 onMounted(()=>{
     getActiveEvent()
     getComments()
-    getTickets()
+    // getTickets()
 })
 
 onAuthLoaded(()=>{
     getUserTicket()
+    getAllTickets()
 })
 </script>
 
 
 <template>
-    <section class="row justify-content-center">
+    <section class="row justify-content-center mb-2">
         <div v-if="activeEvent" class="col-12 col-md-8">
             <section class="row bgimage rounded">
                 <span v-if="activeEvent.isCanceled == true" class=" text-light"><h3><strong>CANCELED</strong></h3></span>
                 <span v-else class="text-light fontfix"><h3><strong>{{ soldOut }}</strong></h3></span>
             </section>
-            <section class="row">
-                <div class="col-8">
-                    <div class="row">
-                        <div class="col-8">
-                            <h2>{{ activeEvent.name }} </h2>
-                            <span class="rounded-pill bg-primary">{{ activeEvent.type }}</span>
-                        </div>
+            <section class="row mb-2">
+                <div class="col-8 p-2">
+                    <div class="row justify-content-between mt-2">
+                            <div class="col-9"><h2>{{ activeEvent.name }}</h2></div>
+                            <div class="col-3 text-center">
+                                <span class="rounded-pill bg-primary p-1">{{ activeEvent.type }}</span>
+                            </div>
                         <div v-if="activeEvent.creatorId == userProfile?.id" class="col-4">
                             <div class="dropdown">
                                 <div class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="mdi mdi-dots-horizontal fs-1"></i></div>
@@ -141,15 +153,12 @@ onAuthLoaded(()=>{
                     </div>
                     <div v-if="activeEvent" class="row">
                         <div class="col-12">
-                            <p> {{ activeEvent.description }}
-                            </p>
-                            <h4>Date and Time</h4>
-                            <span>{{ activeEvent.startDate }} at {{ activeEvent.time }}</span>
-                            <h4>Location</h4>
-                            <span>{{ activeEvent.location }}</span>
+                            <p> {{ activeEvent.description }}</p>
+                            <p><span class="fs-5 pe-2">Date & Time</span>{{ activeEvent.startDate }} at{{ activeEvent.time }}</p>
+                            <p><span class="fs-5 pe-2">Location</span>{{ activeEvent.location }}</p>
                         </div>
                     </div>
-                    <section class="row">
+                    <section class="row bg-primary pt-2 mb-1 rounded">
                         <div v-if="AppState.account">
                             <CommentForm/>
                         </div>
@@ -176,11 +185,14 @@ onAuthLoaded(()=>{
                             <button class="btn btn-secondary" disabled>Ticket</button>
                         </div> -->
                     </div>
-                    <div v-if="tickets.length > 0">
+                    <div>
                         <p>Attendees</p>
-                        <div class="bg-primary rounded p-2">
+                        <div class="bg-primary rounded p-2 container-fluid">
                             <div v-for="ticket in tickets" :key="ticket.id">
-                                <TicketHoldersCard :ticket="ticket"/>
+                                <div :ticket="ticket">
+                                    <img class="ticketHolder rounded-circle border border-2" :src="ticket.profile.picture"
+                                    :alt="ticket.profile.name"> <span><strong>{{ ticket.profile.name }}</strong></span>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -73,12 +73,12 @@ async function getAllTickets(){
 
 onMounted(()=>{
   getEvents()
-  getAllTickets()
 })
 
 onAuthLoaded(()=>{
-    getUserTickets()
-  })
+  getAllTickets(
+  )
+})
 </script>
 
 <template>

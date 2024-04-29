@@ -4,6 +4,11 @@ export class Profile {
     this.name = data.name
     this.picture = data?.picture
     this.banned = data.banned
-    this.bannedBy = data.bannedBy
+  }
+
+  get generateId() {
+    let timestamp = (new Date().getTime() / 1000 | 0).toString(16);
+    return timestamp + 'xxxxxxxxxxxxxxxx'.replace(/[x]/g, () => (
+      Math.random() * 16 | 0).toString(16)).toLowerCase();
   }
 }

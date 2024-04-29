@@ -6,13 +6,16 @@ defineProps({comment: Comment})
 
 
 <template>
-<div class="row">
-    <div class="col-2"><img :src="comment.creator.picture" :alt="comment.creator.name"><p>{{ comment.creator.name }}</p></div>
-    <div class="col-10">{{ comment.body }}</div>
+<div class="row align-items-center p-2 border-top border-dark">
+    <div class="col-3 text-center"><img class="commentImg rounded-circle border border-2 border-dark justify-self-center" :src="comment.creator.picture" :alt="comment.creator.name">
+        <p>{{ comment.creator.name }}</p></div>
+    <div class="col-9">{{ comment.body }}</div>
 </div>
 </template>
 
 
 <style lang="scss" scoped>
-
+.commentImg{
+    max-height: 40px;
+}
 </style>
