@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { logger } from '../utils/Logger.js';
 import { eventService } from '../services/EventService.js';
@@ -12,7 +12,6 @@ import { Comment } from '../models/Comment.js';
 import { Profile } from '../models/Profile.js';
 import { Ticket } from '../models/Ticket.js';
 import { Account } from '../models/Account.js';
-import TicketHoldersCard from '../components/TicketHoldersCard.vue';
 import { onAuthLoaded } from '@bcwdev/auth0provider-client';
 
 const activeEvent = computed(()=> AppState.activeEvent)
@@ -20,11 +19,11 @@ const eventImg = computed(()=> `url(${AppState.activeEvent?.coverImg})`)
 const tickets = computed(()=> AppState.eventTickets)
 const comments = computed(()=>AppState.comments)
 const userProfile = computed(()=> AppState.account)
-const userTicket = computed(()=> AppState.usersTickets.find(userTicket => userTicket.eventId == activeEvent.value.id))
-const attending = computed(()=> AppState.usersTickets.find(usersTicket => usersTicket.id == userTicket.value.id))
+const userTicket = computed(()=> AppState.eventTickets.find(eventTicket => eventTicket.accountId == AppState.account.id))
+const attending = computed(()=> ((userTicket.value.accountId == userProfile.value.id) ? `You are attending!` : `Get a ticket before it is too late`))
 const soldOutText = `SOLD OUT`
 const ticketAvailable = `TICKETS AVAILABLE`
-const soldOut = computed(()=> (AppState.activeEvent.capacity == AppState.activeEvent.ticketCount) ? soldOutText : ticketAvailable)
+const soldOut = computed(()=> ((AppState.activeEvent.capacity == AppState.activeEvent.ticketCount) ? soldOutText : ticketAvailable))
 // const soldOutTickets = computed(()=> (if(AppState.activeEvent.capacity == AppState.activeEvent.ticketCount) return soldOutText))
 const route = useRoute()
 
@@ -46,6 +45,14 @@ async function getComments(){
         Pop.toast('Unable to load comments', 'error')
         logger.log('Unable to load comments', error)
     }
+}
+
+function resetComputed(){
+    AppState.usersTickets = [],
+    AppState.activeEvent = null,
+  AppState.userEvents= [],
+  AppState.profiles= [],
+  AppState.eventTickets = []
 }
 
 async function createTicket(){
@@ -71,14 +78,16 @@ async function deleteTicket(){
     try {
         await Pop.confirm('Do you want to cancel your ticket?')
         if (!confirm) return
-        await ticketService.deleteTicket()
+        const ticket = AppState.eventTickets.find(ticket => ticket.accountId == AppState.account.id)
+        const ticketId = ticket.id
+        await ticketService.deleteTicket(ticketId)
     } catch (error) {
         Pop.toast('unable to delete ticket', 'error')
         logger.log('Unable to delete ticket', error)
     }
 }
 
-    async function cancelEvent(){
+async function cancelEvent(){
         try {
             const confirmation = await Pop.confirm('Do you want to cancel your event?')
             if(!confirmation) return
@@ -90,7 +99,7 @@ async function deleteTicket(){
         }
     }
 
-    async function getAllTickets(){
+async function getAllTickets(){
   try {
         await ticketService.getAllTickets()
         const tickets = AppState.tickets.filter(ticket => AppState.activeEvent.id == ticket.eventId)
@@ -106,10 +115,13 @@ onMounted(()=>{
     getComments()
 })
 
-
 onAuthLoaded(()=>{
     getUserTicket()
     getAllTickets()
+})
+
+onUnmounted(()=>{
+    resetComputed()
 })
 </script>
 
@@ -118,7 +130,7 @@ onAuthLoaded(()=>{
     <section class="row justify-content-center mb-2">
         <div v-if="activeEvent" class="col-12 col-md-8">
             <section class="row bgimage rounded">
-                <span v-if="activeEvent.isCanceled == true" class=" text-light"><h3><strong>CANCELED</strong></h3></span>
+                <span v-if="activeEvent.isCanceled === true" class=" text-light"><h3><strong>CANCELED</strong></h3></span>
                 <span v-else class="text-light fontfix"><h3><strong>{{ soldOut }}</strong></h3></span>
             </section>
             <section class="row mb-2">
@@ -155,21 +167,15 @@ onAuthLoaded(()=>{
                 </div>
                 <div class="col-4 p-2">
                     <div v-if="AppState.account">
-                        <div v-if="userTicket" class="bg-success rounded p-2">
-                            <h4>You're going!</h4>
-                            <p>Changed your mind?</p>
+                        <div v-if="userTicket?.accountId == userProfile.id" class="bg-success rounded p-2">
+                            <h4>{{ attending }}</h4>
                             <button class="btn btn-warning" @click="deleteTicket">Cancel</button>
                         </div>
-                        <div v-else-if="activeEvent.isCanceled = false || activeEvent.capacity != activeEvent.ticketCount" class="bg-primary rounded p-2">
+                        <div v-if="activeEvent.isCanceled === false && activeEvent.capacity != activeEvent.ticketCount && userTicket?.accountId != userProfile.id" class="bg-primary rounded p-2">
                             <h4>You know you want to go</h4>
                             <p>Claim your spot!</p>
                             <button class="btn btn-secondary" @click="createTicket">Ticket</button>
                         </div>
-                        <!-- <div v-else class="bg-primary rounded p-2">
-                            <h4> {{ soldOut }}</h4>
-                            <p>You missed out!</p>
-                            <button class="btn btn-secondary" disabled>Ticket</button>
-                        </div> -->
                     </div>
                     <div>
                         <p>Attendees</p>
