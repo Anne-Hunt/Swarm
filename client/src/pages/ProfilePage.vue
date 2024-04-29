@@ -108,9 +108,13 @@ onAuthLoaded(()=>{
                 <div :event="event">
                     <div class="card rounded">
                             <RouterLink :to="{name: 'Event Details', params: {eventId: event.id}}">
-                            <img class="card-image-top eventimage rounded-top justify-content-between"
-                                :src="event.coverImg" />
-                            <span class="bgcolor text-light p-1 rounded">{{ event.type }}</span>
+                                <img class="card-image-top eventimage rounded-top justify-content-between"
+                                    :src="event.coverImg" />
+                            <div class="justify-content-between">
+                                <span class="bgcolor text-light p-1 rounded">{{ event.type }}</span>
+                                <span v-if="event.isCanceled === true" class="bg-danger text-light p-1 rounded">CANCELED</span>
+                                <span v-else class="bg-success text-light p-1 rounded">OPEN</span>
+                            </div>
                         </RouterLink>
                             <div class="card-body">
                                 <div class="row">

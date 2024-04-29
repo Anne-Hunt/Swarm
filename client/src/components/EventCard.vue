@@ -69,19 +69,6 @@ const colorType = computed(()=>{
     }
 })
 
-
-
-    async function cancelEvent(){
-        try {
-            const confirmation = await Pop.confirm('Do you wan to cancel your event?')
-            if(!confirmation) return
-            const eventId = eventProps.event.id
-            await eventService.cancelEvent(eventId)
-        } catch (error) {
-            Pop.toast('unable to cancel', 'error')
-        logger.log('Unable to cancel', error)
-        }
-    }
 </script>
 
 
@@ -90,6 +77,8 @@ const colorType = computed(()=>{
             <div class="card rounded">
                 <div class="card-image-top eventimage rounded-top justify-content-between">
                     <span class="bgcolor text-light p-1 rounded">{{ event.type }}</span> 
+                    <span v-if="event.isCanceled === true" class="bg-danger text-light p-1 rounded">CANCELED</span>
+                    <span v-else class="bg-success text-light p-1 rounded">OPEN</span>
                 </div>
                 <div class="card-body">
                     <div class="row">
