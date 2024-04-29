@@ -16,6 +16,6 @@ defineProps({comment: Comment})
 
 <style lang="scss" scoped>
 .commentImg{
-    max-height: 40px;
+    max-height: 30px;
 }
 </style>

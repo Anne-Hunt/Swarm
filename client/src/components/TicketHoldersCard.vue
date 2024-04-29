@@ -1,11 +1,7 @@
 <script setup>
-import { computed } from 'vue';
-import { AppState } from '../AppState.js';
-import { Profile } from '../models/Profile.js';
 import { Ticket } from '../models/Ticket.js';
 
-
-const props = defineProps({ticket: Ticket, profile: Profile})
+defineProps({ticket: Ticket})
 
 </script>
 
@@ -24,7 +20,6 @@ const props = defineProps({ticket: Ticket, profile: Profile})
 
 <style lang="scss" scoped>
 .ticketHolder{
-    max-height: 15px;
-    width: 15px;
+    max-height: 25px;
 }
 </style>

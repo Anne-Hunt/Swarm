@@ -4,7 +4,6 @@ import { useRoute } from 'vue-router';
 import { logger } from '../utils/Logger.js';
 import { eventService } from '../services/EventService.js';
 import { commentService } from '../services/CommentService.js';
-// import { profileService } from '../services/ProfileService.js';
 import { ticketService } from '../services/TicketService.js';
 import { AppState } from '../AppState.js';
 import Pop from '../utils/Pop.js';
@@ -15,12 +14,10 @@ import { Ticket } from '../models/Ticket.js';
 import { Account } from '../models/Account.js';
 import TicketHoldersCard from '../components/TicketHoldersCard.vue';
 import { onAuthLoaded } from '@bcwdev/auth0provider-client';
-// import { profileService } from '../services/ProfileService.js';
-// import EventDetailsCard from '../components/EventDetailsCard.vue';
 
 const activeEvent = computed(()=> AppState.activeEvent)
 const eventImg = computed(()=> `url(${AppState.activeEvent?.coverImg})`)
-const tickets = computed(()=> (AppState.tickets.filter(ticket => AppState.activeEvent.id == ticket.eventId)))
+const tickets = computed(()=> AppState.eventTickets)
 const comments = computed(()=>AppState.comments)
 const userProfile = computed(()=> AppState.account)
 const userTicket = computed(()=> AppState.usersTickets.find(userTicket => userTicket.eventId == activeEvent.value.id))
@@ -61,17 +58,6 @@ async function createTicket(){
     }
 }
 
-// async function getTickets(){
-//     try {
-//         const eventId = route.params.eventId
-//         await ticketService.getTickets(eventId)
-//         this.getProfiles()
-//     } catch (error) {
-//         // Pop.toast('Unable to get tickets', 'error')
-//         logger.log('Unable to get tickets', error)
-//     }
-// }
-
 async function getUserTicket(){
     try {
         await ticketService.getUserTickets()
@@ -106,11 +92,11 @@ async function deleteTicket(){
 
     async function getAllTickets(){
   try {
-      if (AppState.account != null) {
-      await ticketService.getAllTickets()}
-      else return
+        await ticketService.getAllTickets()
+        const tickets = AppState.tickets.filter(ticket => AppState.activeEvent.id == ticket.eventId)
+        AppState.eventTickets = tickets
   } catch (error) {
-      Pop.toast('unable to get all tickets', 'error')
+        Pop.toast('unable to get all tickets', 'error')
         logger.log('unable to get all tickets', error)
   }
 }
@@ -118,8 +104,8 @@ async function deleteTicket(){
 onMounted(()=>{
     getActiveEvent()
     getComments()
-    // getTickets()
 })
+
 
 onAuthLoaded(()=>{
     getUserTicket()
@@ -190,8 +176,14 @@ onAuthLoaded(()=>{
                         <div class="bg-primary rounded p-2 container-fluid">
                             <div v-for="ticket in tickets" :key="ticket.id">
                                 <div :ticket="ticket">
-                                    <img class="ticketHolder rounded-circle border border-2" :src="ticket.profile.picture"
-                                    :alt="ticket.profile.name"> <span><strong>{{ ticket.profile.name }}</strong></span>
+                                    <div class="row">
+                                        <div class="col-3">
+        <img class="ticketHolder rounded-circle border border-2" :src="ticket.profile?.picture" :alt="ticket.profile?.name">
+    </div>
+    <div class="col-8">
+        <span><strong>{{ ticket.profile?.name }}</strong></span>
+    </div>
+</div>
                                 </div>
                             </div>
                         </div>
@@ -218,5 +210,9 @@ onAuthLoaded(()=>{
 
 .fontfix{
    text-shadow: 0 5 9 black;
+}
+
+.ticketHolder{
+    max-height: 25px;
 }
 </style>
