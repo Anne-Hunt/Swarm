@@ -43,10 +43,12 @@ class EventService{
     async cancelEvent(eventId){
         const response = await api.delete(`api/events/${eventId}`)
         logger.log('sending event to cancel', response.data)
-        const eventToCancel = new Event(response.data)
-        const eventIndex = AppState.events.findIndex(eventId) 
-        AppState.events.splice(eventIndex, 1)
-        AppState.events.push(eventToCancel)
+        this.setActiveEvent(eventId)
+        const eventCancel = AppState.events.find(event => event.id == eventId)
+        eventCancel.isCanceled === true
+        const eventUserCancel = AppState.userEvents.find(event => event.id == eventId)
+        eventUserCancel.isCanceled === true
+        logger.log('canceled', eventCancel, response.data, eventUserCancel)
     }
 
     async trashEvent(eventId){

@@ -69,17 +69,6 @@ const colorType = computed(()=>{
     }
 })
 
-async function deleteTicket(){
-    try {
-        await Pop.confirm('Do you want to cancel your ticket?')
-        if (!confirm) return
-        await ticketService.deleteTicket()
-    } catch (error) {
-        Pop.toast('unable to delete ticket', 'error')
-        logger.log('Unable to delete ticket', error)
-    }
-}
-
     async function cancelEvent(){
         try {
             const confirmation = await Pop.confirm('Do you wan to cancel your event?')

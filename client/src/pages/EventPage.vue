@@ -16,8 +16,8 @@ import { onAuthLoaded } from '@bcwdev/auth0provider-client';
 
 const activeEvent = computed(()=> AppState.activeEvent)
 const eventImg = computed(()=> `url(${AppState.activeEvent?.coverImg})`)
-const tickets = computed(()=> AppState.eventTickets)
 const comments = computed(()=>AppState.comments)
+const tickets = computed(()=> AppState.eventTickets)
 const userProfile = computed(()=> AppState.account)
 const userTicket = computed(()=> AppState.eventTickets.find(eventTicket => eventTicket.accountId == AppState.account.id))
 const attending = computed(()=> ((userTicket.value.accountId == userProfile.value.id) ? `You are attending!` : `Get a ticket before it is too late`))
@@ -69,7 +69,6 @@ async function getUserTicket(){
     try {
         await ticketService.getUserTickets()
     } catch (error) {
-        // Pop.toast('unable to find ticket', 'error')
         logger.log('unable to find ticket', 'error')
     }
 }
