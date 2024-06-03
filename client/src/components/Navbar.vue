@@ -18,12 +18,12 @@ function toggleTheme() {
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-sm navbar-dark bg-black px-3">
+  <nav class="navbar navbar-expand-sm navbar-dark bg-primary px-3 shadow">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
-      <div class="d-flex flex-column text-bottom">
-        <div class="rounded-pill border border-5 border-success mt-2">
-          <div class="rounded-pill border border-light bg-black">
-            <i class="mdi mdi-bee fs-1"></i>
+      <div class="d-flex flex-column text-bottom front">
+        <div class="rounded-circle border border-5 border-success mt-2 shadow">
+          <div class="rounded-circle border border-light bg-primary fontpop">
+            <i class="mdi mdi-bee fs-1 p-2"></i>
           </div>
         </div>
       </div>
@@ -39,7 +39,7 @@ function toggleTheme() {
       </ul>
       <!-- LOGIN COMPONENT HERE -->
       <div>
-        <button class="btn text-light fs-3" @click="toggleTheme"
+        <button class="btn text-light fs-3 fontpop" @click="toggleTheme"
           :title="`Enable ${theme == 'light' ? 'dark' : 'light'} theme.`">
           <i class="mdi" :class="theme == 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"></i>
         </button>
@@ -68,5 +68,17 @@ a:hover {
   nav {
     height: 64px;
   }
+}
+
+.fontfix{
+  text-shadow: 1px 1px 4px black;
+}
+
+.fontpop{
+  text-shadow: 1px 1px 2px black;
+}
+
+.front{
+  z-index: 2;
 }
 </style>

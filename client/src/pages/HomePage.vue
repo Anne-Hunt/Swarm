@@ -95,9 +95,9 @@ onAuthLoaded(()=>{
 <!-- Section for Create and Search -->
   <section class="row p-5 justify-content-evenly">
     <h3 class="p-2">What Swarm Does</h3>
-    <div class="col-md-5 col-12">
+    <div class="col-md-5 col-12 shadow">
       <div class="row bg-primary rounded p-2 modalOpener p-3">
-        <div class="col-2 text-center text-warning fs-1">
+        <div class="col-2 text-center text-info fs-1 fontfix">
           <i class="mdi mdi-magnify"></i>
         </div>
         <div class="col-10 p-1">
@@ -106,7 +106,7 @@ onAuthLoaded(()=>{
         </div>
       </div>
     </div>
-    <div class="col-md-5 col-12">
+    <div class="col-md-5 col-12 shadow">
       <div class="row bg-primary rounded p-2 modalOpener p-3" role="button" data-bs-toggle="modal"
     data-bs-target="#modalId">
         <div class="col-2 text-center">          
@@ -157,11 +157,15 @@ onAuthLoaded(()=>{
   max-width: 100%;
   height: 50dvh;
  background-size: cover;
- filter: drop-shadow(blur 10)
+ filter: contrast(.8);
 }
 
 .fontfix{
-   text-shadow: 0 0 8 black;
+  text-shadow: 1px 1px 4px black;
+}
+
+.fontpop{
+  text-shadow: 1px 1px 2px black;
 }
 
 .modalOpener{
