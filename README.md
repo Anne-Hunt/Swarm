@@ -12,7 +12,7 @@ Swarm is a full stack web application that utilizes a front end with Vue.js and 
 
 ## SKILLS
 
-Javascript, Express Node.js, MongoDB, Vue.js, Vue Router, HTML, CSS, Postman, many-to-many data relationships, conditional formatting, RESTful API
+Javascript, Express Node.js, MongoDB, Vue.js 3, Vue Router, Bootstrap 5, HTML, CSS, Postman, many-to-many data relationships, conditional formatting, RESTful API
 
 ## LANGUAGES
 
