@@ -1,9 +1,8 @@
 # SWARM
 
-=========================
 created by Anne Hunt
 
-Live Link: Swarm[https://swarm.annehunt.dev]
+Live Link: [Swarm](https://swarm.annehunt.dev)
 
 Completed 2024
 
@@ -45,4 +44,4 @@ Application may:
 
 ## FIGMA/UML
 
-FIGMA diagram[https://www.figma.com/file/m7U44jDMTPtDqkla1FUTiY/Towe?type=design&node-id=0-1&mode=design&t=gjWOWkLsnXpGJBBS-0] and prototype [https://www.figma.com/proto/m7U44jDMTPtDqkla1FUTiY/Tower?type=design&node-id=4-2&t=gjWOWkLsnXpGJBBS-0&scaling=min-zoom&page-id=0:1&starting-point-node-id=4:2]
+[FIGMA diagram](https://www.figma.com/file/m7U44jDMTPtDqkla1FUTiY/Towe?type=design&node-id=0-1&mode=design&t=gjWOWkLsnXpGJBBS-0) and [prototype](https://www.figma.com/proto/m7U44jDMTPtDqkla1FUTiY/Tower?type=design&node-id=4-2&t=gjWOWkLsnXpGJBBS-0&scaling=min-zoom&page-id=0:1&starting-point-node-id=4:2)
