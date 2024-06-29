@@ -18,35 +18,35 @@ function toggleTheme() {
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-sm navbar-dark bg-primary px-3 shadow">
-    <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
-      <div class="d-flex flex-column text-bottom front">
-        <div class="rounded-circle border border-5 border-success mt-2 shadow">
-          <div class="rounded-circle border border-light bg-primary fontpop">
-            <i class="mdi mdi-bee fs-1 p-2"></i>
+  <div class="container-fluid p-0 m-0">
+
+    <nav class="navbar navbar-expand-sm navbar-dark bg-primary shadow">
+      <div class="container-fluid">
+        <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
+          <div class="d-flex flex-column text-bottom front">
+            <div class="rounded-circle border border-5 border-success mt-2 shadow">
+              <div class="rounded-circle border border-light bg-primary fontpop">
+                <i class="mdi mdi-bee fs-1 p-2"></i>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </router-link>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
-      aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarText">
-      <ul class="navbar-nav me-auto">
-        <li>
-        </li>
-      </ul>
-      <!-- LOGIN COMPONENT HERE -->
-      <div>
-        <button class="btn text-light fs-3 fontpop" @click="toggleTheme"
-          :title="`Enable ${theme == 'light' ? 'dark' : 'light'} theme.`">
-          <i class="mdi" :class="theme == 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"></i>
-        </button>
-      </div>
-      <Login />
+        </router-link>
+      <div class="collapse navbar-collapse px-0" id="navbarText">
+        <ul class="navbar-nav me-auto d-flex align-items-center">
+          <li>
+            <button class="btn text-light fs-3 fontpop" @click="toggleTheme"
+            :title="`Enable ${theme == 'light' ? 'dark' : 'light'} theme.`">
+            <i class="mdi" :class="theme == 'light' ? 'mdi-lightbulb' : 'mdi-lightbulb-outline'"></i>
+          </button>
+          </li>
+          <li>
+            <Login />
+          </li>
+        </ul>
     </div>
-  </nav>
+    </div>
+</nav>
+</div>
 </template>
 
 <style scoped>
