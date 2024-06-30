@@ -1,11 +1,19 @@
 import { AppState } from '../AppState'
 import { Account } from '../models/Account.js'
 import { logger } from '../utils/Logger'
+import Pop from '../utils/Pop.js';
 import { api } from './AxiosService'
 
 class AccountService {
-  updateAccount(accountData) {
-    throw new Error('Method not implemented.')
+  async updateAccount(accountData, accountId) {
+    try {
+      accountData.id = accountId
+      const response = await api.put('/account', accountData)
+      AppState.account = new Account(response.data)
+    }
+    catch (error){
+      Pop.error("Unable to update", 'error');
+    }
   }
   async getAccount() {
     try {
