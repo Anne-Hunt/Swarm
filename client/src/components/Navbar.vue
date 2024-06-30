@@ -18,35 +18,27 @@ function toggleTheme() {
 </script>
 
 <template>
-  <div class="container-fluid p-0 m-0">
 
-    <nav class="navbar navbar-expand-sm navbar-dark bg-primary shadow">
-      <div class="container-fluid">
-        <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
-          <div class="d-flex flex-column text-bottom front">
-            <div class="rounded-circle border border-5 border-success mt-2 shadow">
+<nav class="navbar navbar-lg bg-primary pt-0 shadow">
+  <div class="container-fluid mt-0 pt-0">
+    <router-link class="navbar-brand" :to="{ name: 'Home' }">
+          <div class="text-light front">
+            <div class="rounded-circle border border-5 border-success shadow">
               <div class="rounded-circle border border-light bg-primary fontpop">
                 <i class="mdi mdi-bee fs-1 p-2"></i>
               </div>
             </div>
           </div>
-        </router-link>
-      <div class="collapse navbar-collapse px-0" id="navbarText">
-        <ul class="navbar-nav me-auto d-flex align-items-center">
-          <li>
-            <button class="btn text-light fs-3 fontpop" @click="toggleTheme"
+      </router-link>
+    <div class="d-flex align-items-center">
+      <button class="btn text-light fs-3 py-0 fontpop" @click="toggleTheme"
             :title="`Enable ${theme == 'light' ? 'dark' : 'light'} theme.`">
             <i class="mdi" :class="theme == 'light' ? 'mdi-lightbulb' : 'mdi-lightbulb-outline'"></i>
-          </button>
-          </li>
-          <li>
-            <Login />
-          </li>
-        </ul>
+      </button>
+      <Login />
     </div>
-    </div>
+  </div>
 </nav>
-</div>
 </template>
 
 <style scoped>
@@ -66,7 +58,7 @@ a:hover {
 
 @media screen and (min-width: 576px) {
   nav {
-    height: 64px;
+    height: 75px;
   }
 }
 

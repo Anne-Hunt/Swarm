@@ -22,23 +22,23 @@ const filterTo = ref('all')
 const filters = [
   {
     name: 'digital',
-    icon: 'mdi mdi-television text-info fs-1'
+    icon: 'mdi mdi-television text-info fs-1 fontfix'
   },
   {
     name: 'convention',
-    icon: 'mdi mdi-table text-success fs-1'
+    icon: 'mdi mdi-table text-secondary fs-1 fontfix'
   },
   {
     name: 'concert',
-    icon: 'mdi mdi-music text-party fs-1'
+    icon: 'mdi mdi-music text-party fs-1 fontfix'
   },
   {
     name: 'sport',
-    icon: 'mdi mdi-soccer text-danger fs-1'
+    icon: 'mdi mdi-soccer text-danger fs-1 fontfix'
   },
   {
     name: 'meeting',
-    icon: 'mdi mdi-group text-warning fs-1'
+    icon: 'mdi mdi-group text-warning fs-1 fontfix'
   }
 ]
 
@@ -104,7 +104,7 @@ onAuthLoaded(()=>{
               <i class="mdi mdi-magnify text-light"></i>
             </div>
             <div class="col-10 p-0 text-light">
-              <h3>Find events you want today</h3>
+              <h4>Find events you want today</h4>
               <p>Search for what you're looking for and possibly find the event to change your life.</p>
             </div>
           </div>
@@ -112,7 +112,7 @@ onAuthLoaded(()=>{
         <div class="col-md-5 col-12 shadow p-0 bg-primary rounded py-3">
           <div class="row modalOpener p-3" role="button" data-bs-toggle="modal"
           data-bs-target="#modalId">
-          <div class="col-2 text-center">       
+          <div class="col-2 text-center fontfix">       
             <i class="mdi mdi-plus-circle text-light fs-1"></i>
           </div>
           <div class="col-10 p-1 text-light">
@@ -128,7 +128,7 @@ onAuthLoaded(()=>{
       <div class="col-md-2 col-6 mb-2" role="button" @click="filterTo = 'all'">
         <div class="bg-primary rounded text-center text-light p-2">
           <h4>all</h4>
-          <i class="mdi mdi-earth text-all fs-1"></i>
+          <i class="mdi mdi-earth text-success fs-1 fontfix"></i>
         </div>
       </div>
       <div v-for="filterObj in filters" :key="filterObj.name" class="col-md-2 col-6 mb-2"  role="button" @click="filterTo = filterObj.name">
