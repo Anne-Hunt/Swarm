@@ -9,7 +9,7 @@ import { AppState } from '../AppState.js';
 import Pop from '../utils/Pop.js';
 
 const activeEvent = computed(()=> AppState.activeEvent)
-const eventType = AppState.activeEvent?.type
+// const eventType = AppState.activeEvent?.type
 const eventImg = computed(()=> `url(${AppState.activeEvent?.coverImg})`)
 const comments = computed(()=>AppState.comments)
 const tickets = computed(()=> AppState.eventTickets)
@@ -22,21 +22,6 @@ const soldOut = computed(()=> ((AppState.activeEvent.capacity == AppState.active
 // const soldOutTickets = computed(()=> (if(AppState.activeEvent.capacity == AppState.activeEvent.ticketCount) return soldOutText))
 const route = useRoute()
 
-
-const colorType = computed(()=>{
-    switch(eventType){
-        case 'digital':
-            return '#17a2b8'
-        case 'convention':
-            return '#f7c32e'
-        case 'concert':
-            return '#aa49f9'
-        case 'sport':
-            return '#d6293e'
-        case 'meeting':
-            return '#0cbc87'
-    }
-})
 
 async function getActiveEvent(){
 try {
@@ -139,16 +124,17 @@ onUnmounted(()=>{
 <template>
     <section class="row justify-content-center my-2 p-0 mx-0">
         <div v-if="activeEvent" class="col-12 col-md-8">
-            <section class="row bgimage rounded">
+            <section class="row bgimage flex-column justify-content-between rounded">
                 <span v-if="activeEvent.isCanceled === true" class=" text-light"><h3><strong>CANCELED</strong></h3></span>
                 <span v-else class="text-light fontfix"><h3><strong>{{ soldOut }}</strong></h3></span>
+                <span class="text-light fontfix type"><strong>{{ activeEvent?.type }}</strong></span>
             </section>
             <section class="row mb-2">
                 <div class="col-8 p-2">
                     <div class="row justify-content-between mt-2">
                             <div class="col-9"><h2>{{ activeEvent?.name }}</h2></div>
                             <div class="col-3 text-center">
-                                <span class="rounded-pill bg-primary p-1">{{ activeEvent?.type }}</span>
+                                <!-- <CategoryEvent/> -->
                             </div>
                         <div v-if="activeEvent.creatorId == userProfile?.id" class="col-4">
                             <div class="dropdown">
@@ -223,7 +209,7 @@ onUnmounted(()=>{
     max-height: 25px;
 }
 
-.bgcolor{
-    background-color: v-bind(colorType);
+.type{
+    text-transform: uppercase;
 }
 </style>
