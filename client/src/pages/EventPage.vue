@@ -175,7 +175,7 @@ onUnmounted(()=>{
                     </div>
                     <div class="bg-warning mt-2 rounded">
                         <div class="rounded p-2 container-fluid">
-                            <p><strong>Attendees</strong></p>
+                            <p class="text-info"><strong>Attendees</strong></p>
                             <div v-for="ticket in tickets" :key="ticket.id">
                                 <TicketHoldersCard :ticket="ticket"/>
                             </div>
