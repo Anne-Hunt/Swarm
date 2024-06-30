@@ -58,11 +58,11 @@ onMounted(()=>{
 <template>
   <div class="about text-center">
     <div v-if="account" class="row p-0 m-0">
-      <div class="col-12 bg-warning text-light">
-        <h1 class="py-2">Welcome {{ account.name }}</h1>
-        <img class="rounded-circle profile border border-5 border-light" :src="account.picture" alt="" />
+      <div class="col-12 bg-warning text-light shadow">
+        <h1 class="py-2 fontfix">Welcome {{ account.name }}</h1>
+        <img class="rounded-circle profile border border-5 border-light shadow" :src="account.picture" alt="" />
         <div class="text-end text-bottom text-light">
-          <i class="mdi mdi-dots-horizontal fs-1 btn text-end text-bottom text-light" data-bs-toggle="modal"
+          <i class="mdi mdi-dots-horizontal fs-1 btn text-end text-bottom text-light fontfix" data-bs-toggle="modal"
           data-bs-target="#modalId"></i>
         </div>
       </div>
@@ -97,5 +97,10 @@ img {
   height: 100px;
   object-position: center;
   object-fit: cover;
+}
+
+
+.fontfix{
+  text-shadow: 1px 1px 4px black;
 }
 </style>

@@ -7,7 +7,7 @@ import { ticketService } from '../services/TicketService.js';
 import { Ticket } from '../models/Ticket.js';
 
 const ticketProp = defineProps({ticket: {type: Ticket, required: true}})
-const userProfile = computed(()=> AppState.account)
+const userProfile = computed(()=> AppState.activeProfile)
 
 const colorType = computed(()=>{
     switch(ticketProp.ticket.event.type){
@@ -54,12 +54,6 @@ async function deleteTicket(ticketId){
                     </div>
                     <div class="card-description pb-1">
                         <span>{{ ticket.event.startDate }} - <small>{{ ticket.event.location }}</small></span>
-                    </div>
-                    <div v-if="ticket.event.isCanceled == false">
-                        <button class="btn btn-danger" @click="deleteTicket(ticket.id)">DELETE TICKET</button>
-                    </div>
-                    <div v-else>
-                        <button class="btn btn-danger" disabled>Canceled</button>
                     </div>
                 </div>
             </div>
