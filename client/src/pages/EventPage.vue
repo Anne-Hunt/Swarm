@@ -180,16 +180,7 @@ onUnmounted(()=>{
                         <p>Attendees</p>
                         <div class="bg-primary rounded p-2 container-fluid">
                             <div v-for="ticket in tickets" :key="ticket.id">
-                                <div :ticket="ticket">
-                                    <div class="row">
-                                        <div class="col-3">
-        <img class="ticketHolder rounded-circle border border-2" :src="ticket.profile?.picture" :alt="ticket.profile?.name">
-    </div>
-    <div class="col-8">
-        <span><strong>{{ ticket.profile?.name }}</strong></span>
-    </div>
-</div>
-                                </div>
+                                <TicketHoldersCard :ticket="ticket"/>
                             </div>
                         </div>
                     </div>

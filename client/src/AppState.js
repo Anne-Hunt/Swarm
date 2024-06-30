@@ -25,8 +25,8 @@ export const AppState = reactive({
   activeEvent: null,
   /**@type {Event[]} */
   userEvents: [],
-/**@type {Profile[]} */
-  activeProfile: [],
+/**@type {Profile} */
+  activeProfile: null,
 
   profiles: [],
   /**@type {Ticket[]} */
