@@ -18,35 +18,27 @@ function toggleTheme() {
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-sm navbar-dark bg-primary px-3 shadow">
-    <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
-      <div class="d-flex flex-column text-bottom front">
-        <div class="rounded-circle border border-5 border-success mt-2 shadow">
-          <div class="rounded-circle border border-light bg-primary fontpop">
-            <i class="mdi mdi-bee fs-1 p-2"></i>
+
+<nav class="navbar navbar-lg bg-primary pt-0 shadow">
+  <div class="container-fluid mt-0 pt-0">
+    <router-link class="navbar-brand" :to="{ name: 'Home' }">
+          <div class="text-light front">
+            <div class="rounded-circle border border-5 border-success shadow">
+              <div class="rounded-circle border border-light bg-primary fontpop">
+                <i class="mdi mdi-bee fs-1 p-2"></i>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </router-link>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
-      aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarText">
-      <ul class="navbar-nav me-auto">
-        <li>
-        </li>
-      </ul>
-      <!-- LOGIN COMPONENT HERE -->
-      <div>
-        <button class="btn text-light fs-3 fontpop" @click="toggleTheme"
-          :title="`Enable ${theme == 'light' ? 'dark' : 'light'} theme.`">
-          <i class="mdi" :class="theme == 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"></i>
-        </button>
-      </div>
+      </router-link>
+    <div class="d-flex align-items-center">
+      <button class="btn text-light fs-3 py-0 fontpop" @click="toggleTheme"
+            :title="`Enable ${theme == 'light' ? 'dark' : 'light'} theme.`">
+            <i class="mdi" :class="theme == 'light' ? 'mdi-lightbulb' : 'mdi-lightbulb-outline'"></i>
+      </button>
       <Login />
     </div>
-  </nav>
+  </div>
+</nav>
 </template>
 
 <style scoped>
@@ -66,7 +58,7 @@ a:hover {
 
 @media screen and (min-width: 576px) {
   nav {
-    height: 64px;
+    height: 75px;
   }
 }
 

@@ -22,23 +22,23 @@ const filterTo = ref('all')
 const filters = [
   {
     name: 'digital',
-    icon: 'mdi mdi-television text-info fs-1'
+    icon: 'mdi mdi-television text-info fs-1 fontfix'
   },
   {
     name: 'convention',
-    icon: 'mdi mdi-earth text-warning fs-1'
+    icon: 'mdi mdi-table text-secondary fs-1 fontfix'
   },
   {
     name: 'concert',
-    icon: 'mdi mdi-music text-light fs-1'
+    icon: 'mdi mdi-music text-party fs-1 fontfix'
   },
   {
     name: 'sport',
-    icon: 'mdi mdi-soccer text-danger fs-1'
+    icon: 'mdi mdi-soccer text-danger fs-1 fontfix'
   },
   {
     name: 'meeting',
-    icon: 'mdi mdi-group text-success fs-1'
+    icon: 'mdi mdi-group text-warning fs-1 fontfix'
   }
 ]
 
@@ -82,80 +82,87 @@ onAuthLoaded(()=>{
 </script>
 
 <template>
-  <div class="bgimage">
-    <div class="row justify-content-start align-items-center">
-      <div class="col-md-7 col-12 text-dark p-4 fontfix">
-        <div class="p-5 text-light">
-          <h2><strong>Plan, Schedule, and Execute Events</strong></h2>
-          <p><strong>Never spend another night alone. Even your ex-girlfriend will want to go to your events. Let everyone know where to go, when, and for what, and they'll show up - all with Swarm.</strong></p>
-        </div>
-      </div>
-    </div>
-  </div>
-<!-- Section for Create and Search -->
-  <section class="row p-5 justify-content-evenly">
-    <h3 class="p-2">What Swarm Does</h3>
-    <div class="col-md-5 col-12 shadow">
-      <div class="row bg-primary rounded p-2 modalOpener p-3">
-        <div class="col-2 text-center text-info fs-1 fontfix">
-          <i class="mdi mdi-magnify"></i>
-        </div>
-        <div class="col-10 p-1">
-          <h3>Find events you want today</h3>
-          <p>Search for what you're looking for and possibly find the event to change your life.</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-5 col-12 shadow">
-      <div class="row bg-primary rounded p-2 modalOpener p-3" role="button" data-bs-toggle="modal"
-    data-bs-target="#modalId">
-        <div class="col-2 text-center">          
-          <i class="mdi mdi-plus-circle text-warning fs-1"></i>
-        </div>
-        <div class="col-10 p-1">
-          <h4>Start an event and make everyone attend!</h4>
-          <p>See what everyone else is doing and then create an event of your own. </p>
-        </div>
-      </div>
-    </div>
-  </section>
-<!-- Section for Category Filters-->
-  <section class="row p-3 justify-content-evenly">
-    <h3 class="p-3">Explore by Category</h3>
-    <div class="col-md-2 col-6 mb-2" role="button" @click="filterTo = 'all'">
-      <div class="bg-primary rounded text-center p-2">
-        <h4>All</h4>
-        <i class="mdi mdi-earth text-dark fs-1"></i>
-      </div>
-      </div>
-    <div v-for="filterObj in filters" :key="filterObj.name" class="col-md-2 col-6 mb-2"  role="button" @click="filterTo = filterObj.name">
-      <div class="bg-primary rounded text-center p-2">
-        <h4>{{filterObj.name}}</h4>
-        <i :class="filterObj.icon"></i>
-      </div>
-    </div>
-  </section>
+  <div class="container-fluid p-0 m-0">
+    <div class="container-fluid p-0">
 
-<!-- Section for Event Cards-->
-<section class="row justify-content-evenly align-items-center p-2">
-  <h3 class="p-3">Upcoming Events</h3>
-    <div class="col-md-4 col-6 p-2" v-for="event in events" :key="event.id">
-      <EventCard :event="event" />
+      <div class="bgimage p-0 m-0">
+        <div class="row justify-content-start align-items-center p-0 m-0">
+          <div class="col-md-7 col-12 text-darkfontfix p-0">
+            <div class="ps-5 pt-5 text-light">
+              <h2 class="fontfix fs-1"><strong>Plan, Schedule, and Execute Events</strong></h2>
+              <p class="fontfix fs-4"><strong>Never spend another night alone. Even your ex-girlfriend will want to go to your events. Let everyone know where to go, when, and for what, and they'll show up - all with Swarm.</strong></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Section for Create and Search -->
+      <section class="row p-3 m-0 justify-content-evenly">
+        <h3 class="ps-5 py-3 text-dark">What Swarm Does</h3>
+        <div class="col-md-5 col-12 shadow py-3 rounded bg-primary">
+          <div class="row modalOpener p-3">
+            <div class="col-2 text-center text-info fs-1 fontfix">
+              <i class="mdi mdi-magnify text-light"></i>
+            </div>
+            <div class="col-10 p-0 text-light">
+              <h4>Find events you want today</h4>
+              <p>Search for what you're looking for and possibly find the event to change your life.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-5 col-12 shadow p-0 bg-primary rounded py-3">
+          <div class="row modalOpener p-3" role="button" data-bs-toggle="modal"
+          data-bs-target="#modalId">
+          <div class="col-2 text-center fontfix">       
+            <i class="mdi mdi-plus-circle text-light fs-1"></i>
+          </div>
+          <div class="col-10 p-1 text-light">
+            <h4>Start an event and attend!</h4>
+            <p>See what everyone else is doing and then create an event of your own. </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Section for Category Filters-->
+    <section class="row p-3 justify-content-evenly">
+      <h3 class="px-5 py-3">Explore by Category</h3>
+      <div class="col-md-2 col-6 mb-2" role="button" @click="filterTo = 'all'">
+        <div class="bg-primary rounded text-center text-light p-2">
+          <h4>all</h4>
+          <i class="mdi mdi-earth text-success fs-1 fontfix"></i>
+        </div>
+      </div>
+      <div v-for="filterObj in filters" :key="filterObj.name" class="col-md-2 col-6 mb-2"  role="button" @click="filterTo = filterObj.name">
+        <div class="bg-primary rounded text-center p-2 text-light">
+          <h4>{{filterObj.name}}</h4>
+          <i :class="filterObj.icon"></i>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Section for Event Cards-->
+    <section class="row justify-content-evenly align-items-center p-2">
+      <h3 class="px-5 py-3">Upcoming Events</h3>
+      <div class="col-md-4 col-6 p-2" v-for="event in events" :key="event.id">
+        <EventCard :event="event" />
+      </div>
+    </section>
+    <ModalComp modalId="event-create-modal">
+      <EventForm/>
+    </ModalComp>
   </div>
-</section>
-  <ModalComp modalId="event-create-modal">
-    <EventForm/>
-  </ModalComp>
+  </div>
 </template>
 
 <style scoped lang="scss">
-
+.row{
+  padding: 0;
+  margin: 0;
+}
 .bgimage{
   background-color: black;
-  background-image: url('https://images.unsplash.com/photo-1567942712661-82b9b407abbf?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+  background-image: url('https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
   background-position:center;
-  max-width: 100%;
-  height: 50dvh;
+  height: 65dvh;
  background-size: cover;
  filter: contrast(.8);
 }

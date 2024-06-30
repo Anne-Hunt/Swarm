@@ -4,6 +4,9 @@ import { logger } from '../utils/Logger'
 import { api } from './AxiosService'
 
 class AccountService {
+  updateAccount(accountData) {
+    throw new Error('Method not implemented.')
+  }
   async getAccount() {
     try {
       const res = await api.get('/account')
