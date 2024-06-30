@@ -148,7 +148,7 @@ onUnmounted(()=>{
                     <div v-if="activeEvent" class="row">
                         <div class="col-12">
                             <p> {{ activeEvent?.description }}</p>
-                            <p><span class="fs-5 pe-2">Date & Time</span>{{ activeEvent?.startDate }} at{{ activeEvent?.time }}</p>
+                            <p><span class="fs-5 pe-2">Date</span>{{ activeEvent?.startDate }}</p>
                             <p><span class="fs-5 pe-2">Location</span>{{ activeEvent?.location }}</p>
                         </div>
                     </div>

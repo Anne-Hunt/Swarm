@@ -10,7 +10,7 @@ export class Event{
         this.location = data.location
         this.capacity = data.capacity
         this.startDate = new Date(data.startDate).toLocaleDateString()
-        this.time = data.time
+        this.time = new Date(data.time).toTimeString()
         this.isCanceled = data.isCanceled
         this.type = data.type
         this.duration = data.duration
