@@ -6,6 +6,7 @@ import { logger } from '../utils/Logger.js';
 import { accountService } from '../services/AccountService.js';
 import { eventService } from '../services/EventService.js';
 import { ticketService } from '../services/TicketService.js';
+import UserTicketCard from '../components/UserTicketCard.vue';
 
 const account = computed(() => AppState.account)
 const events = computed(()=> AppState.userEvents)
@@ -38,30 +39,15 @@ async function getTickets(){
   }
 }
 
-async function cancelEvent(eventId){
-        try {
-            const confirmation = await Pop.confirm('Do you wan to cancel your event?')
-            if(!confirmation) return
-            await eventService.cancelEvent(eventId)
-        } catch (error) {
-            Pop.toast('unable to cancel', 'error')
-        logger.log('Unable to cancel', error)
-        }
-    }
-
-async function deleteTicket(ticketId){
-    try {
-        Pop.confirm('Do you want to cancel your ticket?')
-        if (!confirm) return
-        await ticketService.deleteTicket(ticketId)
-    } catch (error) {
-        Pop.toast('unable to delete ticket', 'error')
-        logger.log('Unable to delete ticket', error)
-    }
+async function getUserTickets(){
+  try {
+    await accountService.getUserTickets()
+  }
+  catch (error){
+    Pop.toast("Unable to get tickets", 'error');
+    logger.log("unable to get user tickets", error)
+  }
 }
-
-
-
 
 onMounted(()=>{
     getTickets()
@@ -86,27 +72,7 @@ onMounted(()=>{
     </div>
     <section class="row px-3">
         <div v-for="ticket in tickets" :key="ticket.id" class="col-6 col-md-4 p-1">
-            <div :ticket="ticket">
-                <!-- <RouterLink :to="{name: 'Event Details', params: {eventId: ticket.event.id}}"> -->
-                    <div class="card rounded">
-                        <img class="card-image-top ticketimage rounded-top" :src="ticket.event.coverImg" />
-                        <span class="text-light p-1 rounded">{{ ticket.event.type }}</span>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="card-title"><strong>{{ ticket.event.name }}</strong></div>
-                            </div>
-                            <div class="card-description">
-                                <span>{{ ticket.event.startDate }} -
-                                    <small>{{ ticket.event.location }}</small></span><br>
-                            </div>
-                            <div>
-                                <button class="btn btn-primary" @click="deleteTicket(`${ticket.id}`)">Delete
-                                    Ticket</button>
-                            </div>
-                        </div>
-                    </div>
-                <!-- </RouterLink> -->
-            </div>
+            <UserTicketCard :ticket="ticket"/>
         </div>
     </section>
     <div class="row">

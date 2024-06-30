@@ -1,16 +1,16 @@
 <script setup>
 import { computed } from 'vue';
-import { Event } from '../models/Event.js';
 import { AppState } from '../AppState.js';
-import { eventService } from '../services/EventService.js';
 import Pop from '../utils/Pop.js';
 import { logger } from '../utils/Logger.js';
+import { ticketService } from '../services/TicketService.js';
+import { Ticket } from '../models/Ticket.js';
 
-const eventProp = defineProps({event: {type: Event, required: true}})
+const ticketProp = defineProps({event: {type: Event}, ticket: {type: Ticket, required: true}})
 const userProfile = computed(()=> AppState.account)
 
 const colorType = computed(()=>{
-    switch(eventProp.event.type){
+    switch(ticketProp.ticket.event.type){
         case 'digital':
             return '#17a2b8'
         case 'convention':
@@ -24,41 +24,41 @@ const colorType = computed(()=>{
     }
 })
 
-async function cancelEvent(eventId){
-        try {
-            const confirmation = await Pop.confirm('Do you wan to cancel your event?')
-            if(!confirmation) return
-            await eventService.cancelEvent(eventId)
-        } catch (error) {
-            Pop.toast('unable to cancel', 'error')
-        logger.log('Unable to cancel', error)
-        }
+async function deleteTicket(ticketId){
+    try {
+        Pop.confirm('Do you want to cancel your ticket?')
+        if (!confirm) return
+        await ticketService.deleteTicket(ticketId)
+    } catch (error) {
+        Pop.toast('unable to delete ticket', 'error')
+        logger.log('Unable to delete ticket', error)
     }
+}
 
 </script>
 
 
 <template>
-        <RouterLink :to="{name: 'Event Details', params: {eventId: event.id}}">
+        <RouterLink :to="{name: 'Event Details', params: {eventId: ticket.event.id}}">
             <div class="card rounded">
-                <div class="card-image-top eventimage rounded-top pt-1" :style="{backgroundImage: `url(${event.coverImg})`}">
-                    <span class="bgcolor text-light p-1 rounded">{{ event.type }}</span> 
-                    <span v-if="event.isCanceled === true" class="bg-danger text-light p-1 rounded">CANCELED</span>
+                <div class="card-image-top eventimage rounded-top pt-1" :style="{backgroundImage: `url(${ticket.event.coverImg})`}">
+                    <span class="bgcolor text-light p-1 rounded">{{ ticket.event.type }}</span> 
+                    <span v-if="ticket.event.isCanceled === true" class="bg-danger text-light p-1 rounded">CANCELED</span>
                     <span v-else class="bg-success text-light p-1 rounded">OPEN</span>
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="card-title col-10"><strong>{{ event.name }}</strong></div>
+                        <div class="card-title col-10"><strong>{{ ticket.event.name }}</strong></div>
                         <div class="text-end col-2">
                             </div>
                     </div>
-                    <div class="card-subtitle"><span>Hosted by {{ event.creator.name }}</span></div>
+                    <div class="card-subtitle"><span>Hosted by {{ ticket.event.creator.name }}</span></div>
                     <div class="card-description pb-1">
-                        <span>{{ event.startDate }} - <small>{{ event.location }}</small></span><br>
-                        <span>{{ event.ticketCount }} people are going</span>
+                        <span>{{ ticket.event.startDate }} - <small>{{ ticket.event.location }}</small></span><br>
+                        <span>{{ ticket.event.ticketCount }} people are going</span>
                     </div>
-                    <div v-if="event.creatorId == userProfile.id">
-                        <button class="btn btn-danger" @click="cancelEvent(event.id)">CANCEL EVENT</button>
+                    <div v-if="ticket.event.creatorId == userProfile.id">
+                        <button class="btn btn-danger" @click="deleteTicket(ticket.id)">CANCEL EVENT</button>
                     </div>
                 </div>
             </div>
