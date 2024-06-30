@@ -34,6 +34,9 @@ async function setActiveProfile(profile){
 
 <style lang="scss" scoped>
 .ticketHolder{
-    max-height: 25px;
+    height: 25px;
+    width: 25px;
+    object-fit: cover;
+    object-position: center;
 }
 </style>

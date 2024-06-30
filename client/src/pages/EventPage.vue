@@ -165,7 +165,7 @@ onUnmounted(()=>{
                     <div v-if="AppState.account">
                         <div v-if="userTicket?.accountId == userProfile.id" class="bg-success rounded p-2">
                             <h4>{{ attending }}</h4>
-                            <button class="btn btn-warning" @click="deleteTicket">Cancel</button>
+                            <button class="btn btn-warning btn-outline-dark" @click="deleteTicket">Cancel</button>
                         </div>
                         <div v-if="activeEvent.isCanceled === false && activeEvent.capacity != activeEvent.ticketCount && userTicket?.accountId != userProfile.id" class="bg-primary rounded p-2">
                             <h4>You know you want to go</h4>
@@ -173,9 +173,9 @@ onUnmounted(()=>{
                             <button class="btn btn-secondary" @click="createTicket">Ticket</button>
                         </div>
                     </div>
-                    <div>
-                        <p>Attendees</p>
-                        <div class="bg-warning rounded p-2 container-fluid">
+                    <div class="bg-warning mt-2 rounded">
+                        <div class="rounded p-2 container-fluid">
+                            <p><strong>Attendees</strong></p>
                             <div v-for="ticket in tickets" :key="ticket.id">
                                 <TicketHoldersCard :ticket="ticket"/>
                             </div>
