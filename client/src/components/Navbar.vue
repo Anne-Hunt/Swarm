@@ -18,12 +18,11 @@ function toggleTheme() {
 </script>
 
 <template>
-
 <nav class="navbar navbar-lg bg-primary pt-0 shadow">
   <div class="container-fluid mt-0 pt-0">
     <router-link class="navbar-brand" :to="{ name: 'Home' }">
           <div class="text-light front">
-            <div class="rounded-circle border border-5 border-success shadow">
+            <div class="rounded-circle border border-5 border-warning shadow">
               <div class="rounded-circle border border-light bg-primary fontpop">
                 <i class="mdi mdi-bee fs-1 p-2"></i>
               </div>

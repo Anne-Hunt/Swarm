@@ -5,6 +5,11 @@ import { logger } from '../utils/Logger'
 import { api } from './AxiosService'
 
 class ProfileService {
+  async setActiveProfile(profileId) {
+      const response = await api.get(`profile/${profileId}`)
+      const profile = new Profile(response.data)
+      AppState.activeProfile = profile
+  }
   async getProfiles(eventId) {
       const response = await api.get(`api/events/${eventId}/tickets`)
       logger.log('getting profiles for tickets', response.data)

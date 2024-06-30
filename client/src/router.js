@@ -25,13 +25,13 @@ const routes = [
   {
     path:'/event/:eventId',
     name: 'Event Details',
-    component: loadPage('EventPage')
+    component: loadPage('EventPage'),
+    beforeEnter: authSettled
   },
   {
-    path: '/profile',
+    path: '/profile/:profileId',
     name: 'Profile',
-    component: loadPage('ProfilePage'),
-    beforeEnter: authSettled
+    component: loadPage('ProfilePage')
   }
 ]
 

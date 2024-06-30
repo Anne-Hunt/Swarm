@@ -3,17 +3,14 @@ import { computed } from 'vue';
 import { Event } from '../models/Event.js';
 import { AppState } from '../AppState.js';
 import { eventService } from '../services/EventService.js';
-import { ticketService } from '../services/TicketService.js';
 import Pop from '../utils/Pop.js';
 import { logger } from '../utils/Logger.js';
-import { Ticket } from '../models/Ticket.js';
 
-const eventProps = defineProps({event: {type: Event, required: true}})
+const eventProp = defineProps({event: {type: Event, required: true}})
 const userProfile = computed(()=> AppState.account)
-const eventimage = computed(()=> `url(${event.coverImg})`)
 
 const colorType = computed(()=>{
-    switch(eventProps.event.type){
+    switch(eventProp.event.type){
         case 'digital':
             return '#17a2b8'
         case 'convention':
@@ -27,15 +24,16 @@ const colorType = computed(()=>{
     }
 })
 
-async function setActiveEvent(event){
-    try {
-      AppState.activeEvent = event
+async function cancelEvent(eventId){
+        try {
+            const confirmation = await Pop.confirm('Do you wan to cancel your event?')
+            if(!confirmation) return
+            await eventService.cancelEvent(eventId)
+        } catch (error) {
+            Pop.toast('unable to cancel', 'error')
+        logger.log('Unable to cancel', error)
+        }
     }
-    catch (error){
-      Pop.error(error);
-      logger.log("unable to set active Event", error)
-    }
-}
 
 </script>
 
@@ -43,7 +41,7 @@ async function setActiveEvent(event){
 <template>
         <RouterLink :to="{name: 'Event Details', params: {eventId: event.id}}">
             <div class="card rounded">
-                <div class="card-image-top eventimage rounded-top justify-content-between">
+                <div class="card-image-top eventimage rounded-top pt-1" :style="{backgroundImage: `url(${event.coverImg})`}">
                     <span class="bgcolor text-light p-1 rounded">{{ event.type }}</span> 
                     <span v-if="event.isCanceled === true" class="bg-danger text-light p-1 rounded">CANCELED</span>
                     <span v-else class="bg-success text-light p-1 rounded">OPEN</span>
@@ -55,7 +53,7 @@ async function setActiveEvent(event){
                             </div>
                     </div>
                     <div class="card-subtitle"><span>Hosted by {{ event.creator.name }}</span></div>
-                    <div class="card-description">
+                    <div class="card-description pb-1">
                         <span>{{ event.startDate }} - <small>{{ event.location }}</small></span><br>
                         <span>{{ event.ticketCount }} people are going</span>
                     </div>
@@ -67,7 +65,6 @@ async function setActiveEvent(event){
 
 <style lang="scss" scoped>
 .eventimage{
-    background-image: v-bind(eventimage);
     background-position: center;
     background-size: cover;
     height: 25dvh;

@@ -36,12 +36,12 @@ function resetForm(){
 
 
 <template>
-<form @submit.prevent="createComment">
-    <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Leave a Comment" aria-label="Comment input and button" aria-describedby="button-addon1" v-model="commentFormData.body">
-        <button class="btn btn-outline-dark" type="submit" id="button-addon1">Comment</button>
-</div>
-</form>
+        <form @submit.prevent="createComment">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Leave a Comment" aria-label="Comment input and button" aria-describedby="button-addon1" v-model="commentFormData.body">
+                <button class="btn btn-outline-dark bg-warning" type="submit" id="button-addon1">Comment</button>
+            </div>
+        </form>
 </template>
 
 

@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, onUnmounted } from 'vue';
+import { computed, onBeforeMount, onMounted, onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { logger } from '../utils/Logger.js';
 import { eventService } from '../services/EventService.js';
@@ -7,14 +7,9 @@ import { commentService } from '../services/CommentService.js';
 import { ticketService } from '../services/TicketService.js';
 import { AppState } from '../AppState.js';
 import Pop from '../utils/Pop.js';
-import { Event } from '../models/Event.js';
-import { Comment } from '../models/Comment.js';
-import { Profile } from '../models/Profile.js';
-import { Ticket } from '../models/Ticket.js';
-import { Account } from '../models/Account.js';
-import { onAuthLoaded } from '@bcwdev/auth0provider-client';
 
 const activeEvent = computed(()=> AppState.activeEvent)
+// const eventType = AppState.activeEvent?.type
 const eventImg = computed(()=> `url(${AppState.activeEvent?.coverImg})`)
 const comments = computed(()=>AppState.comments)
 const tickets = computed(()=> AppState.eventTickets)
@@ -27,10 +22,12 @@ const soldOut = computed(()=> ((AppState.activeEvent.capacity == AppState.active
 // const soldOutTickets = computed(()=> (if(AppState.activeEvent.capacity == AppState.activeEvent.ticketCount) return soldOutText))
 const route = useRoute()
 
+
 async function getActiveEvent(){
 try {
     const eventId = route.params.eventId
     await eventService.setActiveEvent(eventId)
+    logger.log("found event", AppState.activeEvent)
 } catch (error) {
     Pop.toast('Unable to load Event', 'error')
     logger.log('Unable to load event', error)
@@ -108,13 +105,12 @@ async function getAllTickets(){
         logger.log('unable to get all tickets', error)
   }
 }
+onBeforeMount(()=>{
+})
 
 onMounted(()=>{
     getActiveEvent()
     getComments()
-})
-
-onAuthLoaded(()=>{
     getUserTicket()
     getAllTickets()
 })
@@ -126,18 +122,19 @@ onUnmounted(()=>{
 
 
 <template>
-    <section class="row justify-content-center mb-2">
+    <section class="row justify-content-center my-2 p-0 mx-0">
         <div v-if="activeEvent" class="col-12 col-md-8">
-            <section class="row bgimage rounded">
+            <section class="row bgimage flex-column justify-content-between rounded">
                 <span v-if="activeEvent.isCanceled === true" class=" text-light"><h3><strong>CANCELED</strong></h3></span>
                 <span v-else class="text-light fontfix"><h3><strong>{{ soldOut }}</strong></h3></span>
+                <span class="text-light fontfix type"><strong>{{ activeEvent?.type }}</strong></span>
             </section>
             <section class="row mb-2">
                 <div class="col-8 p-2">
                     <div class="row justify-content-between mt-2">
-                            <div class="col-9"><h2>{{ activeEvent.name }}</h2></div>
+                            <div class="col-9"><h2>{{ activeEvent?.name }}</h2></div>
                             <div class="col-3 text-center">
-                                <span class="rounded-pill bg-primary p-1">{{ activeEvent.type }}</span>
+                                <!-- <CategoryEvent/> -->
                             </div>
                         <div v-if="activeEvent.creatorId == userProfile?.id" class="col-4">
                             <div class="dropdown">
@@ -150,12 +147,12 @@ onUnmounted(()=>{
                     </div>
                     <div v-if="activeEvent" class="row">
                         <div class="col-12">
-                            <p> {{ activeEvent.description }}</p>
-                            <p><span class="fs-5 pe-2">Date & Time</span>{{ activeEvent.startDate }} at{{ activeEvent.time }}</p>
-                            <p><span class="fs-5 pe-2">Location</span>{{ activeEvent.location }}</p>
+                            <p> {{ activeEvent?.description }}</p>
+                            <p><span class="fs-5 pe-2">Date</span>{{ activeEvent?.startDate }}</p>
+                            <p><span class="fs-5 pe-2">Location</span>{{ activeEvent?.location }}</p>
                         </div>
                     </div>
-                    <section class="row bg-primary pt-2 mb-1 rounded">
+                    <section class="row pt-2 mb-1 rounded">
                         <div v-if="AppState.account">
                             <CommentForm/>
                         </div>
@@ -168,7 +165,7 @@ onUnmounted(()=>{
                     <div v-if="AppState.account">
                         <div v-if="userTicket?.accountId == userProfile.id" class="bg-success rounded p-2">
                             <h4>{{ attending }}</h4>
-                            <button class="btn btn-warning" @click="deleteTicket">Cancel</button>
+                            <button class="btn btn-warning btn-outline-dark" @click="deleteTicket">Cancel</button>
                         </div>
                         <div v-if="activeEvent.isCanceled === false && activeEvent.capacity != activeEvent.ticketCount && userTicket?.accountId != userProfile.id" class="bg-primary rounded p-2">
                             <h4>You know you want to go</h4>
@@ -176,20 +173,11 @@ onUnmounted(()=>{
                             <button class="btn btn-secondary" @click="createTicket">Ticket</button>
                         </div>
                     </div>
-                    <div>
-                        <p>Attendees</p>
-                        <div class="bg-primary rounded p-2 container-fluid">
+                    <div class="bg-warning mt-2 rounded">
+                        <div class="rounded p-2 container-fluid">
+                            <p class="text-info"><strong>Attendees</strong></p>
                             <div v-for="ticket in tickets" :key="ticket.id">
-                                <div :ticket="ticket">
-                                    <div class="row">
-                                        <div class="col-3">
-        <img class="ticketHolder rounded-circle border border-2" :src="ticket.profile?.picture" :alt="ticket.profile?.name">
-    </div>
-    <div class="col-8">
-        <span><strong>{{ ticket.profile?.name }}</strong></span>
-    </div>
-</div>
-                                </div>
+                                <TicketHoldersCard :ticket="ticket"/>
                             </div>
                         </div>
                     </div>
@@ -219,5 +207,9 @@ onUnmounted(()=>{
 
 .ticketHolder{
     max-height: 25px;
+}
+
+.type{
+    text-transform: uppercase;
 }
 </style>
