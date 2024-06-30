@@ -65,6 +65,7 @@ async function deleteTicket(ticketId){
 
 onMounted(()=>{
     getTickets()
+    getEventsByCreator()
 })
 </script>
 
@@ -113,41 +114,8 @@ onMounted(()=>{
     </div>
     <section class="row p-5">
             <div class="col-md-4 col-6 p-1" v-for="event in events" :key="event.id">
-                <div :event="event">
-                    <div class="card rounded">
-                            <RouterLink :to="{name: 'Event Details', params: {eventId: event.id}}">
-                                <img class="card-image-top eventimage rounded-top justify-content-between"
-                                    :src="event.coverImg" />
-                            <div class="justify-content-between">
-                                <span class="bgcolor text-light p-1 rounded">{{ event.type }}</span>
-                                <span v-if="event.isCanceled === true" class="bg-danger text-light p-1 rounded">CANCELED</span>
-                                <span v-else class="bg-success text-light p-1 rounded">OPEN</span>
-                            </div>
-                        </RouterLink>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="card-title col-10"><strong>{{ event.name }}</strong></div>
-                                    <div v-if="event.creatorId == AppState.account?.id" class="text-end col-2">
-                                        <span class="dropdown">
-                                            <span class="dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                                aria-expanded="false"><i class="mdi mdi-dots-horizontal"></i></span>
-                                            <ul class="dropdown-menu">
-                                                <li><button class="dropdown-item"
-                                                        @click="cancelEvent(`${event.id}`)">Cancel Event</button></li>
-                                            </ul>
-                                        </span>
-                                    </div>
-                                    <div v-else></div>
-                                </div>
-                                <div class="card-subtitle"><span>Hosted by {{ event.creator.name }}</span></div>
-                                <div class="card-description">
-                                    <span>{{ event.startDate }} - <small>{{ event.location }}</small></span><br>
-                                    <span>{{ event.ticketCount }} people are going</span>
-                                </div>
-                            </div>
-                        </div>
-                </div>
-            </div>
+                <UserEventCard :event="event"/>
+              </div>
     </section>
     </div>
     <div v-else>
