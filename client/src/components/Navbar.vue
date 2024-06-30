@@ -18,7 +18,6 @@ function toggleTheme() {
 </script>
 
 <template>
-
 <nav class="navbar navbar-lg bg-primary pt-0 shadow">
   <div class="container-fluid mt-0 pt-0">
     <router-link class="navbar-brand" :to="{ name: 'Home' }">

@@ -24,8 +24,8 @@ async function logout() {
       <div class="dropdown my-2 my-lg-0">
         <div type="button" class="border-0 selectable no-select" data-bs-toggle="dropdown"
           aria-expanded="false">
-          <div v-if="account?.picture || user?.picture">
-            <img :src="account?.picture || user?.picture" alt="account photo" height="40" width="40" class="rounded-circle border border-light border-2 shadow" />
+          <div v-if="account?.picture">
+            <img :src="account?.picture" alt="account photo" class="rounded-circle login border border-light border-2 shadow" />
           </div>
         </div>
         <div class="dropdown-menu dropdown-menu-sm-end dropdown-menu-start p-0" aria-labelledby="authDropdown">
@@ -33,11 +33,6 @@ async function logout() {
             <router-link :to="{ name: 'Account' }">
               <div class="list-group-item dropdown-item list-group-item-action">
                 Manage Account
-              </div>
-            </router-link>
-            <router-link :to="{ name: 'Profile' }">
-              <div class="list-group-item dropdown-item list-group-item-action">
-                Visit Profile
               </div>
             </router-link>
             <div class="list-group-item dropdown-item list-group-item-action text-danger selectable" @click="logout">
@@ -51,4 +46,11 @@ async function logout() {
   </span>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+img.login {
+  width: 40px;
+  height: 40px;
+  object-position: center;
+  object-fit: cover;
+}
+</style>

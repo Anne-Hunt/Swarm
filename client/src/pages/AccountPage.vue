@@ -70,20 +70,20 @@ onMounted(()=>{
 
 <template>
   <div class="about text-center">
-    <div v-if="account" class="row">
-      <div class="col-md-6 col-12 p-2">
-        <h1>Welcome {{ account.name }}</h1>
-        <img class="rounded circle" :src="account.picture" alt="" />
-        <p>{{ account.email }}</p>
-
-        <i class="mdi mdi-dots-horizontal fs-1 btn" data-bs-toggle="modal"
-        data-bs-target="#modalId"></i>
+    <div v-if="account" class="row p-0 m-0">
+      <div class="col-12 bg-warning text-light">
+        <h1 class="py-2">Welcome {{ account.name }}</h1>
+        <img class="rounded-circle profile border border-5 border-light" :src="account.picture" alt="" />
+        <div class="text-end text-bottom text-light">
+          <i class="mdi mdi-dots-horizontal fs-1 btn text-end text-bottom text-light" data-bs-toggle="modal"
+          data-bs-target="#modalId"></i>
+        </div>
       </div>
 
-      <div class="row">
+      <div class="row p-3">
         <h2>Your Tickets</h2>
     </div>
-    <section class="row p-5">
+    <section class="row px-3">
         <div v-for="ticket in tickets" :key="ticket.id" class="col-6 col-md-4 p-1">
             <div :ticket="ticket">
                 <!-- <RouterLink :to="{name: 'Event Details', params: {eventId: ticket.event.id}}"> -->
@@ -159,6 +159,9 @@ onMounted(()=>{
 
 <style scoped lang="scss">
 img {
-  max-width: 100px;
+  width: 100px;
+  height: 100px;
+  object-position: center;
+  object-fit: cover;
 }
 </style>
