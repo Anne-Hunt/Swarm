@@ -41,7 +41,7 @@ async function setActiveEvent(event){
 
 
 <template>
-        <RouterLink :to="{name: 'Event Details', params: {eventId: event.id}}" @click="setActiveEvent(event)">
+        <RouterLink :to="{name: 'Event Details', params: {eventId: event.id}}">
             <div class="card rounded">
                 <div class="card-image-top eventimage rounded-top justify-content-between">
                     <span class="bgcolor text-light p-1 rounded">{{ event.type }}</span> 

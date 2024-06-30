@@ -9,7 +9,7 @@ import { AppState } from '../AppState.js';
 import Pop from '../utils/Pop.js';
 
 const activeEvent = computed(()=> AppState.activeEvent)
-const eventType = AppState.activeEvent.type
+const eventType = AppState.activeEvent?.type
 const eventImg = computed(()=> `url(${AppState.activeEvent?.coverImg})`)
 const comments = computed(()=>AppState.comments)
 const tickets = computed(()=> AppState.eventTickets)
@@ -42,6 +42,7 @@ async function getActiveEvent(){
 try {
     const eventId = route.params.eventId
     await eventService.setActiveEvent(eventId)
+    logger.log("found event", AppState.activeEvent)
 } catch (error) {
     Pop.toast('Unable to load Event', 'error')
     logger.log('Unable to load event', error)
@@ -120,10 +121,10 @@ async function getAllTickets(){
   }
 }
 onBeforeMount(()=>{
-    getActiveEvent()
 })
 
 onMounted(()=>{
+    getActiveEvent()
     getComments()
     getUserTicket()
     getAllTickets()
@@ -136,7 +137,7 @@ onUnmounted(()=>{
 
 
 <template>
-    <section class="row justify-content-center mb-2">
+    <section class="row justify-content-center my-2 p-0 mx-0">
         <div v-if="activeEvent" class="col-12 col-md-8">
             <section class="row bgimage rounded">
                 <span v-if="activeEvent.isCanceled === true" class=" text-light"><h3><strong>CANCELED</strong></h3></span>
@@ -145,9 +146,9 @@ onUnmounted(()=>{
             <section class="row mb-2">
                 <div class="col-8 p-2">
                     <div class="row justify-content-between mt-2">
-                            <div class="col-9"><h2>{{ activeEvent.name }}</h2></div>
+                            <div class="col-9"><h2>{{ activeEvent?.name }}</h2></div>
                             <div class="col-3 text-center">
-                                <span class="rounded-pill bg-primary p-1">{{ activeEvent.type }}</span>
+                                <span class="rounded-pill bg-primary p-1">{{ activeEvent?.type }}</span>
                             </div>
                         <div v-if="activeEvent.creatorId == userProfile?.id" class="col-4">
                             <div class="dropdown">
@@ -160,12 +161,12 @@ onUnmounted(()=>{
                     </div>
                     <div v-if="activeEvent" class="row">
                         <div class="col-12">
-                            <p> {{ activeEvent.description }}</p>
-                            <p><span class="fs-5 pe-2">Date & Time</span>{{ activeEvent.startDate }} at{{ activeEvent.time }}</p>
-                            <p><span class="fs-5 pe-2">Location</span>{{ activeEvent.location }}</p>
+                            <p> {{ activeEvent?.description }}</p>
+                            <p><span class="fs-5 pe-2">Date & Time</span>{{ activeEvent?.startDate }} at{{ activeEvent?.time }}</p>
+                            <p><span class="fs-5 pe-2">Location</span>{{ activeEvent?.location }}</p>
                         </div>
                     </div>
-                    <section class="row bg-primary pt-2 mb-1 rounded">
+                    <section class="row pt-2 mb-1 rounded">
                         <div v-if="AppState.account">
                             <CommentForm/>
                         </div>
@@ -188,7 +189,7 @@ onUnmounted(()=>{
                     </div>
                     <div>
                         <p>Attendees</p>
-                        <div class="bg-primary rounded p-2 container-fluid">
+                        <div class="bg-warning rounded p-2 container-fluid">
                             <div v-for="ticket in tickets" :key="ticket.id">
                                 <TicketHoldersCard :ticket="ticket"/>
                             </div>
