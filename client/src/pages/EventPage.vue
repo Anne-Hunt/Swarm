@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, onUnmounted } from 'vue';
+import { computed, onBeforeMount, onMounted, onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { logger } from '../utils/Logger.js';
 import { eventService } from '../services/EventService.js';
@@ -7,14 +7,9 @@ import { commentService } from '../services/CommentService.js';
 import { ticketService } from '../services/TicketService.js';
 import { AppState } from '../AppState.js';
 import Pop from '../utils/Pop.js';
-import { Event } from '../models/Event.js';
-import { Comment } from '../models/Comment.js';
-import { Profile } from '../models/Profile.js';
-import { Ticket } from '../models/Ticket.js';
-import { Account } from '../models/Account.js';
-import { onAuthLoaded } from '@bcwdev/auth0provider-client';
 
 const activeEvent = computed(()=> AppState.activeEvent)
+const eventType = AppState.activeEvent.type
 const eventImg = computed(()=> `url(${AppState.activeEvent?.coverImg})`)
 const comments = computed(()=>AppState.comments)
 const tickets = computed(()=> AppState.eventTickets)
@@ -26,6 +21,22 @@ const ticketAvailable = `TICKETS AVAILABLE`
 const soldOut = computed(()=> ((AppState.activeEvent.capacity == AppState.activeEvent.ticketCount) ? soldOutText : ticketAvailable))
 // const soldOutTickets = computed(()=> (if(AppState.activeEvent.capacity == AppState.activeEvent.ticketCount) return soldOutText))
 const route = useRoute()
+
+
+const colorType = computed(()=>{
+    switch(eventType){
+        case 'digital':
+            return '#17a2b8'
+        case 'convention':
+            return '#f7c32e'
+        case 'concert':
+            return '#aa49f9'
+        case 'sport':
+            return '#d6293e'
+        case 'meeting':
+            return '#0cbc87'
+    }
+})
 
 async function getActiveEvent(){
 try {
@@ -108,13 +119,12 @@ async function getAllTickets(){
         logger.log('unable to get all tickets', error)
   }
 }
-
-onMounted(()=>{
+onBeforeMount(()=>{
     getActiveEvent()
-    getComments()
 })
 
-onAuthLoaded(()=>{
+onMounted(()=>{
+    getComments()
     getUserTicket()
     getAllTickets()
 })
@@ -210,5 +220,9 @@ onUnmounted(()=>{
 
 .ticketHolder{
     max-height: 25px;
+}
+
+.bgcolor{
+    background-color: v-bind(colorType);
 }
 </style>

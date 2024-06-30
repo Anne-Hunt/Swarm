@@ -12,48 +12,6 @@ const eventProps = defineProps({event: {type: Event, required: true}})
 const userProfile = computed(()=> AppState.account)
 const eventimage = computed(()=> `url(${event.coverImg})`)
 
-// const categoryIcon = computed(()=> {
-//     if(event.type == categoryType.type )
-//   return categoryType.icon)
-
-// const icons = computed(()=>{
-//     switch(eventProps.event.type){
-//         case 'digital':
-//             return `${mdi mdi-television}`
-//         case 'convention':
-//             return `${mdi mdi-earth}`
-//         case 'concert':
-//             return `${mdi mdi-music}`
-//         case 'sport':
-//             return `${mdi mdi-soccer}`
-//         case 'meeting':
-//             return `${mdi mdi-group}`
-//     }
-// })
-
-// const categoryType = [
-//   {
-//     type: 'digital',
-//     icon: 'mdi mdi-television text-light'
-//   },
-//   {
-//     type: 'convention',
-//     icon: 'mdi mdi-earth text-primary'
-//   },
-//   {
-//     type: 'concert',
-//     icon: 'mdi mdi-music text-secondary'
-//   },
-//   {
-//     type: 'sport',
-//     icon: 'mdi mdi-soccer text-warning'
-//   },
-//   {
-//     type: 'meeting',
-//     icon: 'mdi mdi-group text-danger'
-//   }
-// ]
-
 const colorType = computed(()=>{
     switch(eventProps.event.type){
         case 'digital':
@@ -69,11 +27,21 @@ const colorType = computed(()=>{
     }
 })
 
+async function setActiveEvent(event){
+    try {
+      AppState.activeEvent = event
+    }
+    catch (error){
+      Pop.error(error);
+      logger.log("unable to set active Event", error)
+    }
+}
+
 </script>
 
 
 <template>
-        <RouterLink :to="{name: 'Event Details', params: {eventId: event.id}}">
+        <RouterLink :to="{name: 'Event Details', params: {eventId: event.id}}" @click="setActiveEvent(event)">
             <div class="card rounded">
                 <div class="card-image-top eventimage rounded-top justify-content-between">
                     <span class="bgcolor text-light p-1 rounded">{{ event.type }}</span> 
@@ -102,7 +70,7 @@ const colorType = computed(()=>{
     background-image: v-bind(eventimage);
     background-position: center;
     background-size: cover;
-    height: 15dvh;
+    height: 25dvh;
 }
 
 .bgcolor{
