@@ -6,4 +6,4 @@ services:
     env_file:
       - swarm-env
     ports:
-      - "3002:3000"
+      - "3001:3000"
