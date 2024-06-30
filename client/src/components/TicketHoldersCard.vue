@@ -1,13 +1,14 @@
 <script setup>
+import { AppState } from '../AppState.js';
 import { Ticket } from '../models/Ticket.js';
 import { profileService } from '../services/ProfileService.js';
 import Pop from '../utils/Pop.js';
 
 defineProps({ticket: Ticket})
 
-async function setActiveProfile(profileId){
+async function setActiveProfile(profile){
     try {
-      await profileService.setActiveProfile(profileId)
+      AppState.activeProfile = profile
     }
     catch (error){
       Pop.error("Unable to make profile active", 'error');
@@ -18,7 +19,7 @@ async function setActiveProfile(profileId){
 
 
 <template>
-<RouterLink :to="{name: 'Profile', params: {profileId: ticket.accountId}}" @click="setActiveProfile(ticket.profile.id)">
+<RouterLink :to="{name: 'Profile', params: {profileId: ticket.accountId}}" @click="setActiveProfile(ticket.profile)">
     <div class="row">
         <div class="col-3">
             <img class="ticketHolder rounded-circle border border-2" :src="ticket.profile?.picture" :alt="ticket.profile?.name">

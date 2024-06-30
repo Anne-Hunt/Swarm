@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted } from 'vue';
+import { computed, onBeforeMount, onMounted } from 'vue';
 import Pop from '../utils/Pop.js';
 import { logger } from '../utils/Logger.js';
 import { ticketService } from '../services/TicketService.js';
@@ -7,6 +7,7 @@ import { eventService } from '../services/EventService.js';
 import { AppState } from '../AppState.js';
 import { onAuthLoaded } from '@bcwdev/auth0provider-client';
 import { useRoute } from 'vue-router';
+import { profileService } from '../services/ProfileService.js';
 
 const profile = computed(()=>AppState.activeProfile)
 const events = computed(()=> AppState.userEvents)
@@ -25,7 +26,7 @@ async function getEventsByCreator(){
 
 async function getTickets(){
   try {
-        const profileId = route.params.routeId
+        const profileId = AppState.activeProfile.id
         await ticketService.getAllTickets()
         const tickets = AppState.tickets.filter(ticket => profileId == ticket.accountId)
         AppState.usersTickets = tickets
@@ -35,20 +36,32 @@ async function getTickets(){
   }
 }
 
+async function setActiveProfile(profileId) {
+  try {
+        await profileService.setActiveProfile(profileId)
+  } catch (error) {
+        // Pop.toast('unable to get all tickets', 'error')
+        logger.log('unable to get all tickets', error)
+  }
+}
+
 onMounted(()=>{
     getTickets()
-})
-
-onAuthLoaded(()=>{
     getEventsByCreator()
 })
+
+onBeforeMount(()=>{
+  setActiveProfile(route.params.profileId)
+}
+)
+
 </script>
 
 
 <template>
     <div class="about text-center">
       <div v-if="AppState.activeProfile" class="row p-0 m-0">
-        <div class="col-12 bg-warning text-light shadow">
+        <div class="col-12 bg-warning text-light shadow pb-2">
           <h1 class="py-2 fontfix">Meet {{ profile.name }}</h1>
           <img class="rounded-circle profile border border-5 border-light shadow" :src="profile.picture" alt="" />
         </div>
@@ -58,7 +71,7 @@ onAuthLoaded(()=>{
       </div>
       <section class="row px-3">
           <div v-for="ticket in tickets" :key="ticket.id" class="col-6 col-md-4 p-1">
-              <UserTicketCard :ticket="ticket"/>
+              <ProfileTicketCard :ticket="ticket"/>
           </div>
       </section>
       <div class="row">
