@@ -61,16 +61,7 @@ async function deleteTicket(ticketId){
 }
 
 
-async function updateAccount(){
-  try {
-    const accountData = formData.value
-    await accountService.updateAccount(accountData)
-  }
-  catch (error){
-    Pop.error("Unable to updated at this time", 'error');
-    logger.log("Unable to complete account update", error)
-  }
-}
+
 
 onMounted(()=>{
     getTickets()
@@ -84,6 +75,9 @@ onMounted(()=>{
         <h1>Welcome {{ account.name }}</h1>
         <img class="rounded circle" :src="account.picture" alt="" />
         <p>{{ account.email }}</p>
+
+        <i class="mdi mdi-dots-horizontal fs-1 btn" data-bs-toggle="modal"
+        data-bs-target="#modalId"></i>
       </div>
 
       <div class="row">
@@ -160,6 +154,7 @@ onMounted(()=>{
       <h1>Loading... <i class="mdi mdi-loading mdi-spin"></i></h1>
     </div>
   </div>
+  <ModalComp><AccountForm></AccountForm></ModalComp>
 </template>
 
 <style scoped lang="scss">
