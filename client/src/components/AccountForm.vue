@@ -18,8 +18,7 @@ const formData = ref({
 async function updateAccount(){
   try {
     const accountData = formData.value
-    const accountId = account.value.id
-    await accountService.updateAccount(accountData, accountId)
+    await accountService.updateAccount(accountData)
   }
   catch (error){
     Pop.error("Unable to updated at this time", 'error');

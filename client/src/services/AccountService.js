@@ -5,9 +5,8 @@ import Pop from '../utils/Pop.js';
 import { api } from './AxiosService'
 
 class AccountService {
-  async updateAccount(accountData, accountId) {
+  async updateAccount(accountData) {
     try {
-      accountData.id = accountId
       const response = await api.put('/account', accountData)
       AppState.account = new Account(response.data)
     }
