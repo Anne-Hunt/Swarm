@@ -12,11 +12,6 @@ const account = computed(() => AppState.account)
 const events = computed(()=> AppState.userEvents)
 const tickets = computed(()=> AppState.usersTickets)
 
-const formData = ref({
-  name: '',
-  picture: '',
-  email: ''
-})
 
 async function getEventsByCreator(){
   try {

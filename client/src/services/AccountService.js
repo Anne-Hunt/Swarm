@@ -11,17 +11,17 @@ class AccountService {
       const response = await api.get('/account')
       AppState.usersTickets = response.data.map(ticket => new Ticket(ticket))
     }
-    catch (error){
+    catch (error) {
       Pop.error("Unable to update", 'error');
       logger.log("unable to get tickets for account", error)
-    }  }
+    }
+  }
   async updateAccount(accountData, accountId) {
     try {
-      accountData.id = accountId
       const response = await api.put('/account', accountData)
       AppState.account = new Account(response.data)
     }
-    catch (error){
+    catch (error) {
       Pop.error("Unable to update", 'error');
       logger.log("unable to get tickets for account", error)
     }
