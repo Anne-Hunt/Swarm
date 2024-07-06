@@ -154,6 +154,7 @@ onUnmounted(()=>{
                     </div>
                     <section class="row p-0 mb-1 rounded border border-info shadow">
                         <div class="bg-info pt-2 rounded-top" v-if="AppState.account">
+                            <h5 class="text-light fontfix">Comments</h5>
                             <CommentForm/>
                         </div>
                         <div v-for="comment in comments" :key="comment.id">
@@ -163,11 +164,11 @@ onUnmounted(()=>{
                 </div>
                 <div class="col-4 p-2">
                     <div v-if="AppState.account">
-                        <div v-if="userTicket?.accountId == userProfile.id" class="bg-success rounded p-2">
+                        <div v-if="userTicket?.accountId == userProfile.id" class="bg-success rounded p-2 shadow">
                             <h4>{{ attending }}</h4>
                             <button class="btn btn-warning btn-outline-dark" @click="deleteTicket">Cancel</button>
                         </div>
-                        <div v-if="activeEvent.isCanceled === false && activeEvent.capacity != activeEvent.ticketCount && userTicket?.accountId != userProfile.id" class="bg-info text-light fontfix rounded p-2">
+                        <div v-if="activeEvent.isCanceled === false && activeEvent.capacity != activeEvent.ticketCount && userTicket?.accountId != userProfile.id" class="bg-info text-light fontfix rounded p-2 shadow">
                             <h4>You know you want to go</h4>
                             <p>Claim your spot!</p>
                             <button class="btn btn-warning border" type="button" @click="createTicket">Ticket</button>
