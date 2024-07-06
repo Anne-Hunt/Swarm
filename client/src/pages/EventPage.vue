@@ -124,7 +124,7 @@ onUnmounted(()=>{
 <template>
     <section class="row justify-content-center my-2 p-0 mx-0">
         <div v-if="activeEvent" class="col-12 col-md-8">
-            <section class="row bgimage flex-column justify-content-between rounded">
+            <section class="row bgimage flex-column justify-content-between rounded p-0 m-0 shadow">
                 <span v-if="activeEvent.isCanceled === true" class=" text-light"><h3><strong>CANCELED</strong></h3></span>
                 <span v-else class="text-light fontfix"><h3><strong>{{ soldOut }}</strong></h3></span>
                 <span class="text-light fontfix type"><strong>{{ activeEvent?.type }}</strong></span>
@@ -152,8 +152,8 @@ onUnmounted(()=>{
                             <p><span class="fs-5 pe-2">Location</span>{{ activeEvent?.location }}</p>
                         </div>
                     </div>
-                    <section class="row pt-2 mb-1 rounded">
-                        <div v-if="AppState.account">
+                    <section class="row p-0 mb-1 rounded border border-info shadow">
+                        <div class="bg-info pt-2 rounded-top" v-if="AppState.account">
                             <CommentForm/>
                         </div>
                         <div v-for="comment in comments" :key="comment.id">
@@ -167,15 +167,15 @@ onUnmounted(()=>{
                             <h4>{{ attending }}</h4>
                             <button class="btn btn-warning btn-outline-dark" @click="deleteTicket">Cancel</button>
                         </div>
-                        <div v-if="activeEvent.isCanceled === false && activeEvent.capacity != activeEvent.ticketCount && userTicket?.accountId != userProfile.id" class="bg-primary rounded p-2">
+                        <div v-if="activeEvent.isCanceled === false && activeEvent.capacity != activeEvent.ticketCount && userTicket?.accountId != userProfile.id" class="bg-info text-light fontfix rounded p-2">
                             <h4>You know you want to go</h4>
                             <p>Claim your spot!</p>
-                            <button class="btn btn-secondary" @click="createTicket">Ticket</button>
+                            <button class="btn btn-warning border" type="button" @click="createTicket">Ticket</button>
                         </div>
                     </div>
-                    <div class="bg-warning mt-2 rounded">
+                    <div class="bg-warning mt-2 rounded shadow">
                         <div class="rounded p-2 container-fluid">
-                            <p class="text-info"><strong>Attendees</strong></p>
+                            <p class="text-dark"><strong>Attendees</strong></p>
                             <div v-for="ticket in tickets" :key="ticket.id">
                                 <TicketHoldersCard :ticket="ticket"/>
                             </div>
@@ -196,13 +196,14 @@ onUnmounted(()=>{
 .bgimage{
   background-color: black;
   background-image: v-bind(eventImg);
+  width: 100%;
   background-position: center;
   height: 40dvh;
-  object-fit: contain;
+  background-size: cover;
 }
 
 .fontfix{
-   text-shadow: 0 5 9 black;
+text-shadow: 1px 1px 4px black;
 }
 
 .ticketHolder{

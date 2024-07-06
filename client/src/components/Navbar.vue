@@ -22,9 +22,9 @@ function toggleTheme() {
   <div class="container-fluid mt-0 pt-0">
     <router-link class="navbar-brand" :to="{ name: 'Home' }">
           <div class="text-light front">
-            <div class="rounded-circle border border-5 border-warning shadow">
-              <div class="rounded-circle border border-light bg-primary fontpop">
-                <i class="mdi mdi-bee fs-1 p-2"></i>
+            <div class="rounded-circle bg-warning border border-5 border-info shadow">
+              <div class="rounded-circle border border-light fontpop">
+                <i class="mdi mdi-bee fs-3 p-2"></i>
               </div>
             </div>
           </div>
@@ -57,7 +57,7 @@ a:hover {
 
 @media screen and (min-width: 576px) {
   nav {
-    height: 75px;
+    height: 65px;
   }
 }
 

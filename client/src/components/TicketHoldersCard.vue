@@ -20,11 +20,11 @@ async function setActiveProfile(profile){
 
 <template>
 <RouterLink :to="{name: 'Profile', params: {profileId: ticket.accountId}}" @click="setActiveProfile(ticket.profile)">
-    <div class="row">
+    <div class="row align-items-center">
         <div class="col-3">
-            <img class="ticketHolder rounded-circle border border-2" :src="ticket.profile?.picture" :alt="ticket.profile?.name">
+            <img class="ticketHolder rounded-circle border border-2 shadow" :src="ticket.profile?.picture" :alt="ticket.profile?.name">
         </div>
-        <div class="col-8">
+        <div class="col-8 text-primary">
             <span><strong>{{ ticket.profile?.name }}</strong></span>
         </div>
     </div>
@@ -34,8 +34,8 @@ async function setActiveProfile(profile){
 
 <style lang="scss" scoped>
 .ticketHolder{
-    height: 25px;
-    width: 25px;
+    height: 30px;
+    width: 30px;
     object-fit: cover;
     object-position: center;
 }

@@ -43,6 +43,18 @@ import Navbar from './components/Navbar.vue'
   --main-height: calc(100vh - 32px - 64px);
 }
 
+.colors{
+  color: rgb(126, 27, 198, 1);
+  color: rgb(12, 188, 135, 1);
+  color: rgb(247, 195, 46, 1);
+  color: rgb(33, 190, 214, 1);
+  color: rgb(214, 41, 62, 1);
+  color: rgb(47, 255, 154, 1);
+  color: rgb(170, 73, 249, 1);
+  color: rgb(255, 218, 107, 1);
+  color: rgb(124, 119, 224, 1);
+  color: rgb(234, 134, 143, 1);
+}
 
 footer {
   display: grid;
