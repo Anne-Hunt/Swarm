@@ -10,15 +10,16 @@ import { AppState } from '../AppState.js';
 const account = computed(() => AppState.account)
 
 const formData = ref({
-  name: '',
-  picture: '',
-  email: ''
+  name: account.value.name,
+  picture: account.value.picture,
+  email: account.value.email
 })
 
 async function updateAccount(){
   try {
     const accountData = formData.value
     await accountService.updateAccount(accountData)
+    Pop.success("Account updated!")
   }
   catch (error){
     Pop.error("Unable to updated at this time", 'error');

@@ -53,13 +53,19 @@ onMounted(()=>{
 <template>
   <div class="about text-center">
     <div v-if="account" class="row p-0 m-0">
-      <div class="col-12 bg-warning text-light shadow">
-        <h1 class="py-2 fontfix">Welcome {{ account.name }}</h1>
-        <img class="rounded-circle profile border border-5 border-light shadow" :src="account.picture" alt="" />
-        <div class="text-end text-bottom text-light">
-          <i class="mdi mdi-dots-horizontal fs-1 btn text-end text-bottom text-light fontfix" data-bs-toggle="modal"
-          data-bs-target="#modalId"></i>
+      <div class="col-12 headerImg text-light shadow p-0 m-0">
+        <div class="headImg px-0 py-5 m-0">
+          <div class="border border-dark border-1 rounded-circle p-0 m-0 shadow d-inline-block">
+            <div class="border border-light border-5 rounded-circle p-0 m-0 shadow d-inline-block">
+              <img class="rounded-circle border border-1 border-dark p-0 m-0" :src="account.picture" alt="" />
+            </div>
+          </div>
+          <h1 class="p-0 m-0 fontfix">Welcome {{ account.name }}</h1>
         </div>
+      </div>
+      <div class="text-end text-bottom text-light p-0 m-0">
+        <i class="mdi mdi-dots-horizontal fs-1 btn text-end text-bottom text-light fontfix" data-bs-toggle="modal"
+        data-bs-target="#modalId"></i>
       </div>
 
       <div class="row p-3">
@@ -93,7 +99,46 @@ img {
   object-position: center;
   object-fit: cover;
 }
+.headerImg{
+  background: rgb(247,195,46);
+  background: linear-gradient(131deg,
+    rgb(214, 41, 62, 1) 
+    0%, 
+    rgb(234, 134, 143, 1) 
+    16%, 
+    rgb(247, 195, 46, 1) 
+    24%, 
+    rgb(255, 218, 107, 1) 
+    32%, 
+    rgb(47, 255, 154, 1) 
+    40%, 
+    rgb(12, 188, 135, 1) 
+    56%, 
+    rgb(33, 190, 214, 1) 
+    65%, 
+    rgb(170, 73, 249, 1) 
+    80%, 
+    rgb(124, 119, 224, 1) 
+    90%, 
+    rgb(126, 27, 198, 1) 
+    100%); 
+}
 
+.colors{
+  color: rgb(126, 27, 198, 1);
+  color: rgb(12, 188, 135, 1);
+  color: rgb(247, 195, 46, 1);
+  color: rgb(33, 190, 214, 1);
+  color: rgb(214, 41, 62, 1);
+  color: rgb(47, 255, 154, 1);
+  color: rgb(170, 73, 249, 1);
+  color: rgb(255, 218, 107, 1);
+  color: rgb(124, 119, 224, 1);
+  color: rgb(234, 134, 143, 1);
+}
+.headImg{
+  background-image: url("https://www.transparenttextures.com/patterns/dark-mosaic.png");
+}
 
 .fontfix{
   text-shadow: 1px 1px 4px black;
