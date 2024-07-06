@@ -12,6 +12,7 @@ const eventProps = defineProps({event: {type: Event, required: true}, ticket: Ti
 const userProfile = computed(()=> AppState.account)
 const eventimage = computed(()=> `url(${eventProps.event.coverImg})`)
 
+// eslint-disable-next-line vue/return-in-computed-property
 const colorType = computed(()=>{
     switch(eventProps.event.type){
         case 'digital':
@@ -77,6 +78,17 @@ const colorType = computed(()=>{
     background-position: center;
     background-size: cover;
     height: 15dvh;
+}
+
+
+.container{
+  position: relative;
+}
+
+.bottom-right {
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
 }
 
 .bgcolor{

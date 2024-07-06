@@ -45,10 +45,10 @@ class EventService{
         logger.log('sending event to cancel', response.data)
         this.setActiveEvent(eventId)
         const eventCancel = AppState.events.find(event => event.id == eventId)
-        eventCancel.isCanceled === true
+        eventCancel.isCanceled = !eventCancel.isCanceled
         const eventUserCancel = AppState.userEvents.find(event => event.id == eventId)
-        eventUserCancel.isCanceled === true
-        logger.log('canceled', eventCancel, response.data, eventUserCancel)
+        eventUserCancel.isCanceled = !eventUserCancel.isCanceled
+        logger.log('cancel changed', eventCancel, response.data, eventUserCancel)
     }
 
     async trashEvent(eventId){

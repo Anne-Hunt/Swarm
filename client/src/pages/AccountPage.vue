@@ -53,7 +53,7 @@ onMounted(()=>{
 <template>
   <div class="about text-center">
     <div v-if="account" class="row p-0 m-0">
-      <div class="col-12 headerImg text-light shadow p-0 m-0">
+      <div class="col-12 headerImg container text-light shadow p-0 m-0">
         <div class="headImg px-0 py-5 m-0">
           <div class="border border-dark border-1 rounded-circle p-0 m-0 shadow d-inline-block">
             <div class="border border-light border-5 rounded-circle p-0 m-0 shadow d-inline-block">
@@ -62,10 +62,10 @@ onMounted(()=>{
           </div>
           <h1 class="p-0 m-0 fontfix">Welcome {{ account.name }}</h1>
         </div>
-      </div>
-      <div class="text-end text-bottom text-light p-0 m-0">
-        <i class="mdi mdi-dots-horizontal fs-1 btn text-end text-bottom text-light fontfix" data-bs-toggle="modal"
-        data-bs-target="#modalId"></i>
+        <div class="bottom-right text-light p-0 m-0">
+          <i class="mdi mdi-dots-horizontal fs-1 btn text-end text-bottom text-light fontfix" data-bs-toggle="modal"
+          data-bs-target="#modalId"></i>
+        </div>
       </div>
 
       <div class="row p-3">
@@ -122,6 +122,16 @@ img {
     90%, 
     rgb(126, 27, 198, 1) 
     100%); 
+}
+
+.container{
+  position: relative;
+}
+
+.bottom-right {
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
 }
 
 .colors{
