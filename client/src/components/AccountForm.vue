@@ -10,9 +10,9 @@ import { AppState } from '../AppState.js';
 const account = computed(() => AppState.account)
 
 const formData = ref({
-  name: account.value.name,
-  picture: account.value.picture,
-  email: account.value.email
+  name: account.value.name || '',
+  picture: account.value.picture || '',
+  email: account.value.email || ''
 })
 
 async function updateAccount(){

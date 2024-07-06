@@ -28,7 +28,8 @@ function toggleTheme() {
               </div>
             </div>
           </div>
-      </router-link>
+        </router-link>
+        <h1 class="text-light fontfix">SWARM</h1>
     <div class="d-flex align-items-center">
       <button class="btn text-light fs-3 py-0 fontpop" @click="toggleTheme"
             :title="`Enable ${theme == 'light' ? 'dark' : 'light'} theme.`">

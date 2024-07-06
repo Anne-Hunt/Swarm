@@ -56,6 +56,7 @@ async function createTicket(){
     try {
         const ticketData = {eventId: route.params.eventId}
         await ticketService.createTicket(ticketData)
+        Pop.success("You have a ticket!")
     } catch (error) {
         Pop.toast('Unable to load tickets', 'error')
         logger.log('Unable to load tickets', error)

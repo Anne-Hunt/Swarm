@@ -2,16 +2,12 @@
 import { computed } from 'vue';
 import { Event } from '../models/Event.js';
 import { AppState } from '../AppState.js';
-import { eventService } from '../services/EventService.js';
-import { ticketService } from '../services/TicketService.js';
-import Pop from '../utils/Pop.js';
-import { logger } from '../utils/Logger.js';
-import { Ticket } from '../models/Ticket.js';
 
 const eventProps = defineProps({event: {type: Event, required: true}})
 const userProfile = computed(()=> AppState.account)
 const eventimage = computed(()=> `url(${event.coverImg})`)
 
+// eslint-disable-next-line vue/return-in-computed-property
 const colorType = computed(()=>{
     switch(eventProps.event.type){
         case 'digital':
@@ -27,16 +23,6 @@ const colorType = computed(()=>{
     }
 })
 
-async function setActiveEvent(event){
-    try {
-      AppState.activeEvent = event
-    }
-    catch (error){
-      Pop.error(error);
-      logger.log("unable to set active Event", error)
-    }
-}
-
 </script>
 
 
@@ -45,8 +31,8 @@ async function setActiveEvent(event){
             <div class="card rounded">
                 <div class="card-image-top eventimage rounded-top justify-content-between">
                     <span class="bgcolor text-light p-1 rounded">{{ event.type }}</span> 
-                    <span v-if="event.isCanceled === true" class="bg-danger text-light p-1 rounded">CANCELED</span>
-                    <span v-else class="bg-success text-light p-1 rounded">OPEN</span>
+                    <span v-if="event.isCanceled === true" class="bg-danger text-light fontfix p-1 rounded">CANCELED</span>
+                    <span v-else class="bg-success text-light p-1 fontfix rounded">OPEN</span>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -71,6 +57,10 @@ async function setActiveEvent(event){
     background-position: center;
     background-size: cover;
     height: 25dvh;
+}
+
+.fontfix{
+  text-shadow: 1px 1px 4px black;
 }
 
 .bgcolor{

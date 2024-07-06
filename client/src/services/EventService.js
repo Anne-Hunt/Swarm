@@ -26,6 +26,11 @@ class EventService{
         AppState.events = meets
     }
 
+    async getCurrentEvents(){
+        const response = await this.getEvents()
+        
+    }
+
     async createEvent(eventData){
         const response = await api.post('api/events', eventData)
         const meet = new Event(response.data)

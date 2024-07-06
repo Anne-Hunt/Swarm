@@ -20,7 +20,7 @@ async function setActiveProfile(profile){
 
 <template>
 <RouterLink :to="{name: 'Profile', params: {profileId: ticket.accountId}}" @click="setActiveProfile(ticket.profile)">
-    <div class="row align-items-center">
+    <div class="row align-items-center mb-2">
         <div class="col-3">
             <img class="ticketHolder rounded-circle border border-2 shadow" :src="ticket.profile?.picture" :alt="ticket.profile?.name">
         </div>
