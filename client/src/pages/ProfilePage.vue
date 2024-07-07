@@ -61,9 +61,15 @@ onBeforeMount(()=>{
 <template>
     <div class="about text-center">
       <div v-if="AppState.activeProfile" class="row p-0 m-0">
-        <div class="col-12 bg-warning text-light shadow pb-2">
-          <h1 class="py-2 fontfix">Meet {{ profile.name }}</h1>
-          <img class="rounded-circle profile border border-5 border-light shadow" :src="profile.picture" alt="" />
+        <div class="col-12 headerImg container text-light shadow p-0 m-0">
+        <div class="headImg px-0 py-5 m-0">
+          <div class="border border-dark border-1 rounded-circle p-0 m-0 shadow d-inline-block">
+            <div class="border border-light border-5 rounded-circle p-0 m-0 shadow d-inline-block">
+              <img class="rounded-circle border border-1 border-dark p-0 m-0" :src="profile.picture" alt="" />
+            </div>
+          </div>
+          <h1 class="p-0 m-0 fontfix">Meet {{ profile.name }}</h1>
+        </div>
         </div>
   
         <div class="row p-3">
@@ -96,6 +102,35 @@ onBeforeMount(()=>{
     object-position: center;
     object-fit: cover;
   }
+
+  .headImg{
+  background-image: url("https://www.transparenttextures.com/patterns/dark-mosaic.png");
+}
+
+  .headerImg{
+  background: rgb(247,195,46);
+  background: linear-gradient(131deg,
+    rgb(214, 41, 62, 1) 
+    0%, 
+    rgb(234, 134, 143, 1) 
+    16%, 
+    rgb(247, 195, 46, 1) 
+    24%, 
+    rgb(255, 218, 107, 1) 
+    32%, 
+    rgb(47, 255, 154, 1) 
+    40%, 
+    rgb(12, 188, 135, 1) 
+    56%, 
+    rgb(33, 190, 214, 1) 
+    65%, 
+    rgb(170, 73, 249, 1) 
+    80%, 
+    rgb(124, 119, 224, 1) 
+    90%, 
+    rgb(126, 27, 198, 1) 
+    100%); 
+}
   
   
   .fontfix{

@@ -51,6 +51,7 @@ const eventimage = computed(()=> `url(${ticket.event.coverImg})`)
 //   }
 // ]
 
+// eslint-disable-next-line vue/return-in-computed-property
 const colorType = computed(()=>{
     switch(ticketProps.ticket.event.type){
         case 'digital':
@@ -118,4 +119,92 @@ async function deleteTicket(ticketId){
 .bgcolor{
     background-color: v-bind(colorType);
 }
-</style>
+</style>// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+    // @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore

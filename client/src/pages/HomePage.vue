@@ -98,24 +98,24 @@ onAuthLoaded(()=>{
       <!-- Section for Create and Search -->
       <section class="row p-3 m-0 justify-content-evenly">
         <h3 class="ps-5 py-3 text-dark">What Swarm Does</h3>
-        <div class="col-md-5 col-12 shadow py-3 rounded bg-primary">
+        <div class="col-md-5 col-12 shadow py-3 rounded bg-info">
           <div class="row modalOpener p-3">
             <div class="col-2 text-center text-info fs-1 fontfix">
               <i class="mdi mdi-magnify text-light"></i>
             </div>
-            <div class="col-10 p-0 text-light">
+            <div class="col-10 p-0 text-light fontfix">
               <h4>Find events you want today</h4>
               <p>Search for what you're looking for and possibly find the event to change your life.</p>
             </div>
           </div>
         </div>
-        <div class="col-md-5 col-12 shadow p-0 bg-primary rounded py-3">
+        <div class="col-md-5 col-12 shadow p-0 bg-info rounded py-3">
           <div class="row modalOpener p-3" role="button" data-bs-toggle="modal"
           data-bs-target="#modalId">
           <div class="col-2 text-center fontfix">       
             <i class="mdi mdi-plus-circle text-light fs-1"></i>
           </div>
-          <div class="col-10 p-1 text-light">
+          <div class="col-10 p-1 text-light fontfix">
             <h4>Start an event and attend!</h4>
             <p>See what everyone else is doing and then create an event of your own. </p>
           </div>

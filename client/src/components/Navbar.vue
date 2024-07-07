@@ -18,7 +18,7 @@ function toggleTheme() {
 </script>
 
 <template>
-<nav class="navbar navbar-lg bg-primary pt-0 shadow">
+<nav class="navbar navbar-lg bg-primary pt-0 px-4 shadow">
   <div class="container-fluid mt-0 pt-0">
     <router-link class="navbar-brand" :to="{ name: 'Home' }">
           <div class="text-light front">
@@ -28,11 +28,12 @@ function toggleTheme() {
               </div>
             </div>
           </div>
-      </router-link>
+        </router-link>
+        <h1 class="text-light fontfix">SWARM</h1>
     <div class="d-flex align-items-center">
       <button class="btn text-light fs-3 py-0 fontpop" @click="toggleTheme"
             :title="`Enable ${theme == 'light' ? 'dark' : 'light'} theme.`">
-            <i class="mdi" :class="theme == 'light' ? 'mdi-lightbulb' : 'mdi-lightbulb-outline'"></i>
+            <i class="mdi" :class="theme == 'light' ? 'mdi-lightbulb text-warning' : 'mdi-lightbulb-outline text-success'"></i>
       </button>
       <Login />
     </div>

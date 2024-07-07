@@ -43,6 +43,10 @@ import Navbar from './components/Navbar.vue'
   --main-height: calc(100vh - 32px - 64px);
 }
 
+h1, h2, h3, h4, h5{
+  font-family: "Ubuntu", sans-serif;
+}
+
 .colors{
   color: rgb(126, 27, 198, 1);
   color: rgb(12, 188, 135, 1);

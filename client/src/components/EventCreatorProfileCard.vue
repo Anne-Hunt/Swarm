@@ -12,48 +12,7 @@ const eventProps = defineProps({event: {type: Event, required: true}, ticket: Ti
 const userProfile = computed(()=> AppState.account)
 const eventimage = computed(()=> `url(${eventProps.event.coverImg})`)
 
-// const categoryIcon = computed(()=> {
-//     if(event.type == categoryType.type )
-//   return categoryType.icon)
-
-// const icons = computed(()=>{
-//     switch(eventProps.event.type){
-//         case 'digital':
-//             return `${mdi mdi-television}`
-//         case 'convention':
-//             return `${mdi mdi-earth}`
-//         case 'concert':
-//             return `${mdi mdi-music}`
-//         case 'sport':
-//             return `${mdi mdi-soccer}`
-//         case 'meeting':
-//             return `${mdi mdi-group}`
-//     }
-// })
-
-// const categoryType = [
-//   {
-//     type: 'digital',
-//     icon: 'mdi mdi-television text-light'
-//   },
-//   {
-//     type: 'convention',
-//     icon: 'mdi mdi-earth text-primary'
-//   },
-//   {
-//     type: 'concert',
-//     icon: 'mdi mdi-music text-secondary'
-//   },
-//   {
-//     type: 'sport',
-//     icon: 'mdi mdi-soccer text-warning'
-//   },
-//   {
-//     type: 'meeting',
-//     icon: 'mdi mdi-group text-danger'
-//   }
-// ]
-
+// eslint-disable-next-line vue/return-in-computed-property
 const colorType = computed(()=>{
     switch(eventProps.event.type){
         case 'digital':
@@ -119,6 +78,17 @@ const colorType = computed(()=>{
     background-position: center;
     background-size: cover;
     height: 15dvh;
+}
+
+
+.container{
+  position: relative;
+}
+
+.bottom-right {
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
 }
 
 .bgcolor{

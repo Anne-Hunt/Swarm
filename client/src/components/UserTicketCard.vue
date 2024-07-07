@@ -9,6 +9,7 @@ import { Ticket } from '../models/Ticket.js';
 const ticketProp = defineProps({ticket: {type: Ticket, required: true}})
 const userProfile = computed(()=> AppState.account)
 
+// eslint-disable-next-line vue/return-in-computed-property
 const colorType = computed(()=>{
     switch(ticketProp.ticket.event.type){
         case 'digital':
@@ -26,7 +27,7 @@ const colorType = computed(()=>{
 
 async function deleteTicket(ticketId){
     try {
-        Pop.confirm('Do you want to cancel your ticket?')
+        await Pop.confirm('Do you want to cancel your ticket?')
         if (!confirm) return
         await ticketService.deleteTicket(ticketId)
     } catch (error) {
@@ -39,13 +40,14 @@ async function deleteTicket(ticketId){
 
 
 <template>
-        <RouterLink :to="{name: 'Event Details', params: {eventId: ticket.event.id}}">
-            <div class="card rounded">
+    <div class="card rounded">
+                <RouterLink :to="{name: 'Event Details', params: {eventId: ticket.event.id}}">
                 <div class="card-image-top eventimage rounded-top pt-1" :style="{backgroundImage: `url(${ticket.event.coverImg})`}">
                     <span class="bgcolor text-light p-1 rounded">{{ ticket.event.type }}</span> 
                     <span v-if="ticket.event.isCanceled === true" class="bg-danger text-light p-1 rounded">CANCELED</span>
                     <span v-else class="bg-success text-light p-1 rounded">OPEN</span>
                 </div>
+            </RouterLink>
                 <div class="card-body">
                     <div class="row">
                         <div class="card-title col-10"><strong>{{ ticket.event.name }}</strong></div>
@@ -63,7 +65,6 @@ async function deleteTicket(ticketId){
                     </div>
                 </div>
             </div>
-        </RouterLink>
 </template>
 
 

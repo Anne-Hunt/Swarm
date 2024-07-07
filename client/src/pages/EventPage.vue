@@ -56,6 +56,7 @@ async function createTicket(){
     try {
         const ticketData = {eventId: route.params.eventId}
         await ticketService.createTicket(ticketData)
+        Pop.success("You have a ticket!")
     } catch (error) {
         Pop.toast('Unable to load tickets', 'error')
         logger.log('Unable to load tickets', error)
@@ -131,14 +132,11 @@ onUnmounted(()=>{
             </section>
             <section class="row mb-2">
                 <div class="col-8 p-2">
-                    <div class="row justify-content-between mt-2">
+                    <div class="row justify-content-between align-items-center mt-2">
                             <div class="col-9"><h2>{{ activeEvent?.name }}</h2></div>
-                            <div class="col-3 text-center">
-                                <!-- <CategoryEvent/> -->
-                            </div>
-                        <div v-if="activeEvent.creatorId == userProfile?.id" class="col-4">
+                        <div v-if="activeEvent.creatorId == userProfile?.id" class="col-3 text-end">
                             <div class="dropdown">
-                                <div class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="mdi mdi-dots-horizontal fs-1"></i></div>
+                                <div class="dropdown-toggle btn" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="mdi mdi-dots-horizontal fs-1 text-warning fontfix"></i></div>
                                 <ul class="dropdown-menu">
                                     <li><button class="dropdown-item"  @click="cancelEvent">Cancel Event</button></li>
                                 </ul>
@@ -154,6 +152,7 @@ onUnmounted(()=>{
                     </div>
                     <section class="row p-0 mb-1 rounded border border-info shadow">
                         <div class="bg-info pt-2 rounded-top" v-if="AppState.account">
+                            <h5 class="text-light fontfix">Comments</h5>
                             <CommentForm/>
                         </div>
                         <div v-for="comment in comments" :key="comment.id">
@@ -163,14 +162,14 @@ onUnmounted(()=>{
                 </div>
                 <div class="col-4 p-2">
                     <div v-if="AppState.account">
-                        <div v-if="userTicket?.accountId == userProfile.id" class="bg-success rounded p-2">
+                        <div v-if="userTicket?.accountId == userProfile.id" class="bg-success rounded p-2 shadow">
                             <h4>{{ attending }}</h4>
                             <button class="btn btn-warning btn-outline-dark" @click="deleteTicket">Cancel</button>
                         </div>
-                        <div v-if="activeEvent.isCanceled === false && activeEvent.capacity != activeEvent.ticketCount && userTicket?.accountId != userProfile.id" class="bg-info text-light fontfix rounded p-2">
-                            <h4>You know you want to go</h4>
+                        <div v-if="activeEvent.isCanceled === false && activeEvent.capacity != activeEvent.ticketCount && userTicket?.accountId != userProfile.id" class="bg-info text-light fontfix rounded p-2 shadow">
+                            <h4>Wanna go?</h4>
                             <p>Claim your spot!</p>
-                            <button class="btn btn-warning border" type="button" @click="createTicket">Ticket</button>
+                            <button class="btn btn-warning border text-end" type="button" @click="createTicket">Ticket</button>
                         </div>
                     </div>
                     <div class="bg-warning mt-2 rounded shadow">
@@ -200,6 +199,12 @@ onUnmounted(()=>{
   background-position: center;
   height: 40dvh;
   background-size: cover;
+}
+
+.bottom-right {
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
 }
 
 .fontfix{

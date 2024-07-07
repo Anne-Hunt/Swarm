@@ -26,6 +26,11 @@ class EventService{
         AppState.events = meets
     }
 
+    async getCurrentEvents(){
+        const response = await this.getEvents()
+        
+    }
+
     async createEvent(eventData){
         const response = await api.post('api/events', eventData)
         const meet = new Event(response.data)
@@ -45,10 +50,10 @@ class EventService{
         logger.log('sending event to cancel', response.data)
         this.setActiveEvent(eventId)
         const eventCancel = AppState.events.find(event => event.id == eventId)
-        eventCancel.isCanceled === true
+        eventCancel.isCanceled = !eventCancel.isCanceled
         const eventUserCancel = AppState.userEvents.find(event => event.id == eventId)
-        eventUserCancel.isCanceled === true
-        logger.log('canceled', eventCancel, response.data, eventUserCancel)
+        eventUserCancel.isCanceled = !eventUserCancel.isCanceled
+        logger.log('cancel changed', eventCancel, response.data, eventUserCancel)
     }
 
     async trashEvent(eventId){

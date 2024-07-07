@@ -9,6 +9,7 @@ import { logger } from '../utils/Logger.js';
 const eventProp = defineProps({event: {type: Event, required: true}})
 const userProfile = computed(()=> AppState.account)
 
+// eslint-disable-next-line vue/return-in-computed-property
 const colorType = computed(()=>{
     switch(eventProp.event.type){
         case 'digital':
@@ -39,13 +40,14 @@ async function cancelEvent(eventId){
 
 
 <template>
-        <RouterLink :to="{name: 'Event Details', params: {eventId: event.id}}">
-            <div class="card rounded">
+    <div class="card rounded">
+                <RouterLink :to="{name: 'Event Details', params: {eventId: event.id}}">
                 <div class="card-image-top eventimage rounded-top pt-1" :style="{backgroundImage: `url(${event.coverImg})`}">
                     <span class="bgcolor text-light p-1 rounded">{{ event.type }}</span> 
                     <span v-if="event.isCanceled === true" class="bg-danger text-light p-1 rounded">CANCELED</span>
                     <span v-else class="bg-success text-light p-1 rounded">OPEN</span>
                 </div>
+            </RouterLink>
                 <div class="card-body">
                     <div class="row">
                         <div class="card-title col-10"><strong>{{ event.name }}</strong></div>
@@ -57,12 +59,14 @@ async function cancelEvent(eventId){
                         <span>{{ event.startDate }} - <small>{{ event.location }}</small></span><br>
                         <span>{{ event.ticketCount }} people are going</span>
                     </div>
-                    <div v-if="event.creatorId == userProfile.id">
+                    <div v-if="event.creatorId == userProfile.id && event.isCanceled != true">
                         <button class="btn btn-danger" @click="cancelEvent(event.id)">CANCEL EVENT</button>
+                    </div>
+                    <div v-else-if="event.creatorId == userProfile.id && event.isCanceled == true">
+                        <button class="btn btn-danger" @click="cancelEvent(event.id)">UN-CANCEL EVENT</button>
                     </div>
                 </div>
             </div>
-        </RouterLink>
 </template>
 
 
