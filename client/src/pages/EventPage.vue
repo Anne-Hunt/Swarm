@@ -7,6 +7,7 @@ import { commentService } from '../services/CommentService.js';
 import { ticketService } from '../services/TicketService.js';
 import { AppState } from '../AppState.js';
 import Pop from '../utils/Pop.js';
+import { AuthService } from '../services/AuthService.js';
 
 const activeEvent = computed(()=> AppState.activeEvent)
 // const eventType = AppState.activeEvent?.type
@@ -57,6 +58,7 @@ async function createTicket(){
         const ticketData = {eventId: route.params.eventId}
         await ticketService.createTicket(ticketData)
         Pop.success("You have a ticket!")
+        await this.getTickets()
     } catch (error) {
         Pop.toast('Unable to load tickets', 'error')
         logger.log('Unable to load tickets', error)
@@ -106,6 +108,11 @@ async function getAllTickets(){
         logger.log('unable to get all tickets', error)
   }
 }
+
+async function login() {
+  AuthService.loginWithPopup()
+}
+
 onBeforeMount(()=>{
 })
 
@@ -155,6 +162,9 @@ onUnmounted(()=>{
                             <h5 class="text-light fontfix">Comments</h5>
                             <CommentForm/>
                         </div>
+                        <div class="bg-info pt-2 rounded-top btn" v-else>
+                            <h5 class="text-light fontfix" @click="login">Sign in to leave a comment!</h5>
+                        </div>
                         <div v-for="comment in comments" :key="comment.id">
                             <CommentCard :comment="comment"/>
                         </div>
@@ -169,8 +179,13 @@ onUnmounted(()=>{
                         <div v-if="activeEvent.isCanceled === false && activeEvent.capacity != activeEvent.ticketCount && userTicket?.accountId != userProfile.id" class="bg-info text-light fontfix rounded p-2 shadow">
                             <h4>Wanna go?</h4>
                             <p>Claim your spot!</p>
-                            <button class="btn btn-warning border text-end" type="button" @click="createTicket">Ticket</button>
+                            <button v-if="activeEvent.isCanceled === false && activeEvent.capacity != activeEvent.ticketCount && userTicket?.accountId != userProfile.id" class="btn btn-warning border text-end" type="button" @click="createTicket">Ticket</button>
                         </div>
+                    </div>
+                    <div v-if="!userProfile" class="bg-info text-light fontfix rounded p-2 shadow">
+                        <h4>Sound fun?</h4>
+                        <p>Get a ticket here.</p>
+                        <button class="btn btn-warning border text-end" type="button" @click="login">Sign in!</button>
                     </div>
                     <div class="bg-warning mt-2 rounded shadow">
                         <div class="rounded p-2 container-fluid">

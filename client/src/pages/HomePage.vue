@@ -98,7 +98,7 @@ onAuthLoaded(()=>{
       <!-- Section for Create and Search -->
       <section class="row p-3 m-0 justify-content-evenly">
         <h3 class="ps-5 py-3 text-dark">What Swarm Does</h3>
-        <div class="col-md-5 col-12 shadow py-3 rounded bg-info">
+        <div class="col-md-5 col-12 shadow py-3 rounded bg-info mb-1">
           <div class="row modalOpener p-3">
             <div class="col-2 text-center text-info fs-1 fontfix">
               <i class="mdi mdi-magnify text-light"></i>
@@ -109,7 +109,7 @@ onAuthLoaded(()=>{
             </div>
           </div>
         </div>
-        <div class="col-md-5 col-12 shadow p-0 bg-info rounded py-3">
+        <div class="col-md-5 col-12 shadow p-0 bg-info rounded py-3 mb-1">
           <div class="row modalOpener p-3" role="button" data-bs-toggle="modal"
           data-bs-target="#modalId">
           <div class="col-2 text-center fontfix">       
@@ -125,13 +125,13 @@ onAuthLoaded(()=>{
     <!-- Section for Category Filters-->
     <section class="row p-3 justify-content-evenly">
       <h3 class="px-5 py-3">Explore by Category</h3>
-      <div class="col-md-2 col-6 mb-2" role="button" @click="filterTo = 'all'">
+      <div class="col-lg-2 col-md-4 col-6 mb-2" role="button" @click="filterTo = 'all'">
         <div class="bg-primary rounded text-center text-light p-2">
           <h4>all</h4>
           <i class="mdi mdi-earth text-success fs-1 fontfix"></i>
         </div>
       </div>
-      <div v-for="filterObj in filters" :key="filterObj.name" class="col-md-2 col-6 mb-2"  role="button" @click="filterTo = filterObj.name">
+      <div v-for="filterObj in filters" :key="filterObj.name" class="col-lg-2 col-md-4 col-6 mb-2"  role="button" @click="filterTo = filterObj.name">
         <div class="bg-primary rounded text-center p-2 text-light">
           <h4>{{filterObj.name}}</h4>
           <i :class="filterObj.icon"></i>

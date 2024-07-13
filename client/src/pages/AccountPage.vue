@@ -75,6 +75,9 @@ onMounted(()=>{
         <div v-for="ticket in tickets" :key="ticket.id" class="col-6 col-md-4 p-1">
             <UserTicketCard :ticket="ticket"/>
         </div>
+        <div v-if="tickets?.length <= 0">
+          <h4>You don't have any active tickets right now</h4>
+        </div>
     </section>
     <div class="row">
         <h2>Your Events</h2>
@@ -83,6 +86,9 @@ onMounted(()=>{
             <div class="col-md-4 col-6 p-1" v-for="event in events" :key="event.id">
                 <UserEventCard :event="event"/>
               </div>
+              <div v-if="events?.length <= 0">
+          <h4>You don't have any created events right now</h4>
+        </div>
     </section>
     </div>
     <div v-else>
