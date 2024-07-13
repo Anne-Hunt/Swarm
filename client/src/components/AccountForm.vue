@@ -4,6 +4,7 @@ import { accountService } from '../services/AccountService.js';
 import Pop from '../utils/Pop.js';
 import { logger } from '../utils/Logger.js';
 import { AppState } from '../AppState.js';
+import { Modal } from 'bootstrap';
 
 
 
@@ -20,6 +21,7 @@ async function updateAccount(){
     const accountData = formData.value
     await accountService.updateAccount(accountData)
     Pop.success("Account updated!")
+    Modal.getOrCreateInstance("#modalId").hide()
   }
   catch (error){
     Pop.error("Unable to updated at this time", 'error');
